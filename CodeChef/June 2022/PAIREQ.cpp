@@ -41,16 +41,17 @@ int main()
                 }
                 if (count > 1 || count == 1)
                 {
-                    cout << "\n"<< arr[i] << " occurs " << count << " times " << endl;
+                    cout << "\n"
+                         << arr[i] << " occurs " << count << " times " << endl;
                 }
                 if (count > max_freq)
                 {
                     max_freq = count;
-                    // cout<<"arr[i]: "<<arr[i]<<endl;
                 }
             }
         }
-        cout << "Number with maximum frequency is: " << max_freq << endl;
+        int operations = n - max_freq;
+        cout << "\n Number of operation required: " << operations << endl;
     }
 
     return 0;
