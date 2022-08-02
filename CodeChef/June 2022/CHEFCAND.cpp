@@ -18,8 +18,7 @@ int main()
             if (neededCandy % 4 != 0)
             {
                 int ans = neededCandy / 4;
-                cout<<ans+1<<endl;
-                
+                cout << ans + 1 << endl;
             }
             else
                 cout << neededCandy / 4 << endl;
