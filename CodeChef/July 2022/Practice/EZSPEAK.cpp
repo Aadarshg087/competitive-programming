@@ -8,40 +8,35 @@ int main()
     cin >> t;
     while (t-- > 0)
     {
-        string str = "aeiou";
+        string vowel = "aeiou";
         int n;
+        int k = 0;
         string word;
         cin >> n;
         cin >> word; // apple
         int count = 0;
-        int str_size = str.length() - 1;
+        int vowel_size = vowel.length() - 1;
         for (int i = 0; i < n - 1; i++)
         {
-            for (int j = 0; j <= str_size; j++)
+            for (int j = 0; j <= vowel_size; j++)
             {
-                if (word[i] != str[j])
+                if (word[i] == vowel[j])
                 {
-                    count++;
-                    cout << count << " ";
-                }
-                else if (word[i] == str[j])
-                {
+                    k = 1;
                     break;
                 }
-            }
-            if (count >= 4)
-            {
-                // Is it easy to pronounce?
-                cout << "No" << endl;
-                break;
-            }
-            else
-            {
-                // Is it easy to pronounce?
-                cout << "Yes" << endl;
-                break;
+                else if (k == 0)
+                {
+                    count++;
+                }
             }
         }
+        if (count >= 4)
+        {
+            cout << "Yes" << endl;
+        }
+        else
+            cout << "No" << endl;
     }
     return 0;
 }
