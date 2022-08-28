@@ -5,18 +5,18 @@ int main()
 {
     int t;
     cin >> t;
-    while (t--)
+    while (t-- > 0)
     {
-        int T, N;
-        int ans = 0;
-        cin >> T >> N;
-        int x = N * N;
-        for (int i = 1; i <= T; i++)
+        int maxT, maxN, sumN, ans;
+        cin >> maxT >> maxN >> sumN;
+        int N = min(maxT, maxN);
+        while (maxT != 0 || sumN != 0)
         {
-            ans = ans + x;
+            ans = ans * N;
+            maxT = maxT - 1;
+            sumN = sumN - N;
         }
         cout << ans << endl;
     }
-
     return 0;
 }

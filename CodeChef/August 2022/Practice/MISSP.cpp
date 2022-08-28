@@ -10,25 +10,34 @@ int main()
     cin >> t;
     while (t-- > 0)
     {
-        // n = no. of numbers
         int n;
         cin >> n;
-        int temp;
-        int count = 0;
-        int array[n] = {};
+        int arr[n];
+        // Inserting elements into the array
         for (int i = 0; i < n; i++)
         {
-            cin >> array[i];
+            cin >> arr[i];
         }
+        // Element picker
         for (int i = 0; i < n; i++)
         {
-            temp = array[i];
-            for (int j = 0; j < n; j++)
+            // Updating the element to 0 which are repeating even number of times
+            for (int j = i + 1; j < n; j++)
             {
-                if (array[j] == temp)
+                if (arr[i] == arr[j])
                 {
-                    count++;
+                    arr[i] = 0;
+                    arr[j] = 0;
                 }
+            }
+        }
+
+        // Printing the non-zero elements in the array
+        for (int i = 0; i < n; i++)
+        {
+            if (arr[i] != 0)
+            {
+                cout << arr[i] << " ";
             }
         }
     }
