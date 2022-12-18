@@ -1,31 +1,28 @@
 #include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
 
-int elementFrequency(int arr[], int n)
+int findUnique(int arr[], int n)
 {
-    int max_freq;
-    int count = 1;
-    int count_max = 0;
     for (int i = 0; i < n; i++)
     {
-        count = 1;
         for (int j = i + 1; j < n; j++)
         {
             if (arr[i] == arr[j])
             {
-                count++;
+                arr[i] = 0;
+                arr[j] = 0;
             }
         }
-        if (count > count_max)
-        {
-            count_max = count;
-            max_freq = arr[i];
-        }
-        arr[i] = 0;
     }
 
-    return count_max;
+    for (int i = 0; i < n; i++)
+    {
+        if (arr[i] != 0)
+        {
+            return arr[i];
+        }
+    }
 }
 
 int main()
@@ -41,10 +38,8 @@ int main()
         {
             cin >> arr[i];
         }
-
-        int count_max = elementFrequency(arr, n);
-        int ans = n - count_max;
-        cout << ans << endl;
+        cout << findUnique(arr, n) << endl;
     }
+
     return 0;
 }
