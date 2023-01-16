@@ -5,15 +5,20 @@ using namespace std;
 void printSubstring(char input[])
 {
     int len = strlen(input);
+    int limit;
     for (int i = 0; i < len; i++)
     {
-        for (int j = i; j < len; j++)
+        int limit = i;
+        for (int k = i; k < len; k++)
         {
-            for (int k = 0; k <= j; k++)
+            int j = i;
+            while (j <= limit)
             {
-                cout << input[i];
+                cout << input[j];
+                j++;
             }
             cout << endl;
+            limit++;
         }
     }
 }

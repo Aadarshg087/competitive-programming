@@ -66,54 +66,87 @@ using namespace std;
 //     return input;
 // }
 
-string getCompressedString(string &input)
+// string getCompressedString(string &input)
+// {
+//     for (int i = 0; i < length; i++)
+//     {
+//         for (int j = i + 1; j < length; j++)
+//         {
+//             if (input[i] != input[j])
+//             {
+//                 break;
+//             }
+//         }
+//     }
+// }
+// string getCompressedString(string &input)
+// {
+//     // hghabff
+//     int length = input.length(); // 7
+//     char prev_char = input[0];   // h
+//     int count = 49;              // 1
+//     int location = 1;            // 1
+//     // string opStr;
+//     char count_char;
+//     for (int i = 1; i < length; i++)
+//     {
+//         if (input[i] == prev_char) // g !=h
+//         {
+//             count++;
+//             input[location] = count;
+//         }
+//         else
+//         {
+//             prev_char = input[i]; // prevchar = g
+//             count = 49;
+//             location++;                 // 2
+//             input[location] = input[i]; // hgg
+//             if (input[i] == input[i + 1])
+//             {
+//                 location++; // 3
+//             }
+//             // else
+//             //     location--;
+//         }
+//     }
+//     if (length > 1)
+//     {
+//         input.erase(location + 1, length - location);
+//     }
+//     return input;
+// }
+
+string getCompressedString(string input)
 {
-    for (int i = 0; i < length; i++)
+    int len = input.length();
+    char output[len];
+    int location = 0;
+    int i = 0;
+    int j;
+    while (i < len)
     {
-        for (int j = i + 1; j < length; j++)
+        output[location] = input[i];
+        location++;
+        if (input[i] == input[i + 1])
         {
-            if (input[i] != input[j])
+            j = i + 1;
+            int count = 49;
+            while (input[j] == input[i])
             {
-                break;
+                count++;
+                j++;
             }
-        }
-    }
-}
-string getCompressedString(string &input)
-{
-    // hghabff
-    int length = input.length(); // 7
-    char prev_char = input[0];   // h
-    int count = 49;              // 1
-    int location = 1;            // 1
-    // string opStr;
-    char count_char;
-    for (int i = 1; i < length; i++)
-    {
-        if (input[i] == prev_char) // g !=h
-        {
-            count++;
-            input[location] = count;
+            i = j;
+            output[location] = count;
+            location++;
         }
         else
         {
-            prev_char = input[i]; // prevchar = g
-            count = 49;
-            location++;                 // 2
-            input[location] = input[i]; // hgg
-            if (input[i] == input[i + 1])
-            {
-                location++; // 3
-            }
-            // else
-            //     location--;
+            i++;
         }
     }
-    if (length > 1)
-    {
-        input.erase(location + 1, length - location);
-    }
-    return input;
+    output[location] = '\0';
+    return output;
 }
 
 int main()
