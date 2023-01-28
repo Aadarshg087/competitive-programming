@@ -11,47 +11,40 @@ int length(char input[])
     }
     return count;
 }
+
 void helper(char input[], int len)
 {
     input[len + 1] = '0';
-    cout << len << endl;
-    len += 2;
-    input[len] = '\0';
+    len++;
+    input[len + 1] = '\0';
     int location = len - 1;
-    for (int i = location - 2; i >= 0; i--)
+    for (int i = location - 1; i >= 0; i--)
     {
         input[location] = input[i];
         location--;
     }
-    input[0] = '3';
-    input[1] = '.';
-    input[2] = '1';
-    input[3] = '4';
+    input[0] = '*';
 }
 
-void replacePi(char input[])
+void pairStar(char input[])
 {
     int len = length(input);
     if (len == 0 || len == 1)
     {
         return;
     }
-    if (input[0] == 'p' && input[1] == 'i')
+    if (input[0] == input[1])
     {
-        helper(input, len);
-        return replacePi(input + 4);
+        helper(input + 1, len);
     }
-    else
-    {
-        return replacePi(input + 1);
-    }
+    return pairStar(input + 1);
 }
 
 int main()
 {
-    char s[50];
-    cin >> s;
-    replacePi(s);
-    cout << s;
+    char input[50];
+    cin >> input;
+    pairStar(input);
+    cout << input;
     return 0;
 }
