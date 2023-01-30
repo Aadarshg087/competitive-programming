@@ -21,7 +21,6 @@ void helper(char input[])
         location++;
     }
     input[location] = '\0';
-    cout << input << endl;
 }
 
 void removeX(char input[])
@@ -45,6 +44,6 @@ int main()
     char s[100];
     cin >> s;
     removeX(s);
-    cout << s;
+    cout << s << endl;
     return 0;
 }
