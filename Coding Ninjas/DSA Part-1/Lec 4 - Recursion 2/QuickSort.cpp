@@ -2,12 +2,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int partition(int input[], int size)
+int partition(int input[], int s, int e)
 {
     // Counting the elements smaller than the key
-    int key = input[0];
+    int key = input[s];
     int count = 0;
-    for (int i = 0; i < size; i++)
+    for (int i = s + 1; i <= e; i++)
     {
         if (input[i] < key)
         {
@@ -17,14 +17,14 @@ int partition(int input[], int size)
 
     // Replacing the key and first index value
     {
-        int temp = input[count];
-        input[count] = key;
-        input[0] = temp;
+        int temp = input[s + count];
+        input[s + count] = key;
+        input[s] = temp;
     }
 
     // Swapping the elements to the corrects side
-    int i = 0;
-    int j = size - 1;
+    int i = s;
+    int j = e;
     while (i < count && j > count)
     {
         if (input[i] < key)
@@ -44,16 +44,20 @@ int partition(int input[], int size)
             j--;
         }
     }
-
-    return count;
+    return s + count;
 }
 void helper(int input[], int s, int e)
 {
+    // Base Condition
     if (s >= e)
     {
         return;
     }
-    int location = partition(input, e + 1);
+    
+    // Location of partitioning
+    int location = partition(input, s, e);
+
+    // Recursion Calls
     helper(input, s, location - 1);
     helper(input, location + 1, e);
 }
@@ -72,6 +76,12 @@ int main()
         cin >> input[i];
     }
     quickSort(input, size);
+
+    for (int i = 0; i < size; i++)
+    {
+        cout << input[i] << " ";
+    }
+    cout << endl;
 
     return 0;
 }
