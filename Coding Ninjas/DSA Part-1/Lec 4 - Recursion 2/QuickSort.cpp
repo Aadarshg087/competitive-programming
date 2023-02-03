@@ -53,7 +53,7 @@ void helper(int input[], int s, int e)
     {
         return;
     }
-    
+
     // Location of partitioning
     int location = partition(input, s, e);
 

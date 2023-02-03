@@ -7,14 +7,15 @@ int main()
     cin >> t;
     while (t-- > 0)
     {
-        int maxT, maxN, sumN, ans;
+        int maxT, maxN, sumN;
         cin >> maxT >> maxN >> sumN;
-        int N = min(maxT, maxN);
-        while (maxT != 0 || sumN != 0)
+        long long ans = 0;
+        while (maxT && sumN)
         {
-            ans = ans * N;
-            maxT = maxT - 1;
-            sumN = sumN - N;
+            int n = min(maxN, sumN);
+            ans += (n * n);
+            sumN -= n;
+            maxT--;
         }
         cout << ans << endl;
     }
