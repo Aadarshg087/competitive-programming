@@ -9,7 +9,7 @@ int keypad(int num, string output[])
         return 1;
     }
     int rem = num % 10;
-    
+
     num = num / 10;
     int ans = keypad(num, output);
 }
