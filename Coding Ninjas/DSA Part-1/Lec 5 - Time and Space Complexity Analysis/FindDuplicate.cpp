@@ -3,7 +3,7 @@
 using namespace std;
 void insertionSort(int arr[], int n)
 {
-    
+    cout << "Hello World" << endl;
 }
 
 int findDuplicate(int arr[], int n)
