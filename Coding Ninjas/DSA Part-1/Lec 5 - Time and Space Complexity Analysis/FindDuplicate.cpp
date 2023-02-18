@@ -1,14 +1,17 @@
 #include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
-void insertionSort(int arr[], int n)
-{
-    cout << "Hello World" << endl;
-}
 
 int findDuplicate(int arr[], int n)
 {
-    insertionSort(arr, n);
+    int total_sum = ((n - 2) * (n - 1)) / 2;
+    int sum = 0;
+    for (int i = 0; i < n; i++)
+    {
+        sum += arr[i];
+    }
+    int ans = sum - total_sum;
+    return ans;
 }
 
 int main()
