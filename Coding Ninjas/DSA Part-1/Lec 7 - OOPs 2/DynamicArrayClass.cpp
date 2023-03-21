@@ -31,7 +31,6 @@ public:
 
     void operator=(DynamicArray const &d)
     {
-        cout << "hello" << endl;
         this->data = new int[d.capacity];
         for (int i = 0; i < d.nextIndex; i++)
         {
