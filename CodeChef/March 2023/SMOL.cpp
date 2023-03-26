@@ -21,8 +21,8 @@ int main()
         }
         else
         {
-            n = n % k;
-            cout << n << endl;
+            int sum = n % k;
+            cout << sum << endl;
         }
     }
 
