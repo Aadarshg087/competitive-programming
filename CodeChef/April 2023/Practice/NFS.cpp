@@ -19,7 +19,7 @@ int main()
         if (res <= 0)
         {
             cout << "Yes" << endl;
-            continue;   
+            continue;
         }
         res = sqrt(res);
         if (res <= v)
@@ -27,6 +27,7 @@ int main()
         else
             cout << "No" << endl;
     }
+    // If condition statements issue
 
     return 0;
 }
