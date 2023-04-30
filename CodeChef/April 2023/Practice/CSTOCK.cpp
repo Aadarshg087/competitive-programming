@@ -10,7 +10,7 @@ int main()
     {
         float price, range1, range2, percent;
         cin >> price >> range1 >> range2 >> percent;
-        double currentPrice = (percent / 100) * price;
+        double currentPrice = abs((percent / 100) * price);
         if (percent >= 0)
         {
             price = price + currentPrice;
