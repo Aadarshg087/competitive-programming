@@ -27,6 +27,7 @@ int main()
             {
                 count++;
             }
+            
             else
             {
                 int sum1 = sum - arr[i];
