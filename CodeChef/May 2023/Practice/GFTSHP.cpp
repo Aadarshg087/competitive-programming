@@ -31,7 +31,7 @@ int main()
             else
             {
                 int sum1 = sum - arr[i];
-                int temp = arr[i] / 2;
+                double temp = arr[i] / 2;
                 double dis = ceil(temp);
                 sum1 = sum1 + dis;
                 if (sum1 <= k)
