@@ -14,25 +14,8 @@ public:
     }
 };
 
-void insert(int data)
-{
-    Node *head = NULL;
-    Node *temp = head;
-    Node *newNode = new Node(data);
-    if (head == NULL)
-    {
-        head->next = newNode;
-        temp = head;
-    }
-    else
-    {
-    }
-}
-
 Node *mergeTwoSortedLinkedLists(Node *head1, Node *head2)
 {
-    Node *temp1 = head1;
-    Node *temp2 = head2;
     Node *head_main = NULL;
     Node *temp = NULL;
     if (head1 == NULL && head2 != NULL)
@@ -45,19 +28,20 @@ Node *mergeTwoSortedLinkedLists(Node *head1, Node *head2)
         head_main = head1;
         return head_main;
     }
-    else
+    else if (head1 == NULL && head2 == NULL)
     {
         head_main = head1;
         return head_main;
     }
-    while (temp1 != NULL || temp2 != NULL)
+
+    while (head1 != NULL && head2 != NULL)
     {
-        if (temp1->data <= temp2->data)
+        if (head1->data <= head2->data)
         {
-            Node *newNode = new Node(temp1->data);
+            Node *newNode = new Node(head1->data);
             if (head_main == NULL)
             {
-                head_main->next = newNode;
+                head_main = newNode;
                 temp = newNode;
             }
             else
@@ -65,14 +49,14 @@ Node *mergeTwoSortedLinkedLists(Node *head1, Node *head2)
                 temp->next = newNode;
                 temp = newNode;
             }
-            temp1 = temp1->next;
+            head1 = head1->next;
         }
-        else if (temp1->data >= temp2->data)
+        else if (head1->data > head2->data)
         {
-            Node *newNode = new Node(temp2->data);
+            Node *newNode = new Node(head2->data);
             if (head_main == NULL)
             {
-                head_main->next = newNode;
+                head_main = newNode;
                 temp = newNode;
             }
             else
@@ -80,19 +64,43 @@ Node *mergeTwoSortedLinkedLists(Node *head1, Node *head2)
                 temp->next = newNode;
                 temp = newNode;
             }
-            temp2 = temp2->next;
+            head2 = head2->next;
         }
     }
-    if (temp1 == NULL)
+
+    if (head1 == NULL)
     {
-        temp->next = temp2;
+        temp->next = head2;
     }
-    else if (temp2 == NULL)
+    else if (head2 == NULL)
     {
-        temp->next = temp1;
+        temp->next = head1;
     }
 
     return head_main;
+    
+}
+
+void insert(Node *head, int data)
+{
+    Node *temp = head;
+    Node *newNode = new Node(data);
+    while (temp->next != NULL)
+    {
+        temp = temp->next;
+    }
+    temp->next = newNode;
+}
+
+void print(Node *head)
+{
+    Node *temp = head;
+    while (temp != NULL)
+    {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+    cout << endl;
 }
 
 int main()
@@ -101,6 +109,20 @@ int main()
     cin >> t;
     while (t--)
     {
+        Node *head1 = new Node(10);
+        insert(head1, 10);
+        insert(head1, 22);
+
+        Node *head2 = new Node(3);
+        insert(head2, 8);
+        insert(head2, 8);
+        insert(head2, 36);
+
+        print(head1);
+        print(head2);
+
+        Node *main_head = mergeTwoSortedLinkedLists(head1, head2);
+        print(main_head);
     }
 
     return 0;
