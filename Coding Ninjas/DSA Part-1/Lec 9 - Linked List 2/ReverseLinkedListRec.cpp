@@ -30,7 +30,7 @@ Node *reverseLinkedListRec(Node *head)
     }
 
     temp->next = temp_curr;
-    temp->curr = NULL;
+    temp->next = NULL;
     return smallAns;
 }
 
