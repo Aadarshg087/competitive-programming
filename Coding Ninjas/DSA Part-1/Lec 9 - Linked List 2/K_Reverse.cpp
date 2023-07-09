@@ -83,22 +83,97 @@ public:
 //     return head;
 // }
 
+// Node *kReverse(Node *head, int k)
+// {
+//     if (head == NULL || head->next == NULL || k == 0 || k == 1)
+//     {
+//         return head;
+//     }
+//     else if (k == 2)
+//     {
+//         Node *h1 = head;
+//         Node *t1 = head->next;
+//         h1->next = t1->next;
+//         t1->next = h1;
+//         Node *t = kReverse(head->next, k);
+//         if (t == NULL)
+//         {
+//             return t1;
+//         }
+//         else
+//         {
+//             h1->next = t;
+//         }
+//         return t1;
+//     }
+//     else
+//     {
+
+//         Node *h1 = head;
+//         Node *t1 = head;
+//         Node *t1_prev = NULL;
+//         int count = 1;
+//         while (count < k)
+//         {
+//             if (t1->next == NULL)
+//             {
+//                 k = count;
+//                 break;
+//             }
+//             if (count == k - 1)
+//             {
+//                 t1_prev = t1;
+//             }
+//             t1 = t1->next;
+//             count++;
+//         }
+
+//         if (k == 2)
+//         {
+//             Node *t = kReverse(head, k);
+//             if (t == NULL)
+//             {
+//                 return t1;
+//             }
+//             else
+//             {
+//                 return t;
+//             }
+//         }
+//         else
+//         {
+//             Node *t1_next = t1->next;
+//             t1->next = h1->next;
+//             t1_prev->next = h1;
+//             h1->next = t1_next;
+//             Node *t = kReverse(head->next, k);
+//             if (t == NULL)
+//             {
+//                 return t1;
+//             }
+//             else
+//             {
+//                 h1->next = t;
+//             }
+//             return t1;
+//         }
+//     }
+// }
+
 Node *kReverse(Node *head, int k)
 {
     if (head == NULL || head->next == NULL || k == 0 || k == 1)
     {
         return head;
     }
-
-    Node *h1 = head;
-    Node *t1 = head;
-    int count = 2;
-    while (count <= k)
+    else if (k == 2)
     {
-        t1 = t1->next;
-        count++;
+        Node *h1 = head;
+        Node *t1 = head->next;
+        h1->next = t1->next;
+        t1->next = h1;
+        kReverse(head->next, k);
     }
-    t1 = 
 }
 
 void insert(Node *head, int data)
@@ -129,10 +204,12 @@ int main()
     insert(head, 7);
     insert(head, 8);
     insert(head, 3);
+    insert(head, 4);
+    insert(head, 7);
+    insert(head, 9);
     insert(head, 36);
     print(head);
-
-    kReverse(head, 2);
-    print(head);
+    Node *t = kReverse(head, 9);
+    print(t);
     return 0;
 }
