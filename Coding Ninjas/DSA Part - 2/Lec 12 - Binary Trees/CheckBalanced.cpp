@@ -24,20 +24,45 @@ public:
     }
 };
 
+int height(BinaryTreeNode<int> *root)
+{
+    if (root == NULL)
+    {
+        return 0;
+    }
+    int leftHeight = 1 + height(root->left);
+    int rightHeight = 1 + height(root->right);
+
+    int ans = 1 + max(leftHeight, rightHeight);
+
+    return ans;
+}
+
 bool isBalanced(BinaryTreeNode<int> *root)
 {
     if (root == NULL)
     {
         return 0;
     }
-    int leftHeight = 1 + isBalanced(root->left);
-    int rightHeight = 1 + isBalanced(root->right);
+    bool mainAns = true;
+    mainAns = isBalanced(root->left);
+    bool mainAns2 = true;
+    mainAns2 = isBalanced(root->right);
+    int lHeight = height(root->left);
+    int rHeight = height(root->right);
 
-    if (abs((leftHeight - rightHeight) > 1))
+    bool ans = true;
+    if (abs((lHeight - rHeight) > 1))
+    {
+        ans = false;
+    }
+
+    if (mainAns == false || mainAns2 == false)
     {
         return false;
     }
-    return true;
+
+    return ans;
 }
 
 int main()
