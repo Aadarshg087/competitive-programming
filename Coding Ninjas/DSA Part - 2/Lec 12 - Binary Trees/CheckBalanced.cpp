@@ -16,7 +16,6 @@ public:
         right = NULL;
         left = NULL;
     }
-
     ~BinaryTreeNode()
     {
         delete left;
