@@ -29,63 +29,23 @@ pair<int, int> getMinAndMax(BinaryTreeNode<int> *root)
 {
     if (root == NULL)
     {
-        return;
+        pair<int, int> p;
+        p.first = INT_MAX;
+        p.second = INT_MIN;
+        return p;
     }
 
-    getMinAndMax(root->left);
-    getMinAndMax(root->right);
-    int max = INT_MIN;
-    int min = INT_MAX;
+    pair<int, int> leftAns = getMinAndMax(root->left);
+    pair<int, int> rightAns = getMinAndMax(root->right);
 
-    // finding the maximum element around
-    if (root->data > root->left->data)
-    {
-        if (root->data > root->right->data)
-        {
-            max = root->data;
-        }
-        else
-        {
-            max = root->right->data;
-        }
-    }
-    else
-    {
-        if (root->left->data > root->right->data)
-        {
-            max = root->left->data;
-        }
-        else
-        {
-            max = root->right->data;
-        }
-    }
+    int minimum = min(root->data, min(leftAns.first, rightAns.first));
+    int maximum = max(root->data, max(leftAns.second, rightAns.second));
 
-    // finding the minimum element around
-    if (root->data < root->left->data)
-    {
-        if (root->data < root->right->data)
-        {
-            min = root->data;
-        }
-        else
-        {
-            min = root->right->data;
-        }
-    }
-    else
-    {
-        if (root->left->data < root->right->data)
-        {
-            min = root->left->data;
-        }
-        else
-        {
-            min = root->right->data;
-        }
-    }
+    pair<int, int> p;
+    p.first = minimum;
+    p.second = maximum;
 
-    return make_pair(min, max);
+    return p;
 }
 
 int main()
