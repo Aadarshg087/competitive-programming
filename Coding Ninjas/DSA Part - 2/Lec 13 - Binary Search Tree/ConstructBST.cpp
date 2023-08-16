@@ -32,13 +32,18 @@ BinaryTreeNode<int> *constructTree(int *input, int n)
     {
         return NULL;
     }
-    if (n % 2 == 0)
+
+    if (n == 1)
+    {
+        mid = 0;
+    }
+    else if (n % 2 == 0)
+    {
+        mid = (n / 2) - 1;
+    }
+    else if (n % 2 == 1)
     {
         mid = n / 2;
-    }
-    else
-    {
-        mid = (n / 2) + 1;
     }
 
     BinaryTreeNode<int> *root = new BinaryTreeNode<int>(input[mid]);
@@ -48,7 +53,7 @@ BinaryTreeNode<int> *constructTree(int *input, int n)
         return root;
     }
 
-    BinaryTreeNode<int> *leftSubTree = constructTree(input, mid);
+    BinaryTreeNode<int> *leftSubTree = constructTree(input, mid - 1);
     BinaryTreeNode<int> *rightSubTree = constructTree(input + mid + 1, n - (mid + 1));
 
     root->left = leftSubTree;
