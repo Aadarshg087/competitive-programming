@@ -8,33 +8,30 @@ class BST
     BinaryTreeNode<int> *root;
 
 public:
-    bool helperHasData(BinaryTreeNode<int> *root, int data)
+    BST()
     {
-        if (root == NULL)
-        {
-            return false;
-        }
-        if (root->data == data)
-        {
-            return true;
-        }
-        return helperHasData(root->left, data) || helperHasData(root->right, data);
+        root = NULL;
     }
 
     BinaryTreeNode<int> *helperInsert(BinaryTreeNode<int> *root, int data)
     {
-        cout << "Insert: " << endl;
+        cout << "Helper inserts is called" << endl;
         if (root == NULL)
         {
-            BinaryTreeNode<int> *node = new BinaryTreeNode<int>(data);
-            return node;
+            cout << "NUll root is called" << endl;
+            BinaryTreeNode<int> *Node = new BinaryTreeNode<int>(data);
+            root = Node;
+            cout << root->data << endl;
+            // cout << data << endl;
+            // cout << Node->data << endl;
+            return root;
         }
         if (root->data >= data)
         {
             BinaryTreeNode<int> *temp = helperInsert(root->left, data);
             root->left = temp;
         }
-        else if (root->data < data)
+        else
         {
             BinaryTreeNode<int> *temp = helperInsert(root->right, data);
             root->right = temp;
@@ -45,53 +42,37 @@ public:
 
     void helperPrint(BinaryTreeNode<int> *root)
     {
+        cout << "helper print is called" << endl;
         if (root == NULL)
         {
+            cout << "hello is called" << endl;
             return;
         }
-        cout << "N:" << root->data << "L:" << root->left->data << ", "
-             << "R:" << root->right->data << endl;
-
+        cout << root->data << " " << root->left << " " << root->right << endl;
         helperPrint(root->left);
         helperPrint(root->right);
     }
 
-    // public:
-    BST()
-    {
-        root = NULL;
-    }
-    bool hasData(int data)
-    {
-        return helperHasData(root, data);
-    }
-
     void insert(int data)
     {
-        cout << "Helo is called" << endl;
-        cout << "insert public: " << root->data << data << endl;
+        cout << "Main Insert is called" << endl;
         helperInsert(root, data);
     }
 
     void print()
     {
         cout << "main print is called" << endl;
+        
         helperPrint(root);
     }
 };
 
 int main()
 {
-
-    BST *b = new BST();
+    BST b;
     cout << "main is called" << endl;
-    b->insert(4);
-    cout << "after 1 insert is called" << endl;
-    b->insert(5);
-    b->insert(1);
-    b->insert(2);
-
-    b->print();
+    b.insert(10);
+    b.print();
 
     return 0;
 }
