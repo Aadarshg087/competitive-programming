@@ -6,10 +6,6 @@ class PriorityQueue
 {
     vector<int> pq;
 
-    PriorityQueue()
-    {
-    }
-
 public:
     bool isEmpty()
     {
@@ -55,23 +51,50 @@ public:
         }
     }
 
-    void removeMin()
+    int removeMin()
     {
+
         int lastElementIndex = pq.size() - 1;
-        int ansIndex = 0;
         int ans = pq[0];
-        int temp = pq[ansIndex];
-        pq[ansIndex] = pq[lastElementIndex];
+        int temp = pq[0];
+        pq[0] = pq[lastElementIndex];
         pq[lastElementIndex] = temp;
         pq.pop_back();
+        int parentIndex = 0;
 
-        int leftChildIndex = (2 * ansIndex) + 1;
-        int rightChildIndex = (2 * ansIndex) + 2;
-        int parentIndex = lastElementIndex;
-        if (pq[parentIndex] > pq[leftChildIndex] || pq[parentIndex] > pq[rightChildIndex])
+        while (parentIndex < pq.size() - 1)
         {
-            
+            int leftChildIndex = (2 * parentIndex) + 1;
+            int rightChildIndex = (2 * parentIndex) + 2;
+            if (pq[parentIndex] < pq[leftChildIndex] && pq[parentIndex] < pq[rightChildIndex])
+            {
+                break;
+            }
+                else if (rightChildIndex > pq.size() - 1 && pq[parentIndex] > pq[leftChildIndex])
+                {
+                    int temp = pq[parentIndex];
+                    pq[parentIndex] = pq[leftChildIndex];
+                    pq[leftChildIndex] = temp;
+                    parentIndex = leftChildIndex;
+                }
+            else
+            {
+                if (pq[leftChildIndex] < pq[rightChildIndex])
+                {
+                    int temp = pq[parentIndex];
+                    pq[parentIndex] = pq[leftChildIndex];
+                    pq[leftChildIndex] = temp;
+                    parentIndex = leftChildIndex;
+                }
+                else if (pq[rightChildIndex] < pq[leftChildIndex])
+                {
+                    int temp = pq[parentIndex];
+                    pq[parentIndex] = pq[rightChildIndex];
+                    pq[rightChildIndex] = temp;
+                    parentIndex = rightChildIndex;
+                }
+            }
         }
-        int minElementIndex = min(pq[rightChildIndex], pq[leftChildIndex]);
+        return ans;
     }
 };
