@@ -70,13 +70,13 @@ public:
             {
                 break;
             }
-                else if (rightChildIndex > pq.size() - 1 && pq[parentIndex] > pq[leftChildIndex])
-                {
-                    int temp = pq[parentIndex];
-                    pq[parentIndex] = pq[leftChildIndex];
-                    pq[leftChildIndex] = temp;
-                    parentIndex = leftChildIndex;
-                }
+            else if (rightChildIndex > pq.size() - 1 && pq[parentIndex] > pq[leftChildIndex])
+            {
+                int temp = pq[parentIndex];
+                pq[parentIndex] = pq[leftChildIndex];
+                pq[leftChildIndex] = temp;
+                parentIndex = leftChildIndex;
+            }
             else
             {
                 if (pq[leftChildIndex] < pq[rightChildIndex])
@@ -96,5 +96,14 @@ public:
             }
         }
         return ans;
+    }
+
+    void printVector()
+    {
+        for (int i = 0; i < pq.size(); i++)
+        {
+            cout << pq[i] << " ";
+        }
+        cout << endl;
     }
 };
