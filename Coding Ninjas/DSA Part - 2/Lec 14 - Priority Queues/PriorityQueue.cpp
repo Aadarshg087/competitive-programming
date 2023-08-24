@@ -80,7 +80,7 @@ public:
         return ans;
     }
 
-    void PrintVector()
+    void printVector()
     {
 
         for (int i = 0; i < pq.size(); i++)
