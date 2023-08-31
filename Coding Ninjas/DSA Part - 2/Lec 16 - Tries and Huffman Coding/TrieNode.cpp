@@ -4,12 +4,12 @@ using namespace std;
 
 class Trie
 {
-    TrieNode *root;
+    TrieNode root;
 
 public:
     Trie()
     {
-        root = new TrieNode('\0');
+        // root = new TrieNode('\0');
     }
 
     void insertWord(TrieNode *root, string word)
