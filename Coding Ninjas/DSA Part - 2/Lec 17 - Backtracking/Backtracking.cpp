@@ -2,9 +2,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class TreeNode{
+class TreeNode
+{
     T data;
-}
+};
 
 int main()
 {
