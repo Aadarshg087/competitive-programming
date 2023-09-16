@@ -17,30 +17,39 @@ public:
         right = NULL;
         left = NULL;
     }
+
+    ~BinaryTreeNode()
+    {
+        delete right;
+        delete left;
+    }
 };
 
-void insertNode(BinaryTreeNode<int> *root, int data)
+BinaryTreeNode<int> *insertNode(BinaryTreeNode<int> *root, int data)
 {
-    BinaryTreeNode<int> *newNode = new BinaryTreeNode<int>(data);
     if (root == NULL)
     {
-        root = newNode;
-        return;
+        BinaryTreeNode<int> *node = new BinaryTreeNode<int>(data);
+        return node;
     }
-    else if (newNode->data > root->data)
+
+    if (root->data >= data)
     {
-        insertNode(root->right, data);
-        root->right = NULL;
+        BinaryTreeNode<int> *temp = insertNode(root->left, data);
+        root->right = temp;
     }
-    else if (newNode->data < root->data)
+    else if (root->data < data)
     {
-        insertNode(root->left, data);
-        root->left = NULL;
+        BinaryTreeNode<int> *temp = insertNode(root->right, data);
+        root->left = temp;
     }
+
+    return root;
 }
 
 void printTree(BinaryTreeNode<int> *root)
 {
+    cout << root->data << endl;
     if (root == NULL)
     {
         return;
@@ -55,14 +64,12 @@ void printTree(BinaryTreeNode<int> *root)
 int main()
 {
     BinaryTreeNode<int> *root = NULL;
-    insertNode(root, 1);
-    insertNode(root, 2);
-    insertNode(root, 3);
-    insertNode(root, 4);
-    insertNode(root, 5);
+    root = insertNode(root, 1);
+    root = insertNode(root, 2);
 
-    cout << root->data << endl;
-    cout << "hello world" << endl;
+    root = insertNode(root, 3);
+    root = insertNode(root, 4);
+    root = insertNode(root, 5);
 
     printTree(root);
 
