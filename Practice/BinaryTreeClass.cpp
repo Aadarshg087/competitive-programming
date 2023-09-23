@@ -70,6 +70,6 @@ int main()
     root = insertNode(root, 5);
 
     printTree(root);
-    
+
     return 0;
 }
