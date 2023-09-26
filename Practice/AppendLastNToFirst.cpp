@@ -65,9 +65,6 @@ void printLinkedList(Node *root)
     cout << endl;
 }
 
-// 1 2 3 4 5
-// 2
-
 Node *appendLastNtoFirst(Node *root, int x)
 {
     Node *newRoot = root;
@@ -78,7 +75,6 @@ Node *appendLastNtoFirst(Node *root, int x)
         temp = temp->next;
         if (count = x - 1)
         {
-            
         }
         count++;
     }
