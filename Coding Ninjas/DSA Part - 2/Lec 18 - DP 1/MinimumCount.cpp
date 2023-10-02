@@ -2,16 +2,30 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+int minCount2_helper(int n, int *arr)
+{
+    if (arr[n] != -1)
+    {
+        return arr[n];
+    }
+    
+
+    int ans = 1 + minCount2_helper(n - num, arr);
+}
+
 int minCount2(int n)
 {
-    if (n == 1 || n == 2 || n == 3)
+    int *arr = new int[n + 1];
+    for (int i = 0; i < n + 1; i++)
     {
-        
+        arr[i] = -1;
     }
-    else if (n == 0)
-    {
+    int arr[0] = 0;
+    int arr[1] = 1;
+    int arr[2] = 2;
+    int arr[3] = 3;
 
-    }
+    return minCount2(int n, arr);
 }
 
 int minCount(int n)
