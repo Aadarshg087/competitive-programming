@@ -4,7 +4,7 @@ using namespace std;
 
 void printArray(int arr[][5], int m, int n)
 {
-    // We sent the total number of columns to navigate in the 1D array that stored in the memory (index = Total columns*i + j)
+    // We sent the total number of columns to navigate in the 1D array that stored in the memory (index = Total columns*i + j)  
     cout << "Printing from the function: " << endl;
     for (int i = 0; i < m; i++)
     {

@@ -14,6 +14,13 @@ int minSteps2_helper(int n, int *ans)
         return ans[n];
     }
 
+    cout << n << " ";
+    for (int i = 0; i < n + 1; i++)
+    {
+        cout << ans[n] << " ";
+    }
+    cout << endl;
+
     int count3 = INT_MAX, count2 = INT_MAX, count1 = INT_MAX;
     if (n % 3 == 0)
     {

@@ -1,8 +1,9 @@
 #include <iostream>
 #include <bits/stdc++.h>
+#include <queue>
 using namespace std;
 
-int MinCost(int n)
+vector<int> sortedSquare(vector<int> &nums)
 {
     
 }
