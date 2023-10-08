@@ -18,11 +18,10 @@ public:
 
 BinaryTreeNode *insertNode(BinaryTreeNode *root, int data)
 {
-    BinaryTreeNode *node = new BinaryTreeNode(data);
     if (root == NULL)
     {
-        root = node;
-        return root;
+        BinaryTreeNode *node = new BinaryTreeNode(data);
+        return node;
     }
     if (root->data < data)
     {
