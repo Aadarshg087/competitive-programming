@@ -4,31 +4,44 @@ using namespace std;
 
 int doUnion(int *arr, int n, int *brr, int m)
 {
-    int i = 0;
-    int j = 0;
-    int count = 0;
-    while (i < n && j < m)
+    int c[m + n + 1];
+    for (int i = 0; i < n; i++)
     {
-        if (arr[i] == brr[j])
+        c[i] = arr[i];
+    }
+
+    int j = 0;
+    for (int i = n; i < m + n; i++)
+    {
+        c[i] = brr[j++];
+    }
+
+    sort(c, c + n + m);
+    int count = 1;
+    for (int i = 1; i < n + m; i++)
+    {
+        if (c[i] != c[i - 1])
         {
             count++;
         }
-        else
-        {
-            count += 2;
-        }
-        i++;
-        j++;
-    }
-    if (j >= m)
-    {
-        count = count + (n - i);
-    }
-    if (i >= n)
-    {
-        count = count + (m - j);
     }
     return count;
+}
+
+int doUnion(int *arr, int n, int *brr, int m)
+{
+    unordered_set<int> s;
+    for (int i = 0; i < n; i++)
+    {
+        s.insert(arr[i]);
+    }
+
+    for (int i = 0; i < m; i++)
+    {
+        s.insert(brr[i]);
+    }
+
+    return s.size();
 }
 
 int main()
