@@ -3,7 +3,7 @@
 using namespace std;
 
 // Memoization
-int minCostPath_helper2(int **input, int m, int n, int i, int j, int **output)
+int minCostPath_Mem(int **input, int m, int n, int i, int j, int **output)
 {
     // Base Case
     if (i == m - 1 && j == n - 1)
@@ -23,9 +23,9 @@ int minCostPath_helper2(int **input, int m, int n, int i, int j, int **output)
     }
 
     // Recursive Calls
-    int x = minCostPath_helper(input, m, n, i, j + 1);
-    int y = minCostPath_helper(input, m, n, i + 1, j + 1);
-    int z = minCostPath_helper(input, m, n, i + 1, j);
+    int x = minCostPath_Mem(input, m, n, i, j + 1, output);
+    int y = minCostPath_Mem(input, m, n, i + 1, j + 1, output);
+    int z = minCostPath_Mem(input, m, n, i + 1, j, output);
 
     // Small calculation
     int ans = min(x, min(y, z)) + input[i][j];
@@ -33,7 +33,7 @@ int minCostPath_helper2(int **input, int m, int n, int i, int j, int **output)
     // Saving the ans for future use
     output[i][j] = ans;
 
-    return ans;
+    return ans; 
 }
 
 // Brute Force Approach - O(3^n)
@@ -62,7 +62,7 @@ int minCostPath_helper(int **input, int m, int n, int i, int j)
 
 int minCostPath(int **input, int m, int n)
 {
-    minCostPath_helper(input, m, n, 0, 0);
+    // minCostPath_helper(input, m, n, 0, 0);
 }
 
 int main()
