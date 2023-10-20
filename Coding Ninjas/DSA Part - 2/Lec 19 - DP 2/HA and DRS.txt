@@ -1,0 +1,67 @@
+In type I hyperviser, we can enable high level services
+
+High Availability - Up time of a server
+Dynamically Resource Scheduling - Allocating and managing the resources 
+
+---------------------------
+1 Select the region machine(COMP1)
+2 Go to configure settings
+3 Go to vSphere Availability
+4 Click edit and toggle
+
+5 Turn on vSphere HA in order to increase the up time of the server/cluster machines (in configure settings-> services-> vSphere availability)
+
+6 Go to VM Monitoring  -> select VM and Application Monitoring
+
+7 Go to Admission contorl(Qulity of the services) -> Define host failover capacity by - change it to cluster resource percentage
+    turn on override, reserved failover CPU capacity and give 80% and 60 for the next one(reserved memory capacity)
+8 Go to Heartbeat datastores
+   choose automatically select datastores(frist one)
+9 Click Done
+------------ Till now we have create and env where resorces can be allocated 24/7 ---------------------
+Now we have to enable the servies
+Here we use DRS(Dynamic Resource Scheduling)
+
+1 vShpere DRS turn on the property
+2 choose fully automatic - both the services are now turned on 
+
+now resource will managed and allocated dynamically
+
+-------------- Alarms (Notification) ---------------------------------
+1 Basic Region
+2 Action -> alarms
+3 Give alarm name and its target type (keep it at data center(contains all))
+4 Set the if condition to the cannot add host and then condition show as ciritcal 
+  check the email box and fill the email id and next and complete
+
+
+
+------------ Tagging and Searching ------------------------
+To make the searching of a particular resoucrce easier. A tag can contain multiple catogories
+1 Create a catogroy first. We need a pool to tag. 
+2 Select a VM and create a tag using that and choose VM for the type. Give name to the tag
+3 After the creating, go to the searching bar and search with the tag name.
+4 You'll see the selected VMs in it and can add more.
+
+5 regionA01 -> actions -> tags and custom attributes
+Fill the name, category/group
+
+
+----------- Creating Switches --------------------------
+1 Select Host
+2 go to configure
+3 networking 
+4 virtual switches(there is default swetc switch0)
+5 Choose vm port group for a standard switch
+6 Either you create a new swtich or create a port in existing switch (Create a new one)
+7 Choose vmnic and click on move down(blue button) and click next, done
+Till now we have created a virtual switch which is not connected to any machine
+
+1 Now go the VM that you are sharing the common host
+2 Select that VM and go to action and edit settings and go to netwerk adaptor and browse and choose the newly created Switch
+3 Now, go to the host and virtual switch settings and scroll down and expland the switch and there you can see the connected VMs.
+
+
+
+Final Exam - they might ask manual allocation or partial. they might give percentage do accordingly. 
+

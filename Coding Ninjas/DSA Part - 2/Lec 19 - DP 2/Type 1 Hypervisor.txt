@@ -1,0 +1,33 @@
+Type 1 Hypervisor -> Directly running on the hardware. No HOST OS in betweeen(Either run on the machine or run on the browser which allows you to do stuff)
+Link - https://labs.hol.vmware.com/HOL/catalogs/catalog/1936
+	
+Type 2 Hypervisor -> Running on the HOST OS
+
+ -------------------
+1. Click on the link
+2. Register or log in(Username - Aadarsh.12116817@lpu.in Password - saved already)
+3. Open Firefox browser in the ubunto that just opened
+4. login with adminisatration given credentials. Just login with already filled details
+
+--------------------- Now you will be in VMs -----------------
+1. One the left, there are cluster of hardware machines something like esx01a or esx02a, and below that there will be OS machines
+2. Create the new VM using the Actions Button and give a name to the VM
+3. Choose the ESX01a or any one of them to run on the harware
+4. Now, choosing the file system NFS(for less then 5GB) and NTFS (For greater than that)
+5. Choose comaptibility with ESXi 8.0 or later
+6. Choose guest OS Family as Linux and OS Version as VMware Photon OS
+7. Set the New hard disk size to 3 GB as we choose the NFS earlier
+8. Choose CD/DVD Drive - Content Library ISO File and choose the only option in the pop up
+9. Finish
+
+----------------------
+Click on the VM bar after choosing the Hardware machines.
+It will show the OS running on that machine. In either one of them, your created machine will be there
+
+- Come to dashboard and select on any one of the machine and click on run on browser. It will the run the machine as usual.
+
+- Right click on the machine and click on the clone and select clone to virtual machine. Fill the details similar to the previous processes(choose NFS and in any other cases don't change much) and click finish.
+-  
+
+
+

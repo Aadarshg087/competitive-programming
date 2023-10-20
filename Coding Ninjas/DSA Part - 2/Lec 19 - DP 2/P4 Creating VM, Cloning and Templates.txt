@@ -1,0 +1,72 @@
+-------- Creating Clones of the Virtual Machines -------------------
+Select the Virtual Machine
+Go to Actions
+Provide the normall detiails and select NFS Datastore types
+and Done
+
+
+----------------------Snapshots-----------------------------
+1. There is a icon beside the actions button or right click VM machine and click snapshot
+2. Give name and description and click create
+3. To check
+4. Select the VM and go to the tab of snapshots.
+5. Here you can see the snapshots created for that virtual machine
+
+
+
+-------------- Creating a template ---------------------------
+
+Template -> non-exectabele. We have to convert it into the machine in order to execute
+
+RIght cliekc and clone to tempplate
+Gvive name and select the machine
+select the sotrage NFS
+Finish
+
+Template will note show in Machines area
+select a machine and go to VM Templates
+there you will be able to see
+you can convert the template to machine to execute
+
+
+RIght click and convert ot Vritual mahcine. It will use the golden copy(original) and convert it into VM. 
+select the host machine
+and complete the process.
+Since, we use the golden copy. So, now template wont show up in the VM Templates since it has been converted to VM.
+If you chose the create New VM from template. Then, it would copy the template and convert it into the VM leaving the template as it is
+
+
+
+
+Question - Create the template of the clone of tiny linux 2
+
+
+
+----------- Migrate VMs to one host to another --------------------------
+Select the VM (check its current host)
+Right click and select migrate
+Choose Change compute resource only (we want ot change the host)
+Select the other host where you wamma change to
+
+Choose vMotion with High Priority(Same resources should be availabe int other machine readily and immediately)
+other option will also change the resource but not readily
+
+Click done or finish
+
+Now, check to confirm
+
+
+----------- Hoe to change the storage from nfs to vmfs or viceversa --------------------
+Select migrate and choose to change the storage.
+Other steps are pretty normal and similar. Choose the other storage to change
+Dont change the netwrks and keep it at high priority
+
+
+Question - Create one virtual machine with VMFS Storage on Host 2 and migrate it to HOST 1 with NFS Storage policy.
+
+
+
+
+
+
+
