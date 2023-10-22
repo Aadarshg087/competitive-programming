@@ -27,7 +27,7 @@ public:
 
 BinaryTreeNode<int> *insertNode(BinaryTreeNode<int> *root, int data)
 {
-    if (root == NULL)
+    if (root == NULL)   
     {
         BinaryTreeNode<int> *node = new BinaryTreeNode<int>(data);
         return node;
