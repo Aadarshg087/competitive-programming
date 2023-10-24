@@ -15,8 +15,7 @@ int main()
         {
             cin >> arr[i];
         }
-        if(sprays_to_kill > )
-
+        if (sprays_to_kill >)
     }
 
     return 0;

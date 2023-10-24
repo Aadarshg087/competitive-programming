@@ -2,6 +2,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
+//  Done
 void segregateElements(int *arr, int n)
 {
     int *arr2 = new int[n];
@@ -11,7 +13,7 @@ void segregateElements(int *arr, int n)
         if (arr[i] > 0)
         {
             arr2[j] = arr[i];
-            arr[i] = INT_MAX;
+            // arr[i] = INT_MAX;
             j++;
         }
     }
@@ -25,12 +27,10 @@ void segregateElements(int *arr, int n)
         }
     }
 
-    // Printing the array
     for (int i = 0; i < n; i++)
     {
-        cout << arr2[i] << " ";
+        arr[i] = arr2[i];
     }
-    cout << endl;
 }
 
 int main()
@@ -44,6 +44,12 @@ int main()
     }
 
     segregateElements(arr, n);
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
 
     delete[] arr;
 

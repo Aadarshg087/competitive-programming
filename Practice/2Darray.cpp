@@ -19,7 +19,6 @@ int main()
     int n, m;
     cin >> n >> m;
     int **arr = new int *[n];
-    
 
     return 0;
 }

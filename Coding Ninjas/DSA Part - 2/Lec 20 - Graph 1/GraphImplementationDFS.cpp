@@ -27,7 +27,7 @@ void print(int **edges, int n, int sv, bool *visited)
         {
             if (visited[i] == true)
                 continue;
-            print(edges, n, i, visited)
+            print(edges, n, i, visited);
         }
     }
 }
@@ -60,7 +60,7 @@ int main()
     bool *visited = new bool[n];
     for (int i = 0; i < n; i++)
     {
-        visisted[i] = false;
+        visited[i] = false;
     }
 
     print(edges, n, 0, visited);
