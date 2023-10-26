@@ -4,24 +4,6 @@ using namespace std;
 
 long long maxSubArraySum(int *arr, int n)
 {
-    long long max = INT_MIN;
-    long long sum = 0;
-    for (int i = 0; i < n; i++)
-    {
-        sum = 0;
-        for (int j = i; j < n; j++)
-        {
-            sum += arr[i];
-        }
-
-        if (max < sum)
-            max = sum;
-    }
-    return max;
-}
-
-long long maxSubArraySum(int *arr, int n)
-{
     long long sum = 0;
     long long maxi = arr[0];
     for (int i = 0; i < n; i++)
