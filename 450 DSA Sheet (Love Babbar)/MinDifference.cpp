@@ -2,7 +2,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-
 // Incomplete
 int getMinDiff(int arr[], int n, int k)
 {
@@ -12,21 +11,16 @@ int getMinDiff(int arr[], int n, int k)
     }
 
     sort(arr, arr + n);
-    int maxNum;
-    int minNum;
 
-    int diff = arr[n - 1] - arr[0];
-    int diff2;
-    for (int i = 1; i < n - 1; i++)
+    int ans = arr[n - 1] - arr[0];
+    int smallest = arr[0] + k;
+    int largest = arr[n - 1] - k;
+    int minNum, maxNum;
+
+    for (int i = 0; i < n; i++)
     {
-        if (arr[i] - k < 0)
-            continue;
-        maxNum = max(arr[n - 1], arr[i] + k);
-        minNum = min(arr[0], arr[i] - k);
-        diff2 = maxNum - minNum;
-    }
-
-    return diff2;
+        minNum = min(smallest, arr[i] - k);
+        }
 }
 
 int main()

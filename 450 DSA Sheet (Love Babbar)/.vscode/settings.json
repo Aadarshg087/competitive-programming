@@ -1,6 +1,10 @@
 {
   "C_Cpp.errorSquiggles": "enabled",
   "files.associations": {
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "chrono": "cpp",
+    "random": "cpp",
+    "limits": "cpp",
+    "valarray": "cpp"
   }
 }
