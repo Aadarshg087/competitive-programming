@@ -4,14 +4,7 @@ using namespace std;
 
 void print(int **edges, int v)
 {
-    for (int i = 0; i < v; i++)
-    {
-        for (int j = 0; j < v; j++)
-        {
-            cout << edges[i][j] << " ";
-        }
-        cout << endl;
-    }
+   
 }
 
 int main()
