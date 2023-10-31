@@ -3,6 +3,9 @@
 using namespace std;
 
 // Incomplete
+
+
+
 int getMinDiff(int arr[], int n, int k)
 {
     if (n == 1)
