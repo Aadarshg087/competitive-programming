@@ -2,46 +2,63 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void print(int **edges, int v)
+void printBFS(int **edges, int n, int sv, bool *visited)
 {
-   
+    queue<int> pendingVertices;
+    pendingVertices.push(sv);
+    visited[sv] = true;
+    while (!pendingVertices.empty())
+    {
+        int currentVertex = pendingVertices.front();
+        cout << currentVertex << " ";
+        pendingVertices.pop();
+        for (int i = 0; i < n; i++)
+        {
+            if (edges[currentVertex][i] == 1 && !visited[i])
+            {
+                pendingVertices.push(i);
+                visited[i] = true;
+            }
+        }
+    }
 }
 
 int main()
 {
-    int v;
-    cin >> v;
-
-    int **edges = new int *[v];
-    for (int i = 0; i < v; i++)
+    int n, e;
+    cin >> n >> e;
+    int **edges = new int *[n];
+    for (int i = 0; i < n; i++)
     {
-        edges[i] = new int[v];
-    }
-
-    for (int i = 0; i < v; i++)
-    {
-        for (int j = 0; j < v; j++)
+        edges[i] = new int[n];
+        for (int j = 0; j < n; j++)
         {
             edges[i][j] = 0;
         }
     }
 
-    print(edges, v);
-
-    cout << "Enter the number of edges: ";
-    int edge;
-    cin >> edge;
-    for (int i = 0; i < edge; i++)
+    for (int i = 0; i < e; i++)
     {
-        int first, second;
-        cin >> first >> second;
-        edges[first][second] = 1;
-        edges[second][first] = 1;
+        int f, s;
+        cin >> f >> s;
+        edges[f][s] = 1;
+        edges[s][f] = 1;
     }
 
-    print(edges, v);
+    bool *visited = new bool[n];
+    for (int i = 0; i < n; i++)
+    {
+        visited[i] = false;
+    }
 
-    int *visited = new int[v];
+    printBFS(edges, n, 0, visited);
+
+    for (int i = 0; i < n; i++)
+    {
+        delete[] edges[i];
+    }
+    delete[] edges;
+    delete[] visited;
 
     return 0;
 }

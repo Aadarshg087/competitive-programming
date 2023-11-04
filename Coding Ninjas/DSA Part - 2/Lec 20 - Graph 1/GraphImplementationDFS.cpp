@@ -2,40 +2,24 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void printArray(int **edges, int n)
+void printDFS(int **edges, int n, int sv, bool *visited)
 {
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            cout << edges[i][j] << " ";
-        }
-        cout << endl;
-    }
-}
-
-void print(int **edges, int n, int sv, bool *visited)
-{
-    cout << edges[sv] << " ";
+    cout << sv << endl;
     visited[sv] = true;
     for (int i = 0; i < n; i++)
     {
-        if (i == sv)
-            continue;
-
         if (edges[sv][i] == 1)
         {
-            if (visited[i] == true)
+            if (visited[i])
                 continue;
-            print(edges, n, i, visited);
+            printDFS(edges, n, i, visited);
         }
     }
 }
 
 int main()
 {
-    int n;
-    int e;
+    int e, n;
     cin >> n >> e;
     int **edges = new int *[n];
     for (int i = 0; i < n; i++)
@@ -46,12 +30,10 @@ int main()
             edges[i][j] = 0;
         }
     }
-    cout << "Printing the empty array: " << endl;
-    printArray(edges, n);
 
+    int f, s;
     for (int i = 0; i < e; i++)
     {
-        int f, s;
         cin >> f >> s;
         edges[f][s] = 1;
         edges[s][f] = 1;
@@ -63,7 +45,15 @@ int main()
         visited[i] = false;
     }
 
-    print(edges, n, 0, visited);
+    printDFS(edges, n, 0, visited);
+
+    delete[] visited;
+
+    for (int i = 0; i < n; i++)
+    {
+        delete[] edges[i];
+    }
+    delete edges;
 
     return 0;
 }
