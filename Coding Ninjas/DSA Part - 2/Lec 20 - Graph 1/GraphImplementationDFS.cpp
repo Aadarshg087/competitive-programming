@@ -8,10 +8,10 @@ void printDFS(int **edges, int n, int sv, bool *visited)
     visited[sv] = true;
     for (int i = 0; i < n; i++)
     {
-        if (edges[sv][i] == 1)
+        if (edges[sv][i] == 1 && !visited[i])
         {
-            if (visited[i])
-                continue;
+            // if (visited[i])
+            //     continue;
             printDFS(edges, n, i, visited);
         }
     }

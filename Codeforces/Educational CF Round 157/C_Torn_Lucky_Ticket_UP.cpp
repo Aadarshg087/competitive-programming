@@ -1,8 +1,9 @@
 #include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
+// Concept Learnt -> Use parenthesis while using bitwise operators.
 
-// Incomplete
+// Time Limit Exceeded Solution
 
 int main()
 {
@@ -17,11 +18,11 @@ int main()
     for (int i = 0; i < n; i++)
     {
         // For even size
-        if (s[i].size() & 1 == 0)
+        if ((s[i].size() & 1) == 0)
         {
             for (int j = 0; j < n; j++)
             {
-                if (s[j].size() & 1 == 0)
+                if ((s[j].size() & 1) == 0)
                 {
                     string str = s[i] + s[j];
                     string temp1 = str.substr(0, (str.size() / 2));
@@ -46,7 +47,6 @@ int main()
                     }
                     if (ans1 == ans2)
                     {
-                        // cout << temp1 << " " << temp2 << endl;
                         count++;
                     }
                 }
@@ -56,14 +56,13 @@ int main()
         { // For odd size
             for (int j = 0; j < n; j++)
             {
-                if (s[j].size() & 1 == 1)
+                if ((s[j].size() & 1) == 1)
                 {
                     string str = s[i] + s[j];
                     string temp1 = str.substr(0, (str.size() / 2));
                     string temp2 = str.substr((str.size() / 2));
                     int s1 = temp1.size();
                     int s2 = temp2.size();
-                    // cout << temp1 << " " << temp2 << endl;
                     int num1 = stoi(temp1);
                     int num2 = stoi(temp2);
                     int ans1 = 0;
@@ -82,7 +81,6 @@ int main()
                     }
                     if (ans1 == ans2)
                     {
-                        // cout << temp1 << " " << temp2 << endl;
                         count++;
                     }
                 }
