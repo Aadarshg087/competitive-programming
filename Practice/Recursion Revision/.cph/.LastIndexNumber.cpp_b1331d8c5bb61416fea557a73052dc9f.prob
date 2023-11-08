@@ -1,0 +1,1 @@
+{"name":"Local: LastIndexNumber","url":"c:\\Users\\aadar\\Desktop\\Recursion Revision\\LastIndexNumber.cpp","tests":[{"id":1683133527213,"input":"4\n9 8 10 8\n8","output":"3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\aadar\\Desktop\\Recursion Revision\\LastIndexNumber.cpp","group":"local","local":true}

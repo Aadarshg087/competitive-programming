@@ -1,0 +1,1 @@
+{"name":"Local: checkAB","url":"c:\\Users\\aadar\\Desktop\\Recursion Revision\\New\\checkAB.cpp","tests":[{"id":1683520945971,"input":"ababab\nbabab","output":"true\nfalse"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\aadar\\Desktop\\Recursion Revision\\New\\checkAB.cpp","group":"local","local":true}

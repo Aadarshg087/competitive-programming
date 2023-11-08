@@ -4,21 +4,26 @@ using namespace std;
 
 int minJumps(int *arr, int n)
 {
-    int ans = 0;
     int i = 0;
-    while (i < n - 1)
+    int count = 0;
+    while (i < n)
     {
-        if (arr[i] == 0)
+        int maxLocation = 0;
+        for (int j = i + 1; j <= (i + arr[i]); j++)
         {
-            ans = -1;
+            if (arr[j] > arr[maxLocation])
+            {
+                maxLocation = j;
+            }
+        }
+        i += maxLocation;
+        count++;
+        if (i >= n - 1)
+        {
             break;
         }
-
-        i += arr[i];
-        ans++;
     }
-
-    return ans;
+    return count;
 }
 
 int main()
