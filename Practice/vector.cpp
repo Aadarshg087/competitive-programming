@@ -9,7 +9,7 @@ int main()
     v.push_back(10);
     v.push_back(10);
     v.push_back(10);
-    v.push_back(10);
+    v.push_back(10);    
     v.push_back(10);
     cout << v.size() << endl;
     cout << v.capacity() << endl;
