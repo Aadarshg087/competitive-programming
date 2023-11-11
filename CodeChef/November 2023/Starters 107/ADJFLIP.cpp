@@ -14,9 +14,20 @@ int main()
         int n;
         cin >> n;
         string s;
-        for (int i = 0; i < n; i += 2)
+        cin >> s;
+        stack<char> st;
+        for (int i = 0; i < n; i++)
         {
-                }
+            if (!st.empty() && st.top() == s[i])
+                st.pop();
+            else
+                st.push(s[i]);
+        }
+
+        if (st.size() <= 1)
+            cout << "Yes" << endl;
+        else
+            cout << "No" << endl;
     }
     return 0;
 }
