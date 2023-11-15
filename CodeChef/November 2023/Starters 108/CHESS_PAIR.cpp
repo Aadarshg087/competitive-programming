@@ -7,17 +7,17 @@ using namespace std;
 
 void solve()
 {
-    int n;
-    cin >> n;
-    int *arr = new int[n];
-    for (int i = 0; i < n; i++)
+    int n, rated;
+    cin >> n >> rated;
+    int totalPlayers = 2 * n;
+    int unRated = totalPlayers - rated;
+    if (rated > unRated)
     {
-        cin >> arr[i];
+        cout << rated - unRated << endl;
     }
-    if (n == 2)
+    else
     {
-        cout << "ture" << endl;
-        return;
+        cout << 0 << endl;
     }
 }
 
