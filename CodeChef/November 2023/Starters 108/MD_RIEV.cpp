@@ -28,47 +28,52 @@ pair<bool, int> Palindrome_(int i)
 
 void palindromePrimes(int n)
 {
-    int count = 2;
-    int i = 2;
-    bool isPrime = true;
-    int countEven = 0;
-    int countOdd = 1;
-    while (count <= n)
-    {
-        isPrime = true;
-        if ((i & 1) == 0)
-        {
-            i++;
-            continue;
-        }
+    // int count = 2;
+    // int i = 2;
+    // bool isPrime = true;
+    // int countEven = 0;
+    // int countOdd = 1;
+    // while (count <= n)
+    // {
+    //     isPrime = true;
+    //     if ((i & 1) == 0)
+    //     {
+    //         i++;
+    //         continue;
+    //     }
 
-        for (int j = 2; j <= i / 2; j++)
-        {
-            if (i % j == 0)
-            {
-                isPrime = false;
-                break;
-            }
-        }
-        if (isPrime)
-        {
-            pair<bool, int> isPalindrome = Palindrome_(i);
-            // cout << i << endl;
-            if (isPalindrome.first == true && ((isPalindrome.second & 1) == 0))
-            {
-                countEven++;
-                count++;
-            }
-            else if (isPalindrome.first == true && ((isPalindrome.second & 1) == 1))
-            {
-                countOdd++;
-                count++;
-            }
-        }
-        i++;
-    }
+    //     for (int j = 2; j <= i / 2; j++)
+    //     {
+    //         if (i % j == 0)
+    //         {
+    //             isPrime = false;
+    //             break;
+    //         }
+    //     }
+    //     if (isPrime)
+    //     {
+    //         pair<bool, int> isPalindrome = Palindrome_(i);
+    //         // cout << i << endl;
+    //         if (isPalindrome.first == true && ((isPalindrome.second & 1) == 0))
+    //         {
+    //             countEven++;
+    //             count++;
+    //         }
+    //         else if (isPalindrome.first == true && ((isPalindrome.second & 1) == 1))
+    //         {
+    //             countOdd++;
+    //             count++;
+    //         }
+    //     }
+    //     i++;
+    // }
 
-    cout << countEven << " " << countOdd << endl;
+    // cout << countEven << " " << countOdd << endl;
+
+    if (n <= 4)
+        cout << 0 << " " << n << endl;
+    else
+        cout << 1 << " " << n - 1 << endl;
 }
 
 void solve()
