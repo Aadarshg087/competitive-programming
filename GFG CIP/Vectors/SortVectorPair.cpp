@@ -2,20 +2,19 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-bool sortBySecond(const pair<int, int> &a, const pair<int, int> &b)
+bool sortBySec(const pair<int, int> &a, const pair<int, int> &b)
 {
-    return (a.second < b.second);
+    if (a.second == b.second)
+        return (a.first > b.first);
+    return (a.second > b.second);
 }
 
-void sortBySecond(vector<pair<int, int>> &v)
+vector<pair<int, int>> sortBySecond(vector<pair<int, int>> &v)
 {
     // Your code here
-    sort(v.begin(), v.end(), sortBySecond);
+    sort(v.begin(), v.end(), sortBySec);
 
-    for (int i = 0; i < v.size(); i++)
-    {
-        cout << v[i].first << " " << v[i].second << endl;
-    }
+    return v;
 }
 
 int main()
