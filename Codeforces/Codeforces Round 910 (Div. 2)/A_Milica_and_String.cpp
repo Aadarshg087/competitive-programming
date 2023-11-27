@@ -8,33 +8,33 @@ using namespace std;
 void solve()
 {
     int n, k;
-    cin >> n >> k;
-    char arr[n];
-    int count = 0;
-    for (int i = 0; i < n; i++)
-    {
-        cin >> arr[i];
-        if (arr[i] == 'B')
-            count++;
-    }
-
-    if (count == k)
+    string s;
+    cin >> n >> k >> s;
+    if (count(s.begin(), s.end(), 'B') == k)
     {
         cout << 0 << endl;
         return;
     }
-    int operations = 0;
-    while (count != k)
-    {
-        if (k > count)
-        {
-            
-        }
-        else if (k < count)
-        {
 
+    int totalB = count(s.begin(), s.end(), 'B');
+    int countA = 0;
+    int countB = 0;
+    for (int i = 0; i < n; i++)
+    {
+        countA += (s[i] == 'A');
+        countB += (s[i] == 'B');
+
+        if (k - totalB == countA)
+        {
+            cout << 1 << "\n" << i + 1 << " B\n";
+            break;
         }
-        operations++;
+
+        if (totalB - k == countB)
+        {
+            cout << 1 << "\n" << i + 1 << " A\n";
+            break;
+        }
     }
 }
 
@@ -42,6 +42,7 @@ int main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
+    cout.tie(NULL);
     // solve();
     int t;
     cin >> t;
