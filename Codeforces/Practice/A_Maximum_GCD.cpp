@@ -16,19 +16,24 @@ void solve()
 {
     ll n;
     cin >> n;
-    ll maxGCD = 1;
-    for (int i = n; i >= 2; i--)
-    {
-        for (int j = n; j >= 2; j--)
-        {
-            if (i == j)
-                continue;
-            ll ans = __gcd(i, j);
-            maxGCD = max(maxGCD, ans);
-        }
-    }
+    // ll maxGCD = 1;
+    // for (int i = n; i >= 2; i--)
+    // {
+    //     for (int j = n; j >= 2; j--)
+    //     {
+    //         if (i == j)
+    //             continue;
+    //         ll ans = __gcd(i, j);
+    //         maxGCD = max(maxGCD, ans);
+    //     }
+    // }
 
-    cout << maxGCD << endl;
+    // cout << maxGCD << endl;
+
+    if ((n & 1) == 0)
+        cout << n / 2 << endl;
+    else
+        cout << (n - 1) / 2 << endl;
 }
 
 int main()
