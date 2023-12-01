@@ -7,19 +7,13 @@ using namespace std;
 
 void solve()
 {
-    int n, k;
-    cin >> n >> k;
-    //     cout << 1337 / 67 << endl;
-    //     cout << 1337 % 67 << endl;
-    if (n % 2 == 0)
-    {
-        cout << k % n << endl;
-        return;
-    }
-    else
-    {
-        
-    }
+    int n;
+    // cin >> n;
+    cout << sqrt(35) << endl;
+    // if (n % 2 == 0)
+    // {
+    //     while (n !=)
+    // }
 }
 
 int main()
