@@ -7,36 +7,32 @@ using namespace std;
 //  10
 //  2 6 3 4 7 2 10 3 2 1
 
-int getMinDiff(int arr[], int n, int k)
+int getMinDiff(long long int arr[], int n, int k)
 {
     sort(arr, arr + n);
-
-    int largest = arr[n - 1] - k;
-    int smallest = arr[0] + k;
-    int diff = arr[n - 1] - arr[0];
-
-    for (int i = 0; i < n - 1; i++)
-
+    long long int temp1 = INT_MAX;
+    long long int temp2 = INT_MIN;
+    for (int i = 0; i < n; i++)
     {
-        int minElement = min(smallest, arr[i + 1] - k);
-        int maxElement = max(largest, arr[i] + k);
-
-        if (minElement < 0)
+        temp1 = min(temp1, arr[i] + k);
+        // temp1 = (temp1 < arr[i] + k) ? temp1 : (arr[i] + k);
+        if ((arr[i] - k) < 0)
             continue;
-
-        diff = min(diff, maxElement - minElement);
+        temp2 = max(temp2, arr[i] - k);
+        // temp2 = (temp2 > arr[i] - k) ? temp2 : (arr[i] - k);
     }
+    cout << temp1 << " " << temp2 << endl;
 
-    return diff;
+    return abs(temp2 - temp1);
 }
 
 int main()
 {
-    int k;
+    long long int k;
     cin >> k;
-    int n;
+    long long int n;
     cin >> n;
-    int arr[n];
+    long long int arr[n];
     for (int i = 0; i < n; i++)
     {
         cin >> arr[i];
