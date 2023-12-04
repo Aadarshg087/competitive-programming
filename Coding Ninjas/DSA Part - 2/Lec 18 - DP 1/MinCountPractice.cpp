@@ -2,9 +2,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int minCountMemo(){
-    
-}
 
 int minCount_helper(int n, int *arr)
 {
@@ -15,7 +12,7 @@ int minCount_helper(int n, int *arr)
 
     if (arr[n] != -1)
     {
-        cout << "true" << endl;
+        // cout << "true" << endl;
         return arr[n];
     }
 
