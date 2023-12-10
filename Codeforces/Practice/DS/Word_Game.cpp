@@ -5,17 +5,9 @@ using namespace std;
 // Macros
 #define ll long long int
 
-// void solve1()
-// {
 
-//     string s;
-//     int n;
-//     cin >> n;
-//     cin >> s;
-//     return;
-// }
-
-void solve1()
+// -------------------- Incomplete --------------------------
+void solve()
 {
     int n;
     cin >> n;
@@ -56,43 +48,63 @@ void solve1()
     //     cout << i << " ";
     // }
     // cout << endl;
-
-    for (auto i = s1.begin(); i != s1.end(); i++)
+    auto i = s1.begin();
+    while (i != s1.end())
     {
-        if (s2.find(*i) != s2.end())
+
+        string temp = *i;
+        cout << temp << " ";
+        cout << endl;
+        if (s2.find(temp) != s2.end())
         {
-            if (s3.find(*i) != s3.end())
+            cout << "helo" << endl;
+            if (s3.find(temp) != s3.end())
             {
-                s1.erase(i);
-                s2.erase(i);
-                s3.erase(i);
+                cout << "bye" << endl;
+                s1.erase(temp);
+                s2.erase(temp);
+                s3.erase(temp);
             }
             else
             {
+                cout << "what" << endl;
                 count1++;
                 count2++;
-                s1.erase(i);
-                s2.erase(i);
+                s1.erase(temp);
+                s2.erase(temp);
             }
         }
-        else if (s3.find(*i) != s3.end())
+        else if (s3.find(temp) != s3.end())
         {
-            s1.erase(i);
-            s3.erase(i);
+            cout << "wow" << endl;
+            auto i = s1.erase(temp);
+            auto i = s3.erase(temp);
             count1++;
             count3++;
         }
         else
         {
+            cout << "thank you" << endl;
             count1 += 2;
         }
     }
 
+    for (auto i = s3.begin(); i != s3.end(); i++)
+    {
+        string temp = *i;
+        if (s2.find(temp) != s2.end())
+        {
+            s2.erase(temp);
+            s3.erase(temp);
+            count2++;
+            count3++;
+        }
+    }
+    // count1 += (2 * s1.size());
     count2 += (2 * s2.size());
     count3 += (2 * s3.size());
 
     cout << count1 << " " << count2 << " " << count3 << endl;
-    return;
 }
 
 int main()
@@ -105,7 +117,7 @@ int main()
     cin >> t;
     while (t--)
     {
-        solve1();
+        solve();
     }
     return 0;
 }
