@@ -6,47 +6,53 @@ using namespace std;
 #define ll long long int
 #define endl "\n"
 
-void summation(int arr1[][100], int arr2[][100], int r, int c)
+void summationRec(int **arr1, int **arr2, int r, int c)
 {
+    
+
+}
+void summation(int **arr1, int **arr2, int r, int c)
+{
+    for (int i = 0; i < r; i++)
+    {
+        for (int j = 0; j < c; j++)
+        {
+            cout << arr1[i][j] + arr2[i][j] << " ";
+        }
+        cout << endl;
+    }
 }
 
 void solve()
 {
     int r, c;
     cin >> r >> c;
-    // int arr1[r + 1][c + 1];
-    // for (int i = 1; i <= r; i++)
-    // {
-    //     for (int j = 1; j <= c; j++)
-    //     {
-    //         cin >> arr1[i][j];
-    //     }
-    // }
 
-    // int arr2[r + 1][c + 1];
-    // for (int i = 1; i <= r; i++)
-    // {
-    //     for (int j = 1; j <= c; j++)
-    //     {
-    //         cin >> arr2[i][j];
-    //     }
-    // }
-
-    int *arr1 = new int[(r + 1) * (m + 1)];
-    for (int i = 1; i <= r; i++)
+    int **arr1 = new int *[r];
+    for (int i = 0; i < r; i++)
     {
-        for (int j = 1; j <= c; j++)
+        arr1[i] = new int[c];
+    }
+
+    int **arr2 = new int *[r];
+    for (int i = 0; i < r; i++)
+    {
+        arr2[i] = new int[c];
+    }
+
+    for (int i = 0; i < r; i++)
+    {
+        for (int j = 0; j < c; j++)
         {
             cin >> arr1[i][j];
         }
     }
 
-    int *arr2 = new int[(r + 1) * (m + 1)];
-    for (int i = 1; i <= r; i++)
+    for (int i = 0; i < r; i++)
     {
-        for (int j = 1; j <= c; j++)
+        for (int j = 0; j < c; j++)
         {
-            cin >> arr2[i * j];
+            cin >> arr2[i][j];
         }
     }
 
@@ -58,12 +64,12 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // solve();
-    int t;
-    cin >> t;
-    while (t--)
-    {
-        solve();
-    }
+    solve();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    // {
+    //     solve();
+    // }
     return 0;
 }
