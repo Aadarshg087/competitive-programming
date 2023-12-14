@@ -6,11 +6,30 @@ using namespace std;
 #define ll long long int
 #define endl "\n"
 
-void summationRec(int **arr1, int **arr2, int r, int c)
+// Recursive Approach
+void summationRec(int **arr1, int **arr2, int r, int c, int R, int C)
 {
-    
-
+    if (r == R && c == C)
+    {
+        cout << arr1[r][c] + arr2[r][c];
+        return;
+    }
+    cout << arr1[r][c] + arr2[r][c] << " ";
+    if (c + 1 < C)
+        summationRec(arr1, arr2, r, c + 1, R, C);
+    else
+    {
+        cout << endl;
+        if (r + 1 < R)
+        {
+            r++;
+            c = 0;
+            summationRec(arr1, arr2, r, c, R, C);
+        }
+    }
 }
+
+// Basic For Loop Approach
 void summation(int **arr1, int **arr2, int r, int c)
 {
     for (int i = 0; i < r; i++)
@@ -56,7 +75,8 @@ void solve()
         }
     }
 
-    summation(arr1, arr2, r, c);
+    // summation(arr1, arr2, r, c);
+    summationRec(arr1, arr2, 0, 0, r, c);
 }
 
 int main()

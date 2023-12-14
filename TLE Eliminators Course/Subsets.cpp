@@ -5,7 +5,7 @@ using namespace std;
 // Macros
 #define ll long long int
 
-void printVector(vector<vector<int>> ans)
+void printVector(vector<vector<int>> &ans)
 {
     cout << "[ ";
     for (int i = 0; i < ans.size(); i++)
@@ -23,26 +23,50 @@ void printVector(vector<vector<int>> ans)
     cout << "]";
 }
 
+void helper() {}
+
 vector<vector<int>> subsets(vector<int> &nums)
 {
-    vector<int> v = {};
-    vector<vector<int>> ans;
-    ans.push_back(v);
-    for (int i = 0; i < (int)nums.size(); i++)
+    // ------------ 1st Approach Kinda --------------------------
+    // vector<vector<int>> ans;
+    // for (int i = 0; i < nums.size(); i++)
+    // {
+    //     vector<int> temp;
+    //     temp.push_back(nums[i]);
+    //     ans.push_back(temp);
+    //     for (int j = i + 1; j < nums.size(); j++)
+    //     {
+    //         vector<int> temp1;
+    //         temp1.push_back(nums[i]);
+    //         temp1.push_back(nums[j]);
+    //         ans.push_back(temp);
+    //     }
+    // }
+    // vector<int> temp = {};
+    // ans.push_back(temp);
+    // return ans;
+
+    // -------------------- 2nd Approach ------------------------------
+    if (nums.size() == 0)
     {
-        v.push_back(nums[i]);
-        ans.push_back(v);
-        v.clear();
-        for (int j = i + 1; j < nums.size(); j++)
-        {
-            v.push_back(nums[i]);
-            v.push_back(nums[j]);
-            ans.push_back(v);
-            v.clear();
-        }
+        vector<int> temp(0);
+        vector<vector<int>> ans;
+        ans.push_back(temp);
+        return ans;
     }
-    printVector(ans);
+    vector<int> temp;
+    nums.erase(nums.begin());
+    vector<vector<int>> ans = subsets(nums);
+    for (int i = 0; i < ans.size(); i++)
+    {
+        temp = ans[i];
+        temp.push_back(nums[0]);
+        ans.push_back(temp);
+        temp.clear();
+    }
     return ans;
+    // temp.push_back(nums[0]);
+    // ans.push_back(temp);
 }
 
 void solve()
@@ -54,22 +78,15 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // solve();
-    // int t;
-    // cin >> t;
-    // while (t--)
+    vector<int> nums = {1, 2, 3};
+    // for (int i = 0; i < nums.size(); i++)
     // {
-    //     solve();
+    //     cin >> nums[i];
     // }
+    // printVector(nums);
+    vector<vector<int>> v = subsets(nums);
+    printVector(v);
 
-    int n;
-    cin >> n;
-    vector<int> nums(n);
-    for (int i = 0; i < n; i++)
-    {
-        cin >> nums[i];
-    }
-    subsets(nums);
     // vector<vector<int>> ans;
     // vector<int> v1 = {};
     // vector<int> v2 = {2, 3};
