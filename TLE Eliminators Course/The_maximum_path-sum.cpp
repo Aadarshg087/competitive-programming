@@ -6,60 +6,36 @@ using namespace std;
 #define ll long long int
 #define endl "\n"
 
-int maxPathSum(int **arr, int rows, int cols)
+ll maxSum(vector<vector<int>> &mat, int R, int C, int i, int j)
 {
-    if (rows == 0 && cols == 0)
+    if (i == R && j == C)
     {
-        return arr[rows][cols];
+        return mat[i][j];
     }
-    int temp1, temp2;
-    if (rows - 1 > 0)
-        temp1 = arr[rows][cols] + maxPathSum(arr, rows - 1, cols);
-    else if (cols - 1 > 0)
-        temp2 = arr[rows][cols] + maxPathSum(arr, rows, cols - 1);
-    int ans = max(temp1, temp2);
+    // ll temp1 = mat[i][j], temp2 = mat[i][j];
+    ll temp1 = INT_MIN, temp2 = INT_MIN;
+    if (i + 1 <= R)
+        temp1 = mat[i][j] + maxSum(mat, R, C, i + 1, j);
+    if (j + 1 <= C)
+        temp2 = mat[i][j] + maxSum(mat, R, C, i, j + 1);
 
+    ll ans = max(temp1, temp2);
     return ans;
 }
 
 void solve()
 {
-    // int rows, cols;
-    // cin >> rows >> cols;
-    // vector<vector<int>> m(rows);
-
-    // for (int i = 0; i < rows; i++)
-    // {
-    //     for (int j = 0; j < cols; j++)
-    //     {
-    //         cin >> m[rows][cols];
-    //     }
-    // }
-
-    // How it should bes
-    // vector<vector<int>> mat(rows,vector<int>cols));
-
-    // cout << maxPathSum(m, rows, cols) << endl;
-
-    // -----------------------------------------
     int r, c;
     cin >> r >> c;
-
-    int **arr = new int *[r];
-    for (int i = 0; i < r; i++)
-    {
-        arr[i] = new int[c];
-    }
-
+    vector<vector<int>> mat(r, vector<int>(c));
     for (int i = 0; i < r; i++)
     {
         for (int j = 0; j < c; j++)
         {
-            cin >> arr[i][j];
+            cin >> mat[i][j];
         }
     }
-
-    cout << maxPathSum(arr, r - 1, c - 1) << endl;
+    cout << maxSum(mat, r - 1, c - 1, 0, 0);
 }
 
 int main()

@@ -4,6 +4,7 @@
     "bitset": "cpp",
     "chrono": "cpp",
     "algorithm": "cpp",
-    "random": "cpp"
+    "random": "cpp",
+    "iostream": "cpp"
   }
 }
