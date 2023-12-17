@@ -7,8 +7,8 @@ using namespace std;
 #define endl "\n"
 bool isAnagram2(string s, string t)
 {
-    sort(s);
-    sort(t);
+    // sort(s);
+    // sort(t);
     if (s == t)
     {
         return true;
