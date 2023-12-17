@@ -5,6 +5,7 @@
     "chrono": "cpp",
     "algorithm": "cpp",
     "random": "cpp",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "vector": "cpp"
   }
 }
