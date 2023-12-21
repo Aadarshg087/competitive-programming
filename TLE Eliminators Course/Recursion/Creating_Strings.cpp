@@ -6,14 +6,26 @@ using namespace std;
 #define ll long long int
 #define endl "\n"
 
-string createString(string s, int n, int i)
+vector<string> allStrings;
+void createString(map<char, int> mp, string s = "")
 {
-    if (i == n)
+    if (mp.empty())
+    {
+        allStrings.push_back(s);
         return;
+    }
 
-    string s1 = createString(s.substr(1), n - 1, i + 1);
-    string s2 = s[0] + createString(s.substr(1), n - 1, i + 1);
-    
+    for (auto &i : mp)
+    {
+        if (i.second != 0)
+        {
+            auto newMp = mp;
+            if (--newMp[i.first] == 0)
+                newMp.erase(i.first);
+
+            createString(newMp, s + i.first);
+        }
+    }
 }
 
 void solve()
@@ -21,7 +33,14 @@ void solve()
     string s;
     cin >> s;
     int n = s.size();
-    createString(s, n, 0);
+    map<char, int> mp;
+    for (auto &i : s)
+        mp[i]++;
+
+    createString(mp);
+    cout << allStrings.size() << endl;
+    for (auto i : allStrings)
+        cout << i << endl;
 }
 
 int main()

@@ -1,3 +1,1 @@
- v1)
-        cout << i << " ";
-    cout << endl;
+ (n == 0 && sum == x)
