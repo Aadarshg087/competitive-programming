@@ -4,6 +4,10 @@
     "vector": "cpp",
     "xstring": "cpp",
     "string": "cpp",
-    "valarray": "cpp"
+    "valarray": "cpp",
+    "*.tcc": "cpp",
+    "deque": "cpp",
+    "forward_list": "cpp",
+    "list": "cpp"
   }
 }
