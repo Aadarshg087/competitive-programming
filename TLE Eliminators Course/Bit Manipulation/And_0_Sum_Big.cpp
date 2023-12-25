@@ -8,24 +8,8 @@ using namespace std;
 
 void solve()
 {
-    int n;
-    cin >> n;
-    string s;
-    cin >> s;
-    unordered_set<char> st;
-
-    int ans = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (st.find(s[i]) == st.end())
-        {
-            st.insert(s[i]);
-            ans += n - i;
-        }
-    }
-
-    cout << ans << endl;
-    return;
+    
+    
 }
 
 int main()
