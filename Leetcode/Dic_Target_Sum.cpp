@@ -4,6 +4,32 @@ using namespace std;
 
 int t[31][1001];
 int MOD = 1e9 + 7;
+// Bottom up approach ------------------------------
+int solve2(int n, int k, int target)
+{
+    t[0][0] = 1;
+
+    for (int i = 1; i < n + 1; i++)
+    {
+        for (int j = 1; j < target + 1; j++)
+        {
+
+            int ways = 0;
+            for (int face = 1; face <= k; face++)
+            {
+                if (j >= face)
+                {
+                    ways = (ways + t[i - 1][j - face]) % MOD;
+                }
+            }
+            t[i][j] = ways;
+        }
+    }
+    return t[n][target];
+}
+
+// --- Memoization ---------------------
+
 int solve(int n, int k, int target)
 {
     if (target < 0)
