@@ -4,6 +4,7 @@
     "ios": "cpp",
     "*.tcc": "cpp",
     "list": "cpp",
-    "ostream": "cpp"
+    "ostream": "cpp",
+    "functional": "cpp"
   }
 }
