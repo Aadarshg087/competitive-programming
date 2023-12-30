@@ -2,13 +2,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+int t[301][11];
 int solve(vector<int> &jobDifficulty, int n, int d, int index)
 {
-    if (index == 1)
-        cout << "Yes" << endl;
+    cout << index << " " << d << endl;
     if (d == 1)
     {
-        cout << "No" << endl;
         int maxElement = INT_MIN;
         for (int i = index; i < n; i++)
         {
@@ -17,21 +16,20 @@ int solve(vector<int> &jobDifficulty, int n, int d, int index)
         return maxElement;
     }
 
-    int maxD = INT_MAX;
+    if (t[index][d] != -1)
+    {
+        return t[index][d];
+    }
+
+    int maxD = INT_MIN;
     int finalResult = INT_MAX;
     for (int i = index; i <= n - d; i++)
     {
         maxD = max(maxD, jobDifficulty[i]);
-        for (int j = index; j <= n - d; j++)
-        {
-            cout << jobDifficulty[j] << " ";
-        }
-        cout << "   " << index << endl;
-        cout << endl;
         int result = maxD + solve(jobDifficulty, n, d - 1, i + 1);
         finalResult = min(finalResult, result);
     }
-    return finalResult;
+    return t[index][d] = finalResult;
 }
 
 int minDifficulty(vector<int> &jobDifficulty, int d)
@@ -47,6 +45,7 @@ int minDifficulty(vector<int> &jobDifficulty, int d)
         sum = accumulate(jobDifficulty.begin(), jobDifficulty.end(), sum);
         return sum;
     }
+    memset(t, -1, sizeof(t));
     int n = jobDifficulty.size();
     return solve(jobDifficulty, n, d, 0);
 }

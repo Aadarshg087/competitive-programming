@@ -8,15 +8,11 @@ using namespace std;
 
 void solve()
 {
-    int n, k;
-    cin >> n >> k;
-    int *arr = new int[n];
+    int n;
+    cin >> n;
     for (int i = 0; i < n; i++)
     {
-        cin >> arr[i];
     }
-
-    
 
 }
 

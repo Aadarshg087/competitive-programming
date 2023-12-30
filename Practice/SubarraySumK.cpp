@@ -15,9 +15,16 @@ int main()
     int res = 0;
     for (int i = 0; i < 5; i++)
     {
+        res = 0;
         for (int j = i; j < 5; j++)
         {
-            itn sum = 0
+            res = arr[i] + arr[j];
+            if (res == k)
+            {
+                cout << arr[i] << " " << arr[j] << endl;
+                cout << "true" << endl;
+                return 0;
+            }
         }
     }
 
