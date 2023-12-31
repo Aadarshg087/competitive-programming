@@ -10,15 +10,15 @@ void solve()
 {
     int n, k;
     cin >> n >> k;
-    int arr[n];
-    int product = 1;
+    int *arr = new int[n];
+    ll product = 1;
     for (int i = 0; i < n; i++)
     {
         cin >> arr[i];
         product *= arr[i];
     }
     int num = 2023;
-    if (num % product != 0)
+    if (num % product != 0 || num < product)
     {
         cout << "NO" << endl;
         return;
@@ -35,7 +35,6 @@ void solve()
         }
     }
     cout << endl;
-    return;
 }
 
 int main()
