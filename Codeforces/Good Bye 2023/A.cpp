@@ -11,7 +11,7 @@ void solve()
     int n, k;
     cin >> n >> k;
     int *arr = new int[n];
-    ll product = 1;
+    int product = 1;
     for (int i = 0; i < n; i++)
     {
         cin >> arr[i];
@@ -32,6 +32,7 @@ void solve()
         for (int i = 0; i < k; i++)
         {
             cout << 1 << " ";
+
         }
     }
     cout << endl;
