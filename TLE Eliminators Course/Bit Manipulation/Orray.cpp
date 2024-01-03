@@ -6,35 +6,32 @@ using namespace std;
 #define ll long long int
 #define endl "\n"
 
-void solve()
+void orr(vector<ll> v)
 {
-    ll n, k;
-    cin >> n >> k;
-    vector<ll> v(n);
-    for (int i = 0; i < n; i++)
-    {
-        cin >> v[i];
-    }
-
-    bool check = false;
-
+    ll ans = 0;
     for (int i = 0; i < v.size(); i++)
     {
-        if (v[i] == 0)
-        {
-            continue;
-        }
-        else if ((v[i] == 1 && check == false))
-        {
-            check = true;
-            continue;
-        }
-        if (v[i] % k != 0)
-        {
-            cout << "NO" << endl;
-            return;
-        }
+        ans = ans | v[i];
+        cout << ans << " ";
     }
+    cout << endl;
+}
+
+void solve()
+{
+    ll n;
+    cin >> n;
+    vector<ll> v(n);
+    for (int i = 0; i < n; i++)
+        cin >> v[i];
+
+    orr(v);
+    sort(v.begin(), v.end());
+    reverse(v.begin(), v.end());
+    for (auto i : v)
+        cout << i << " ";
+    cout << endl;
+    orr(v);
 }
 
 int main()
