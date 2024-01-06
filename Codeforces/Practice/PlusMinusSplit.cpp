@@ -8,20 +8,29 @@ using namespace std;
 
 void solve()
 {
-    // int arr[10] = {0};
-    int arr[10][10];
-    memset(arr, -1, sizeof(arr));
-    // Only used for the 0 and -1;
-    
-    for (int i = 0; i < 10; i++)
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+    int arr[n];
+    for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < 10; j++)
+        if (s[i] == '-')
         {
-            cout << arr[i][j] << " ";
+            arr[i] = -1;
         }
-        cout << endl;
+        else
+        {
+            arr[i] = 1;
+        }
     }
-    cout << endl;
+
+    int sum = 0;
+    for (int i = 0; i < n; i++)
+    {
+        sum += arr[i];
+    }
+    cout << abs(sum) << endl;
 }
 
 int main()

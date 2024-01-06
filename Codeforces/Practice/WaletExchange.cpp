@@ -8,20 +8,18 @@ using namespace std;
 
 void solve()
 {
-    // int arr[10] = {0};
-    int arr[10][10];
-    memset(arr, -1, sizeof(arr));
-    // Only used for the 0 and -1;
-    
-    for (int i = 0; i < 10; i++)
+    int a, b;
+    cin >> a >> b;
+
+    int diff = abs(a - b);
+    if (diff & 1)
     {
-        for (int j = 0; j < 10; j++)
-        {
-            cout << arr[i][j] << " ";
-        }
-        cout << endl;
+        cout << "Alice" << endl;
     }
-    cout << endl;
+    else
+    {
+        cout << "Bob" << endl;
+    }
 }
 
 int main()
