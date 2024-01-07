@@ -10,19 +10,46 @@ void solve()
 {
     ll n;
     cin >> n;
-    vector<ll> v(n);
+    vector<int> v(n);
     for (int i = 0; i < n; i++)
     {
         cin >> v[i];
     }
 
-    cout << 1 << " ";
-    for (int i = 0; i < n; i++)
+    vector<int> validK(n + 1, 1);
+    for (int i = 0; i <= 30; i++)
     {
-        if (n % i != 0)
-            continue;
-        
+        int count = 0;
+        vector<int> validFactors(n + 1);
+        for (int j = 0; j < n; j++)
+        {
+            if (v[j] & (1 << i))
+            {
+                count++;
+            }
+        }
+        for (int i = 1; i <= n; i++)
+        {
+            if (count % i == 0)
+            {
+                validFactors[i] = 1;
+            }
+        }
+
+        for (int i = 1; i <= n; i++)
+        {
+            validK[i] = validFactors[i] & validK[i];
+        }
     }
+
+    for (int i = 1; i <= n; i++)
+    {
+        if (validK[i] == 1)
+        {
+            cout << i << " ";
+        }
+    }
+    cout << endl;
 }
 
 int main()
