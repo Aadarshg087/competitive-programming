@@ -16,8 +16,25 @@ void solve()
         cin >> v[i];
     }
 
-    cout << 0 << endl;
-    
+    vector<int> needed(n, 0);
+    for (int j = 0; j < 30; j++)
+    {
+        bool found = 0;
+        for (int i = 0; i < n; i++)
+        {
+            if ((v[i] & (1 << j)) && found == 0)
+                found = 1;
+            else if (found && (v[i] & (1 << j)) == 0)
+            {
+                needed[i] += (1 << j);
+            }
+        }
+    }
+    for (int i = 0; i < n; i++)
+    {
+        cout << needed[i] << " ";
+    }
+    cout << endl;
 }
 
 int main()
