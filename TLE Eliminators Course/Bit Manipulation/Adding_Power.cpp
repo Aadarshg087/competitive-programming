@@ -10,7 +10,7 @@ void solve()
 {
     ll n, k;
     cin >> n >> k;
-    vector<ll> v(n);
+    vector<ll> v(n, 0);
     for (int i = 0; i < n; i++)
     {
         cin >> v[i];
