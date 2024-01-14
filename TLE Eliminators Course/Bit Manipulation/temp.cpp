@@ -8,20 +8,21 @@ using namespace std;
 
 void solve()
 {
-    // int arr[10] = {0};
-    int arr[10][10];
-    memset(arr, -1, sizeof(arr));
-    // Only used for the 0 and -1;
-    
-    for (int i = 0; i < 10; i++)
-    {
-        for (int j = 0; j < 10; j++)
-        {
-            cout << arr[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
+    // int temp = 32;
+    // cout << bitset<8>(temp) << endl;
+    // cout << (temp ^ (1 << 0)) << endl;
+
+    // cout << ((temp & (temp - 1)) ? "NO" : "YES") << endl;
+
+    // int temp2 = temp & (~(1 << 2));
+    // cout << temp2 << "\n"
+    //      << bitset<8>(temp2) << endl;
+    int a = 10, b = 20;
+    cout << a << " " << b << endl;
+    a = a ^ b;
+    b = a ^ b;
+    a = a ^ b;
+    cout << a << " " << b << endl;
 }
 
 int main()
