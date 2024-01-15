@@ -8,9 +8,17 @@ using namespace std;
 
 void solve()
 {
-    int n;
-    cin >> n;
-    
+    vector<pair<int, int>> v;
+    for (int i = 0; i < 4; i++)
+    {
+        int f, s;
+        cin >> f >> s;
+        v.push_back(make_pair(f, s));.cpp
+    }
+    sort(v.begin(), v.end());
+    int num1 = abs(v[0].second - v[1].second);
+    int num2 = abs(v[2].second - v[3].second);
+    cout << num2 * num1 << endl;
 }
 
 int main()
