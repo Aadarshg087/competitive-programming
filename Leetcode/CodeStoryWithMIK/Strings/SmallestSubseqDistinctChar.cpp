@@ -4,6 +4,38 @@ using namespace std;
 
 string smallestSubsequence(string s)
 {
+    int n = s.size();
+    string res = "";
+    vector<int> lastIndex(26, -1);
+    vector<bool> taken(26, false);
+    for (int i = 0; i < n; i++)
+    {
+        char ch = s[i] - 'a';
+        lastIndex[ch] = i;
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        char ch = s[i];
+        if (taken[ch - 'a'] == true)
+            continue;
+
+        while (res.size() > 0 && res.back() > ch && lastIndex[res.back() - 'a'] > i)
+        {
+            taken[res.back() - 'a'] = false;
+            res.pop_back();
+        }
+
+        res.push_back(s[i]);
+        taken[ch - 'a'] = true;
+    }
+
+    return res;
+}
+
+// Failed
+string smallestSubsequence(string s)
+{
     string sortedStr = s;
     sort(sortedStr.begin(), sortedStr.end());
     set<char> set;
