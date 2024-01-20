@@ -17,7 +17,6 @@ vector<int> beautifulIndices(string s, string a, string b, int k)
         if (s.find(b) == string::npos || check == true)
         {
             string st = s;
-            
         }
         int index1 = s.find(a);
         int index2 = s.find(b);
