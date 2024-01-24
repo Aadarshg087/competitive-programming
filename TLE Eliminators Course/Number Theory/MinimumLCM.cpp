@@ -34,7 +34,6 @@ ll lcm(ll a, ll b)
 
 void solve()
 {
-
     ll n;
     cin >> n;
     vector<int> divisors = findDivisors(n);
