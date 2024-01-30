@@ -8,21 +8,10 @@ using namespace std;
 
 void solve()
 {
-    ll x, n;
-    cin >> x >> n;
-    if (x % n == 0)
-    {
-        cout << (x / n) << endl;
-        return;
-    }
-    for (int i = n; i <= x; i++)
-    {
-        if (x % i == 0)
-        {
-            cout << x / i << endl;
-            break;
-        }
-    }
+    ll n; // 100000
+    cin>>n;
+    
+    
 }
 
 int main()
