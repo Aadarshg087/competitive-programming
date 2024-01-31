@@ -9,6 +9,7 @@ using namespace std;
 vector<bool> seiveAlgo(int n)
 {
     vector<bool> isPrime(n, true);
+    isPrime[0] = isPrime[1] = false;
     for (int i = 2; i < n; i++)
     {
         if (isPrime[i] == true)
@@ -22,8 +23,42 @@ vector<bool> seiveAlgo(int n)
     return isPrime;
 }
 
+bool divisor(ll n)
+{
+    for (ll i = 2; i * i <= n; i++)
+    {
+        if (n % i == 0)
+        {
+            if (i & 1)
+                return true;
+            if (n / i != i)
+                if ((n / i) & 1)
+                    return true;
+        }
+    }
+    if (n & 1)
+        return true;
+    return false;
+}
+
 void solve()
 {
+    ll n;
+    cin >> n;
+    while ((n & 1) == 0)
+    {
+        n = n >> 1;
+        // cout << n << endl;
+    }
+    if (n > 1)
+        cout << "YES" << endl;
+    else
+        cout << "NO" << endl;
+
+    // if (divisor(n))
+    //     cout << "YES" << endl;
+    // else
+    //     cout << "NO" << endl;
 }
 
 /*
