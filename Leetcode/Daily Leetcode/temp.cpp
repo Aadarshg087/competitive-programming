@@ -2,23 +2,49 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void solve(unordered_map<int, int> mp)
+// Macros
+#define ll long long int
+#define endl "\n"
+
+vector<bool> seiveAlgo(int n)
 {
-    for (auto i : mp)
-        cout << i.first << ": " << i.second << endl;
+    vector<bool> isPrime(n, true);
+    for (int i = 2; i < n; i++)
+    {
+        if (isPrime[i] == true)
+        {
+            for (int j = 2 * i; j < n; j += i)
+            {
+                isPrime[j] = false;
+            }
+        }
+    }
+    return isPrime;
 }
+
+void solve()
+{
+}
+
+/*
+    - Check for overflow
+    - Add brackets while using bitwise
+    - Check corner cases (out of bounds for loops)
+    - Revise the code
+    - Try to prove yourself wrong
+*/
 
 int main()
 {
-    unordered_map<int, int> mp;
-    mp[1]++;
-    mp[1]++;
-    mp[2]++;
-    mp[3] = 4;
-    mp[2]--;
-    // solve(mp);
-
-    int ans = ('a' ^ 'b' ^ 'a');
-    cout << ans << endl;
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    // solve();
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        solve();
+    }
     return 0;
 }
