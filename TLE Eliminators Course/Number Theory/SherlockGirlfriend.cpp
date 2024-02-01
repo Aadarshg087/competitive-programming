@@ -9,6 +9,7 @@ using namespace std;
 vector<bool> seiveAlgo(int n)
 {
     vector<bool> isPrime(n, true);
+    isPrime[0] = isPrime[1] = false;
     for (int i = 2; i < n; i++)
     {
         if (isPrime[i] == true)
@@ -24,6 +25,21 @@ vector<bool> seiveAlgo(int n)
 
 void solve()
 {
+
+    ll n;
+    cin >> n;
+    vector<bool> v = seiveAlgo(n + 2);
+    if (n <= 2)
+        cout << 1 << endl;
+    else
+        cout << 2 << endl;
+    for (int i = 1; i <= n; i++)
+    {
+        if (v[i + 1] == true)
+            cout << "1 ";
+        else
+            cout << "2 ";
+    }
 }
 
 /*
@@ -39,12 +55,12 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // solve();
-    int t;
-    cin >> t;
-    while (t--)
-    {
-        solve();
-    }
+    solve();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    // {
+    //     solve();
+    // }
     return 0;
 }

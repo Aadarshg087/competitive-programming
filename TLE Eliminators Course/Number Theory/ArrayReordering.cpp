@@ -34,12 +34,19 @@ void solve()
     }
 
     sort(v.begin(), v.end(), greater<int>());
+    // for (int i = 0; i < n; i++)
+    // {
+    // cout << v[i] << " ";
+    // }
+    // cout << endl;
+
     ll count = 0;
     for (int i = 0; i < n - 1; i++)
     {
         for (int j = i + 1; j < n; j++)
         {
-            if (__gcd((2 * v[j]), v[i]) > 1)
+            // cout << v[i] << " " << v[j] << endl;
+            if (__gcd((2 * v[j]), v[i]) > 1 || __gcd(v[j], (2 * v[i])) > 1)
             {
                 // cout<<v[i]<<" "<<v[j]<<endl;
                 count++;
