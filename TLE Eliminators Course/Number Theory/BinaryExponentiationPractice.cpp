@@ -3,14 +3,6 @@
 using namespace std;
 const int M = 1e9 + 7;
 
-int gcd(int a, int b)
-{
-    if (a % b == 0)
-        return b;
-
-    return gcd(b, a % b);
-}
-
 int BinaryExpo(int a, int b)
 {
     if (b == 0)
@@ -22,12 +14,28 @@ int BinaryExpo(int a, int b)
         return (res * res) % M;
 }
 
+int BinaryExpoIter(int a, int b)
+{
+    int ans = 1;
+    while (b > 0)
+    {
+        if (b & 1)
+        {
+            ans = (ans * 1LL * a) % M;
+        }
+        a = (a * 1LL * a) % M;
+        b >>= 1;
+    }
+    return ans;
+}
+
 int main()
 {
     int a = 20, b = 12;
-    // cout << BinaryExpo(a, b) << endl;
-    cout << gcd(a, b) << endl;
-    cout << a % b << endl;
+    cout << BinaryExpo(a, b) << endl;
+    cout << BinaryExpoIter(a, b) << endl;
+    // cout << __gcd(a, b) << endl;
+    // cout << a % b << endl;
 
     return 0;
 }

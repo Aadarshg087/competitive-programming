@@ -6,24 +6,44 @@ using namespace std;
 #define ll long long int
 #define endl "\n"
 
+vector<bool> seiveAlgo(int n)
+{
+    vector<bool> isPrime(n, true);
+    isPrime[0] = isPrime[1] = false;
+    for (int i = 2; i < n; i++)
+    {
+        if (isPrime[i] == true)
+        {
+            for (int j = 2 * i; j < n; j += i)
+            {
+                isPrime[j] = false;
+            }
+        }
+    }
+    return isPrime;
+}
+
 void solve()
 {
-    // int temp = 32;
-    // cout << bitset<8>(temp) << endl;
-    // cout << (temp ^ (1 << 0)) << endl;
+    // string s = "2345";
+    // char s = '3';
+    // char c = s + '1';
+    // char ch = s[0] + 1;
+    // cout << ch << endl;
+    string s = "1";
+    int d = stoi(s);
+    cout << d << endl;
 
-    // cout << ((temp & (temp - 1)) ? "NO" : "YES") << endl;
-
-    // int temp2 = temp & (~(1 << 2));
-    // cout << temp2 << "\n"
-    //      << bitset<8>(temp2) << endl;
-    int a = 10, b = 20;
-    cout << a << " " << b << endl;
-    a = a ^ b;
-    b = a ^ b;
-    a = a ^ b;
-    cout << a << " " << b << endl;
+    // (s > s1) ? cout << "YES" : cout << "NO";
 }
+
+/*
+    - Check for overflow
+    - Add brackets while using bitwise
+    - Check corner cases (out of bounds for loops)
+    - Revise the code
+    - Try to prove yourself wrong
+*/
 
 int main()
 {
