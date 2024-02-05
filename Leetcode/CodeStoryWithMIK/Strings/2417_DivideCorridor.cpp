@@ -4,58 +4,31 @@ using namespace std;
 
 const int M = 1e9 + 7;
 
-int solve(string corridor, int i, int lastIndex)
-{
-    if (i == corridor.size() || i == lastIndex)
-        return 0;
-
-    int n = corridor.size();
-    int ans = 0;
-    int countS = 0;
-    int countP = 0;
-    while (true)
-    {
-        if (countS >= 2 && corridor[i] == 'S')
-            break;
-        if (corridor[i] == 'S')
-        {
-            countS++;
-        }
-        else if (corridor[i] == 'P')
-        {
-            countP++;
-        }
-    }
-    int ans = (countP * 1LL * solve(corridor, i + 1, lastIndex)) % M;
-
-    return ans;
-}
 int numberOfWays(string corridor)
 {
-    int temp = 0;
     int n = corridor.size();
-    int lastindex = 0;
+    vector<int> position;
     for (int i = 0; i < n; i++)
     {
         if (corridor[i] == 'S')
-        {
-            lastindex = i;
-            temp++;
-        }
+            position.push_back(i);
     }
 
-    if (temp & 1 || temp == 0)
-    {
+    if ((position.size() & 1) || position.size() == 0)
         return 0;
+
+    int prevIndexVal = position[1];
+    int res = 1;
+    for (int i = 2; i < position.size(); i += 2)
+    {
+        res = (res * abs(position[i] - prevIndexVal)) % M;
+        prevIndexVal = position[i + 1];
     }
 
-    if (temp == 2)
-        return 1;
-
-    return solve(corridor, 0, lastindex);
+    return res;
 }
 
-int numberOfWays(string corridor)
+int NumberOfWays(string corridor)
 {
     int n = corridor.size();
     int s = 0;

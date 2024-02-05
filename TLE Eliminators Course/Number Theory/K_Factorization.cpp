@@ -25,50 +25,39 @@ vector<bool> seiveAlgo(int n)
 
 void solve()
 {
-    vector<bool> p = seiveAlgo(1e5 + 10);
-    vector<int> primes;
-    for (int i = 0; i < p.size(); i++)
+    int n, k;
+    cin >> n >> k;
+    vector<int> ans;
+    for (int i = 2; i * i <= n; i++)
     {
-        if (p[i])
-            primes.push_back(i);
-    }
-
-    int n, m;
-    cin >> n >> m;
-    int arr[n][m];
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < m; j++)
+        while (n % i == 0)
         {
-            cin >> arr[i][j];
+            ans.push_back(i);
+            n /= i;
         }
     }
+    if (n > 1)
+        ans.push_back(n);
 
-    int ans = INT_MAX;
-
-    for (int i = 0; i < n; i++)
+    if (k > ans.size())
     {
-        int res = 0;
-        for (int j = 0; j < m; j++)
-        {
-            int val = (*lower_bound(primes.begin(), primes.end(), arr[i][j]));
-            res += val - arr[i][j];
-        }
-        ans = min(ans, res);
+        cout << -1 << endl;
+        return;
     }
 
-    for (int i = 0; i < m; i++)
+    int res = 1;
+    k--;
+    for (int i = 0; i < ans.size(); i++)
     {
-        int res = 0;
-        for (int j = 0; j < n; j++)
+        if (k > 0)
         {
-            int val = (*lower_bound(primes.begin(), primes.end(), arr[j][i]));
-            res += val - arr[j][i];
+            cout << ans[i] << " ";
+            k--;
         }
-        ans = min(ans, res);
+        else
+            res *= ans[i];
     }
-
-    cout << ans << endl;
+    cout << res << endl;
 }
 
 /*
