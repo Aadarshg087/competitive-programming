@@ -5,41 +5,48 @@ using namespace std;
 // Macros
 #define ll long long int
 #define endl "\n"
-vector<bool> seiveAlgo(int n)
+const int n = 1e6 + 7;
+bool seive[n];
+
+void calc()
 {
-    vector<bool> isPrime(n, true);
-    isPrime[0] = isPrime[1] = false;
-    for (int i = 2; i < n; i++)
+    seive[0] = seive[1] = true;
+    for (int i = 2; i <= n; i++)
     {
-        if (isPrime[i] == true)
+        if (seive[i] == true)
         {
-            for (int j = 2 * i; j < n; j += i)
+            for (int j = 2 * i; j <= n; j += i)
             {
-                isPrime[j] = false;
+                seive[j] = false;
             }
         }
     }
-    return isPrime;
 }
 
 void solve()
 {
-    ll n;
-    cin >> n;
-    vector<bool> v = seiveAlgo(n);
-    double ans1 = sqrt(n);
-    ll ans2 = sqrt(n);
-    if (ans1 == ans2)
+    ll n1;
+    cin >> n1;
+    if (n1 == 1 || n1 == 2)
     {
-        if (v[ans1])
+        cout << "NO" << endl;
+        return;
+    }
+    ll num = sqrt(n1);
+    if (num * num == n1)
+    {
+        if (seive[num])
         {
             cout << "YES" << endl;
+            return;
         }
         else
+        {
             cout << "NO" << endl;
+            return;
+        }
     }
-    else
-        cout << "NO" << endl;
+    cout << "NO" << endl;
 }
 
 /*
@@ -56,6 +63,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
     // solve();
+    memset(seive, 1, sizeof(seive));
+    calc();
     int t;
     cin >> t;
     while (t--)
