@@ -25,22 +25,20 @@ vector<bool> seiveAlgo(int n)
 
 void solve()
 {
-    ll n;
+    int n;
     cin >> n;
-    if (n & 1)
+    vector<int> v(n);
+    for (int i = 0; i < n; i++)
     {
-        cout << 1 << endl;
+        cin >> v[i];
+    }
+    int mini = min_element(v.being(), v.end());
+    int maxi = min_element(v.being(), v.end());
+    if (mini == maxi)
+    {
+        cout << "YES" << endl;
         return;
     }
-    int count = 0;
-    for (int i = 1; i <= n; i++)
-    {
-        if (n % i == 0)
-            count++;
-        else
-            break;
-    }
-    cout << count << endl;
 }
 
 /*

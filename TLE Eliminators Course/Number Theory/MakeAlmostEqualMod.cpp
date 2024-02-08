@@ -27,20 +27,11 @@ void solve()
 {
     ll n;
     cin >> n;
-    if (n & 1)
+    vector<ll> v(n);
+    for (int i = 0; i < n; i++)
     {
-        cout << 1 << endl;
-        return;
+        cin >> v[i];
     }
-    int count = 0;
-    for (int i = 1; i <= n; i++)
-    {
-        if (n % i == 0)
-            count++;
-        else
-            break;
-    }
-    cout << count << endl;
 }
 
 /*

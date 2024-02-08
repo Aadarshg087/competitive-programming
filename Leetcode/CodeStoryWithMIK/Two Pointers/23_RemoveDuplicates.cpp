@@ -20,6 +20,8 @@ int removeDuplicates(vector<int> &nums)
 
 int main()
 {
+    vector<int> nums{1, 1, 2, 3, 4, 4, 4, 5, 5, 5, 6, 7, 8};
+    cout << removeDuplicates(nums) << endl;
 
     return 0;
 }

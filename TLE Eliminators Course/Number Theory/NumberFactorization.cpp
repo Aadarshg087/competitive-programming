@@ -25,22 +25,9 @@ vector<bool> seiveAlgo(int n)
 
 void solve()
 {
-    ll n;
+    int n;
     cin >> n;
-    if (n & 1)
-    {
-        cout << 1 << endl;
-        return;
-    }
-    int count = 0;
-    for (int i = 1; i <= n; i++)
-    {
-        if (n % i == 0)
-            count++;
-        else
-            break;
-    }
-    cout << count << endl;
+    
 }
 
 /*

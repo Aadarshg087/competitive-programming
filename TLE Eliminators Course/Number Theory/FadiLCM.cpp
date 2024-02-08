@@ -27,20 +27,19 @@ void solve()
 {
     ll n;
     cin >> n;
-    if (n & 1)
-    {
-        cout << 1 << endl;
-        return;
-    }
-    int count = 0;
-    for (int i = 1; i <= n; i++)
+    pair<ll, ll> ans = {-1, -1};
+    for (ll i = 1; i * i <= n; i++)
     {
         if (n % i == 0)
-            count++;
-        else
-            break;
+        {
+            ll j = n / i;
+            if (__gcd(i, j) == 1)
+            {
+                ans = {i, j};
+            }
+        }
     }
-    cout << count << endl;
+    cout << ans.first << " " << ans.second << endl;
 }
 
 /*
@@ -56,12 +55,12 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // solve();
-    int t;
-    cin >> t;
-    while (t--)
-    {
-        solve();
-    }
+    solve();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    // {
+    //     solve();
+    // }
     return 0;
 }
