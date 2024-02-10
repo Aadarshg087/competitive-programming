@@ -2,49 +2,38 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Macros
-#define ll long long int
-#define endl "\n"
-
-vector<bool> seiveAlgo(int n)
+class Student
 {
-    vector<bool> isPrime(n, true);
-    for (int i = 2; i < n; i++)
+public:
+    int data;
+    char c;
+    char *p = &c;
+    Student(int data, char c)
     {
-        if (isPrime[i] == true)
-        {
-            for (int j = 2 * i; j < n; j += i)
-            {
-                isPrime[j] = false;
-            }
-        }
+        this->data = data;
+        this->c = c;
+
+        // cout << (&this->c) << endl;
+        cout << (this->p) << endl;
     }
-    return isPrime;
-}
-
-void solve()
-{
-}
-
-/*
-    - Check for overflow
-    - Add brackets while using bitwise
-    - Check corner cases (out of bounds for loops)
-    - Revise the code
-    - Try to prove yourself wrong
-*/
+};
 
 int main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    // solve();
-    int t;
-    cin >> t;
-    while (t--)
-    {
-        solve();
-    }
+    Student s1(23, 't');
+    // // cout << s1.c << endl;
+    // char *p = &s1.c;
+    // int *i = &s1.data;
+    // cout << (&s1.data) << endl;
+    // cout << i << endl;
+    // cout << *i << endl;
+    // cout << p << endl;
+    // cout << *p << endl;
+    // char c = 'p';
+    // cout << &c << endl;
+    // char *o = &c;
+    // cout << o << endl;
+    // cout << *o << endl;
+
     return 0;
 }
