@@ -25,18 +25,25 @@ vector<bool> seiveAlgo(int n)
 
 void solve()
 {
+    // int i = 3;
+    // int j = 6;
+    // int t = 1;
+    // if (((i & t) ^ (j & t)) == 1)
+    //     cout << "YES" << endl;
+
     ll n;
     cin >> n;
-    bool check = false;
     vector<ll> v(n);
+    bool check = false;
     for (int i = 0; i < n; i++)
     {
         cin >> v[i];
-        if (i != 0 && (v[i] & 1) && (v[i - 1] & 1 == 0))
+        if (i != 0 && (v[i] & 1) && (v[i] & 1 == 0))
         {
             check = true;
         }
     }
+
     if (check)
     {
         cout << 2 << endl;
@@ -44,36 +51,27 @@ void solve()
     }
 
     ll temp = 1;
-    for (int j = 0; j <= 57; j++)
+    for (int i = 0; i <= 57; i++)
     {
-        for (int i = 0; i < n - 1; i++)
+        for (int j = 0; j < n - 1; j++)
         {
-            cout << bitset<8>(v[i]) << endl;
-            // x = (x ^ (v[i] & temp));
-            if (((v[i] & temp) ^ (v[i + 1] & temp)) == 1)
+            if (((v[j] & temp) ^ (v[j + 1] & temp)) == 1)
             {
-                // cout << v[i] << endl;
-                cout << "YES" << endl;
-                cout << temp << endl;
+                // cout << "YES" << endl;
                 check = true;
                 break;
             }
-            // if (x != 0)
-            // {
-            //     cout << temp << endl;
-            //     return;
-            // }
         }
         if (check)
             break;
         temp <<= 1;
     }
-    temp = temp << 1;
+    temp <<= 1;
+
     cout << temp << endl;
-    cout << bitset<64>(temp) << endl;
-    // cout << "BREAK -------------" << endl;
     // for (int i = 0; i < n; i++)
     // {
+    //     cout << bitset<8>(v[i]) << endl;
     //     cout << v[i] % temp << endl;
     // }
 }
