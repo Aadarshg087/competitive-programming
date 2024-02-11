@@ -23,6 +23,21 @@ vector<bool> seiveAlgo(int n)
     return isPrime;
 }
 
+void divs(int x, unordered_map<int, int> &mp)
+{
+
+    for (int i = 2; i * i <= x; i++)
+    {
+        while (x % i == 0)
+        {
+            mp[i]++;
+            x /= i;
+        }
+    }
+    if (x > 1)
+        mp[x]++;
+}
+
 void solve()
 {
     int n;
@@ -32,13 +47,30 @@ void solve()
     {
         cin >> v[i];
     }
-    int mini = min_element(v.being(), v.end());
-    int maxi = min_element(v.being(), v.end());
+    int mini = *min_element(v.begin(), v.end());
+    int maxi = *max_element(v.begin(), v.end());
     if (mini == maxi)
     {
         cout << "YES" << endl;
         return;
     }
+
+    unordered_map<int, int> mp;
+    for (int i = 0; i < n; i++)
+    {
+        int element = v[i];
+        divs(element, mp);
+    }
+
+    for (auto i : mp)
+    {
+        if (i.second % n != 0)
+        {
+            cout << "NO" << endl;
+            return;
+        }
+    }
+    cout << "YES" << endl;
 }
 
 /*

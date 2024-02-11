@@ -27,11 +27,55 @@ void solve()
 {
     ll n;
     cin >> n;
+    bool check = false;
     vector<ll> v(n);
     for (int i = 0; i < n; i++)
     {
         cin >> v[i];
+        if (i != 0 && (v[i] & 1) && (v[i - 1] & 1 == 0))
+        {
+            check = true;
+        }
     }
+    if (check)
+    {
+        cout << 2 << endl;
+        return;
+    }
+
+    ll temp = 1;
+    for (int j = 0; j <= 57; j++)
+    {
+        for (int i = 0; i < n - 1; i++)
+        {
+            cout << bitset<8>(v[i]) << endl;
+            // x = (x ^ (v[i] & temp));
+            if (((v[i] & temp) ^ (v[i + 1] & temp)) == 1)
+            {
+                // cout << v[i] << endl;
+                cout << "YES" << endl;
+                cout << temp << endl;
+                check = true;
+                break;
+            }
+            // if (x != 0)
+            // {
+            //     cout << temp << endl;
+            //     return;
+            // }
+        }
+        if (check)
+            break;
+        temp <<= 1;
+    }
+    temp = temp << 1;
+    cout << temp << endl;
+    cout << bitset<64>(temp) << endl;
+    // cout << "BREAK -------------" << endl;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cout << v[i] % temp << endl;
+    // }
 }
 
 /*
