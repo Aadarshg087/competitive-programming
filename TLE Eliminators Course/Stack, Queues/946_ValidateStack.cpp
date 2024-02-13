@@ -12,16 +12,17 @@ bool validateStackSequences(vector<int> &pushed, vector<int> &popped)
     {
         while (true)
         {
-            s1.push(pushed[j]);
-            if (j < pushed.size() && pushed[j++] != popped[i])
+            s1.push(pushed[j++]);
+            if (s1.top() == popped[i])
                 break;
-            else if (j == pushed.size())
-                break;
+            if (j == pushed.size())
+                return false;
         }
 
-        while (!s1.empty() && s1.top() == popped[i++])
+        while (!s1.empty() && s1.top() == popped[i])
         {
             s1.pop();
+            i++;
         }
 
         if (s1.empty() && i == popped.size())
@@ -32,6 +33,13 @@ bool validateStackSequences(vector<int> &pushed, vector<int> &popped)
 
 int main()
 {
-
+    vector<int> push{1, 2, 3, 4, 5};
+    vector<int> pop{4, 5, 3, 2, 1};
+    if (validateStackSequences(push, pop))
+    {
+        cout << "true" << endl;
+    }
+    else
+        cout << "false" << endl;
     return 0;
 }
