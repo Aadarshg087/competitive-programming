@@ -8,6 +8,22 @@ using namespace std;
 
 const int N = 1e6 + 7;
 vector<bool> isPrime(N, true);
+
+vector<ll> primeDivisor(int n)
+{
+    vector<ll> ans;
+    for (int i = 2; i * i <= n; i++)
+    {
+        while (n % i == 0)
+        {
+            ans.push_back(i);
+            n /= i;
+        }
+    }
+    if (n > 1)
+        ans.push_back(n);
+    return ans;
+}
 void seiveAlgo()
 {
     isPrime[0] = isPrime[1] = false;
@@ -41,14 +57,31 @@ vector<ll> divisor(ll n)
 
 void solve()
 {
-    ll n = 864;
-    // cin >> n;
-    vector<ll> div = divisor(n);
-    sort(div.begin(), div.end());
+    ll n;
+    cin >> n;
+    vector<ll> div = primeDivisor(n);
+    unordered_map<int, int> mp;
+    int maxi = 0;
     for (auto i : div)
-        cout << i << " ";
+    {
+        mp[i]++;
+        maxi = max(maxi, mp[i]);
+    }
+    int product = 0;
+    for (int i = 0; i < maxi; i++)
+    {
+        int temp = 1;
+        for (auto &i : mp)
+        {
+            if (i.second == 0)
+                continue;
+            temp *= i.first;
+            i.second--;
+        }
+        product += temp;
+    }
 
-    
+    cout << product << endl;
 }
 
 /*
