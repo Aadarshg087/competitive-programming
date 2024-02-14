@@ -32,8 +32,6 @@ void solve()
         cin >> v[i];
     }
 
-    bool l = false;
-    bool r = false;
 
     int i = 1;
     int j = v.size() - 1;
@@ -47,6 +45,7 @@ void solve()
         if (v[i] != t && v[j] != t)
             break;
     }
+
     int ans1 = j - i + 1;
     int count = 1;
     for (int i = 2; i <= n; i++)
@@ -58,6 +57,7 @@ void solve()
         else
             break;
     }
+
     int ans2 = n - count;
     int count2 = 1;
     for (int i = n; i >= 1; i--)
