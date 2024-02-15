@@ -6,15 +6,16 @@ using namespace std;
 #define ll long long int
 #define endl "\n"
 
-void orr(vector<ll> v)
+vector<ll> orr(vector<ll> v)
 {
     ll ans = 0;
+    vector<ll> b;
     for (int i = 0; i < v.size(); i++)
     {
         ans = ans | v[i];
-        cout << ans << " ";
+        b.push_back(ans);
     }
-    cout << endl;
+    return b;
 }
 
 void solve()
@@ -24,14 +25,28 @@ void solve()
     vector<ll> v(n);
     for (int i = 0; i < n; i++)
         cin >> v[i];
-
-    orr(v);
-    sort(v.begin(), v.end());
-    reverse(v.begin(), v.end());
-    for (auto i : v)
+    sort(v.begin(), v.end(), greater<ll>());
+    vector<ll> b = orr(v);
+    for (int i : b)
         cout << i << " ";
     cout << endl;
-    orr(v);
+
+    int temp = 1;
+    vector<bool> nums();
+    for (int i = 0; i <= 31; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            if (v[j] & temp)
+        }
+        temp <<= 1;
+    }
+
+    // reverse(v.begin(), v.end());
+    // for (auto i : v)
+    //     cout << i << " ";
+    // cout << endl;
+    // orr(v);
 }
 
 int main()

@@ -16,25 +16,44 @@ void solve()
         cin >> v[i];
     }
 
-    bool check = false;
-
-    for (int i = 0; i < v.size(); i++)
+    ll x = *max_element(v.begin(), v.end());
+    ll maxpowerk = 1;
+    while (maxpowerk < x)
     {
-        if (v[i] == 0)
-        {
-            continue;
-        }
-        else if ((v[i] == 1 && check == false))
-        {
-            check = true;
-            continue;
-        }
-        if (v[i] % k != 0)
-        {
-            cout << "NO" << endl;
-            return;
-        }
+        maxpowerk *= k;
     }
+    bool ans = true;
+    while (maxpowerk > 0)
+    {
+        int count = 0;
+        for (int i = 0; i < n; i++)
+        {
+
+            if (v[i] >= maxpowerk)
+            {
+                v[i] -= maxpowerk;
+                count++;
+            }
+        }
+        if (count > 1)
+        {
+            ans = false;
+            break;
+        }
+        maxpowerk /= k;
+    }
+    if (ans)
+    {
+        ll y = *max_element(v.begin(), v.end());
+        if (y == 0)
+        {
+            cout << "YES" << endl;
+        }
+        else
+            cout << "NO" << endl;
+    }
+    else
+        cout << "NO" << endl;
 }
 
 int main()
