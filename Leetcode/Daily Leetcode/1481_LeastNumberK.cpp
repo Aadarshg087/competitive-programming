@@ -18,7 +18,7 @@ int findLeastNumOfUniqueInts(vector<int> &arr, int k)
         mp[arr[i]]++;
     }
 
-    map<int, int> mp1;
+    multimap<int, int> mp1;
     for (auto i : mp)
     {
         mp1.insert({i.second, i.first});
@@ -38,7 +38,7 @@ int findLeastNumOfUniqueInts(vector<int> &arr, int k)
 
 int main()
 {
-    vector<int> arr{};
+    vector<int> arr{1, 4, 5, 6, 4};
     cout << findLeastNumOfUniqueInts(arr) << endl;
 
     return 0;
