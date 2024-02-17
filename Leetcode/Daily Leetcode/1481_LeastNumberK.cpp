@@ -39,7 +39,8 @@ int findLeastNumOfUniqueInts(vector<int> &arr, int k)
 int main()
 {
     vector<int> arr{1, 4, 5, 6, 4};
-    cout << findLeastNumOfUniqueInts(arr) << endl;
+    int k = 3;
+    cout << findLeastNumOfUniqueInts(arr, k) << endl;
 
     return 0;
 }
