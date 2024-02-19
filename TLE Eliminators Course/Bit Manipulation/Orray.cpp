@@ -27,20 +27,19 @@ void solve()
         cin >> v[i];
     sort(v.begin(), v.end(), greater<ll>());
     vector<ll> b = orr(v);
+    cout << b[n - 1] << endl;
     for (int i : b)
         cout << i << " ";
     cout << endl;
 
     int temp = 1;
-    vector<bool> nums();
-    for (int i = 0; i <= 31; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            if (v[j] & temp)
-        }
-        temp <<= 1;
-    }
+    vector<bool> nums(n);
+    // for (int i = 0; i <= 31; i++)
+    // {
+    //     for (int j = 0; i < n; i++)
+    //     {
+    //     }
+    // }
 
     // reverse(v.begin(), v.end());
     // for (auto i : v)
