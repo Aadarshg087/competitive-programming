@@ -23,7 +23,10 @@ void seiveAlgo()
     }
 }
 
-vector<int> p(51);
+// Upsolve Solution
+// Bs ittu sa door tha contest mein is questions ko solve krne se
+const int M = 2e5 + 1;
+vector<int> p(M, 0);
 ll sumOfDigits(ll n)
 {
     ll sum = 0;
@@ -35,37 +38,14 @@ ll sumOfDigits(ll n)
     }
     return sum;
 }
-int anotherSolve(ll n)
-{
-    int tens = 10;
-    int rem1 = n % 10;
-    ll sum = 1;
-    int ten2 = 1;
-    n /= 10;
-    int count = rem1;
-    while (n != 0)
-    {
-        int rem = (n % 10) * tens;
-        count += rem;
-        rem /= 10;
-        int ans1 = (rem * p[9]) + (p[rem / ten2]) + (rem / ten2) * count;
-        sum += ans1;
-        tens *= 10;
-        ten2 *= 10;
-        n /= 10;
-    }
-
-    sum += p[rem1];
-
-    return sum;
-}
 void solve()
 {
     ll n;
     cin >> n;
 
-    cout << anotherSolve(n) << endl;
-
+    cout << p[n] << endl;
+    // for (int i : p)
+    //     cout << i << endl;
     // // int newn = n / 10;
     // ll ans = 0;
     // int tens = 1;
@@ -95,10 +75,21 @@ int main()
     cout.tie(NULL);
     // solve();
     // seiveAlgo();
-    for (int i = 1; i <= 50; i++)
+    int prev = 0;
+    ll sum = 0;
+    for (int i = 1; i <= M; i++)
     {
-        p[i] += p[i - 1] + i;
+        if (i % 10 == 0)
+        {
+            prev = sumOfDigits(i);
+            sum += prev;
+            p[i] = sum;
+            continue;
+        }
+        sum += (i % 10) + prev;
+        p[i] = sum;
     }
+
     int t;
     cin >> t;
     while (t--)

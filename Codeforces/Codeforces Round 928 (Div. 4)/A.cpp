@@ -22,10 +22,27 @@ void seiveAlgo()
         }
     }
 }
+
+// Upsolve
+void anotherSolve(string s)
+{
+    // XOR will not work here cause
+    // there can even number of 'A' as well as odd number of 'A'
+    // both of the times A is the answer
+    int n = s.size();
+    int x = s[0];
+    for (int i = 1; i < n; i++)
+    {
+        x ^= s[i];
+    }
+    cout << (char)(x) << endl;
+}
 void solve()
 {
     string s;
     cin >> s;
+    anotherSolve(s);
+    return;
     int countA = 0;
     int countB = 0;
     for (int i = 0; i < 5; i++)
