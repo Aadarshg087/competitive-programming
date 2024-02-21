@@ -6,47 +6,75 @@ using namespace std;
 #define ll long long int
 #define endl "\n"
 
-vector<ll> orr(vector<ll> v)
+const int N = 1e6 + 7;
+vector<bool> isPrime(N, true);
+void seiveAlgo()
 {
-    ll ans = 0;
-    vector<ll> b;
-    for (int i = 0; i < v.size(); i++)
+    isPrime[0] = isPrime[1] = false;
+    for (int i = 2; i < N; i++)
     {
-        ans = ans | v[i];
-        b.push_back(ans);
+        if (isPrime[i] == true)
+        {
+            for (int j = 2 * i; j < N; j += i)
+            {
+                isPrime[j] = false;
+            }
+        }
     }
-    return b;
 }
-
 void solve()
 {
     ll n;
     cin >> n;
-    vector<ll> v(n);
+    vector<int> v(n);
     for (int i = 0; i < n; i++)
+    {
         cin >> v[i];
-    sort(v.begin(), v.end(), greater<ll>());
-    vector<ll> b = orr(v);
-    cout << b[n - 1] << endl;
-    for (int i : b)
+    }
+    vector<int> visited(n, 0);
+    vector<int> ans;
+    int mask = 0;
+    int index = 0;
+    for (int it = 0; it <= 30; it++)
+    {
+        int maxmask = mask;
+        int index = -1;
+        for (int i = 0; i < n; i++)
+        {
+            if (!visited[i] && ((v[i] | mask) > maxmask))
+            {
+                maxmask = (v[i] | mask);
+                index = i;
+            }
+        }
+
+        if (index == -1)
+            break;
+        visited[index] = true;
+        ans.push_back(v[index]);
+        mask |= maxmask;
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        if (visited[i] == false)
+        {
+            ans.push_back(v[i]);
+        }
+    }
+
+    for (int i : ans)
         cout << i << " ";
-    cout << endl;
-
-    int temp = 1;
-    vector<bool> nums(n);
-    // for (int i = 0; i <= 31; i++)
-    // {
-    //     for (int j = 0; i < n; i++)
-    //     {
-    //     }
-    // }
-
-    // reverse(v.begin(), v.end());
-    // for (auto i : v)
-    //     cout << i << " ";
-    // cout << endl;
-    // orr(v);
 }
+
+/*
+    - Read the problem twice
+    - Check for overflow
+    - Add brackets while using bitwise
+    - Check corner cases (out of bounds for loops)
+    - Revise the code
+    - Try to prove yourself wrong
+*/
 
 int main()
 {
@@ -54,6 +82,7 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
     // solve();
+    // seiveAlgo();
     int t;
     cin >> t;
     while (t--)
