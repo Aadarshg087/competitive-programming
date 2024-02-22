@@ -13,24 +13,32 @@ using namespace std;
 void nextPermutation(vector<int> &nums)
 {
     int n = nums.size();
-    int i = n - 2;
-    int j = n - 1;
-
-    while (nums[i] > nums[j])
+    int index = -1;
+    for (int i = n - 2; i >= 0; i++)
     {
-        if (i == 0)
+        if (nums[i] < nums[i + 1])
         {
-            j--;
-        }
-        else
-        {
-            i--;
+            index = i;
+            break;
         }
     }
-    swap(nums[i], nums[j]);
-    auto it = nums.begin();
-    advance(it, i);
-    sort(it, nums.end());
+    if (index == -1)
+    {
+        reverse(nums.begin(), nums.end());
+        return;
+    }
+
+    int minElementIndex = index + 1;
+    for (int i = index + 1; i < n; i++)
+    {
+        if (nums[minElementIndex] < nums[i])
+        {
+            minElementIndex = i;
+        }
+    }
+
+    swap(nums[index], nums[minElementIndex]);
+    sort(nums.begin() + index + 1, nums.end());
 }
 
 int main()
