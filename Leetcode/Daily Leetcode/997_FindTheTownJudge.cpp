@@ -12,25 +12,41 @@ using namespace std;
 
 int findJudge(int n1, vector<vector<int>> &v)
 {
-    sort(v.begin(), v.end());
     int n = v.size();
-    set<int> st;
+    vector<int> inDegree(n + 1, 0);
+    vector<int> outDegree(n + 1, 0);
     for (int i = 0; i < n; i++)
     {
-        st.insert(v[i][1]);
+        inDegree[v[i][1]]++;
+        outDegree[v[i][0]]++;
     }
 
+    for (int i = 1; i <= n; i++)
+    {
+        if (outDegree[i] == n - 1 && inDegree[i] == 0)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
+int findJudge(int n1, vector<vector<int>> &v)
+{
+    int n = v.size();
+    vector<int> count(n1 + 1, 0);
     for (int i = 0; i < n; i++)
     {
-        auto it = st.find(v[i][0]);
-        if (it != st.end())
-            st.erase(it);
+        count[v[i][0]]--;
+        count[v[i][1]]++;
     }
-    int ans;
-    if (st.empty())
-        return -1;
-    
-    
+
+    for (int i = 1; i < count.size(); i++)
+    {
+        if (count[i] == n1 - 1)
+            return i;
+    }
+    return -1;
 }
 
 int main()
