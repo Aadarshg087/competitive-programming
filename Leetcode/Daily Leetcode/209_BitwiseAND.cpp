@@ -22,8 +22,8 @@ int rangeBitwiseAnd(int left, int right)
 
     int temp = 1;
     ll ans = 0;
-    if(left == right)
-            return left;
+    if (left == right)
+        return left;
     for (int i = 0; i <= 31; i++)
     {
         left >>= 1;
