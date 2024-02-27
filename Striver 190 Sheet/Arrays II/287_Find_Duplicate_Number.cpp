@@ -37,10 +37,26 @@ int findDuplicate(vector<int> &arr)
     return 0;
 }
 
-// Optimal
+// Optimal - Slow and fast pointer
+// T.C - O(N) and S.C - O(1)
 int findDuplicate(vector<int> &v)
 {
-    
+    int slow = v[0];
+    int fast = v[v[0]];
+    while (slow != fast)
+    {
+        slow = v[slow];
+        fast = v[v[fast]];
+    }
+
+    fast = 0;
+    while (slow != fast)
+    {
+        slow = v[slow];
+        fast = v[fast];
+    }
+
+    return slow;
 }
 
 int main()

@@ -27,13 +27,9 @@ ll getInversions(ll *arr, int n)
     return count;
 }
 
-// Better solution
-ll getInversions(ll *arr, int n)
+int mergeSort(int *arr1, int *arr2)
 {
-    ll count = 0;
-    for (int i = 0; i < n; i++)
-    {
-        }
+    
 }
 
 int main()
