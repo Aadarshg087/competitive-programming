@@ -24,11 +24,11 @@ void seiveAlgo()
 }
 void solve()
 {
-    ll a, b, c, d;
-    cin >> a >> b >> c >> d;
-    // a/c and b /d
-
-    cout << 1 << endl;
+    ll n, x;
+    cin >> n >> x;
+    vector<int> v(n);
+    for (int i = 0; i < n; i++)
+        cin >> v[i];
 }
 
 /*

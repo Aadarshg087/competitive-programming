@@ -22,64 +22,43 @@ void seiveAlgo()
         }
     }
 }
-
-vector<int> divisor(ll l)
-{
-    vector<int> ans;
-    for (int i = 1; i * i <= l; i++)
-    {
-        if (l % i == 0)
-        {
-            ans.push_back(i);
-            // if (l / i != i)
-            // {
-            //     ans.push_back(l / i);
-            // }
-        }
-    }
-    return ans;
-}
-
-bool powerCheck(ll check, ll n)
-{
-    cout << check << " " << n << endl;
-    if (check == 1)
-        return true;
-    while (true)
-    {
-        if (n == check)
-            return true;
-        if (n > check)
-            return false;
-        n *= n;
-    }
-}
-
 void solve()
 {
     ll a, b, l;
     cin >> a >> b >> l;
-    vector<int> div = divisor(l);
-    // for (int i : div)
-    //     cout << i << " ";
-
-    ll n = div.size();
-    int count = 1;
-    for (int i = 0; i < n; i++)
+    ll a1 = 1;
+    unordered_set<ll> st;
+    while (a1 <= l)
     {
-        ll f1 = div[i];
-        ll f2 = l / div[i];
-        cout << "factors: " << f1 << " " << f2 << endl;
-        if (powerCheck(f1, a) || powerCheck(f1, b))
+        ll b1 = 1;
+        while (b1 <= l)
         {
-            count++;
+            // cout << a1 << " " << b1 << endl;
+            ll temp = a1 * b1;
+            if (temp > l)
+                break;
+            ll k;
+            if (l % temp == 0)
+                k = l / temp;
+            // cout << k << " " << a1 << " " << b1 << endl;
+            st.insert(k);
+            if (b1 == 1)
+            {
+                // cout << "sdfsdsdfd is called" << endl;
+                b1 = b;
+            }
+            else
+            {
+                b1 *= b;
+                // cout << b1 << endl;
+            }
         }
-        if (powerCheck(f2, a) || powerCheck(f2, b))
-        {
-            count++;
-        }
+        if (a1 == 1)
+            a1 = a;
+        else
+            a1 *= a;
     }
-    cout << count << endl;
+    cout << st.size() << endl;
 }
 
 /*

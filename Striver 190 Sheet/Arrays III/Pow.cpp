@@ -10,7 +10,7 @@ using namespace std;
     - Try to prove yourself wrong
 */
 
-double binaryExpo(double x, int n)
+double binaryExpo(double x, ll n)
 {
 
     // Base condition
