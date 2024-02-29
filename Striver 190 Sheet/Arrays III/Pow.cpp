@@ -9,7 +9,7 @@ using namespace std;
     - Revise the code
     - Try to prove yourself wrong
 */
-
+#define ll long long int
 double binaryExpo(double x, ll n)
 {
 
@@ -36,13 +36,16 @@ double binaryExpo(double x, ll n)
 double myPow(double x, int n)
 {
     double ans = 0;
+    if (n == 0)
+        return 1;
+    ll nn = n;
     if (n < 0)
     {
         x = 1 / x;
-        ans = binaryExpo(x, abs(n));
+        ans = binaryExpo(x, abs(nn));
     }
     else
-        ans = binaryExpo(x, n);
+        ans = binaryExpo(x, nn);
 
     ans *= 1.00000;
     return ans;
