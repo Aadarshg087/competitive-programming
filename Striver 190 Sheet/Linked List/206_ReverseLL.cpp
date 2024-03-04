@@ -10,8 +10,22 @@ using namespace std;
     - Try to prove yourself wrong
 */
 
+class ListNode
+{
+public:
+    int val;
+    ListNode *next;
+    ListNode(int val)
+    {
+        this->val = val;
+        next = NULL;
+    }
+};
+
 ListNode *reverseList(ListNode *head)
 {
+    if (head == NULL)
+        return 0;
     ListNode *temp = head;
     stack<ListNode *> st;
     while (temp != NULL)
@@ -29,6 +43,7 @@ ListNode *reverseList(ListNode *head)
         temp = temp->next;
         st.pop();
     }
+    temp->next = NULL; // Important statement
 
     return head;
 }

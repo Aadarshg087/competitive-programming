@@ -16,14 +16,24 @@ public:
     ListNode *next;
     ListNode(int val)
     {
-        this->val;
+        this->val = val;
         next = NULL;
     }
 };
 
-ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
+void deleteNode(ListNode *node)
 {
-    
+    ListNode *temp = node;
+    while (node->next != NULL)
+    {
+        node->val = node->next->val;
+        if (node->next->next == NULL)
+        {
+            node->next = NULL;
+            break;
+        }
+        node = node->next;
+    }
 }
 
 int main()
