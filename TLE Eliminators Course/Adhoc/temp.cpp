@@ -8,6 +8,16 @@ using namespace std;
 
 // Debug Template
 #define debug(x) cout << #x << " " << x << endl;
+#define debugv(x) ;
+
+// Debug Functions
+void print_v(vector<int> v)
+{
+    cout << "vector: ";
+    for (int i : v)
+        cout << i << " ";
+    cout << endl;
+}
 
 // Seive Algo
 const int N = 1e6 + 7;
@@ -66,33 +76,9 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    int n, c;
-    cin >> n >> c;
-    vector<int> v;
-    for (int i = 0; i < n; i++)
-    {
-        int temp;
-        cin >> temp;
-        v.push_back(temp + i + 1);
-    }
-
-    sort(v.begin(), v.end());
-    // for (int i : v)
-    //     cout << i << " ";
-    int ans = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (c <= 0)
-            break;
-        if (v[i] <= c)
-        {
-            c -= v[i];
-            ans++;
-        }
-        else
-            break;
-    }
-    cout << ans << endl;
+    int x = 10;
+    vector<int> v{1, 2, 3, 4, 5};
+    debugv(v);
 }
 
 /*

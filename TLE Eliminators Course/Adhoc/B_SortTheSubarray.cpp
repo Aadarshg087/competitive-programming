@@ -7,7 +7,7 @@ using namespace std;
 #define endl "\n"
 
 // Debug Template
-// #define debug(x) cout << #x << \"\" << x << endl;
+#define debug(x) cout << #x << \"\" << x << endl;
 
 // Seive Algo
 const int N = 1e6 + 7;
@@ -68,64 +68,31 @@ void solve()
 {
     int n;
     cin >> n;
-    vector<int> v1(n + 1);
-    vector<int> v2(n + 1);
+    vector<int> v1(n + 1, 0);
+    vector<int> v2(n + 1, 0);
     for (int i = 1; i < n + 1; i++)
-    {
         cin >> v1[i];
-    }
     for (int i = 1; i < n + 1; i++)
         cin >> v2[i];
 
     int l = -1;
-    int r = 1;
-    int left = 1;
-    int right = 1;
-    int mainDiff = INT_MIN;
-    int diff = 0;
-    for (int i = 1; i < n; i++)
+    int r = -1;
+    for (int i = 1; i < n + 1; i++)
     {
-        if (v2[i] <= v2[i + 1])
+        if (v1[i] != v2[i])
         {
+            r = i;
             if (l == -1)
-            {
                 l = i;
-                r = i + 1;
-            }
-            else
-                r = i + 1;
-        }
-        else
-        {
-            if (l == -1)
-                continue;
-            diff = abs(r - l) + 1;
-            if (diff > mainDiff)
-            {
-                left = l;
-                right = r;
-                mainDiff = diff;
-            }
-            l = -1;
-            r = 1;
         }
     }
-    if (l != -1)
-    {
-        diff = abs(r - l) + 1;
-        if (diff > mainDiff)
-        {
-            left = l;
-            right = r;
-            mainDiff = diff;
-        }
-    }
-    // if (l == -1)
-    // {
-    //     cout << 1 << " " << 1 << endl;
-    //     return;
-    // }
-    cout << left << " " << right << endl;
+
+    while (l - 1 >= 1 && v2[l - 1] <= v2[l])
+        l--;
+    while (r + 1 <= n && v2[r] <= v2[r + 1])
+        r++;
+
+    cout << l << " " << r << endl;
 }
 
 /*
