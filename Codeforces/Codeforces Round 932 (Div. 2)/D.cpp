@@ -6,17 +6,22 @@ using namespace std;
 #define ll long long int
 #define endl "\n"
 
-// Debug Template
-#define debug(x) cout << #x << " " << x << endl;
-#define debugv(x) ;
-
-// Debug Functions
-void print_v(vector<int> v)
-{
-    cout << "vector: ";
-    for (int i : v)
-        cout << i << " ";
+#define debug(x)        \
+    cout << #x << ": "; \
+    _print(x);          \
     cout << endl;
+
+// Debug Functions (Nothing to see here!)
+template <class T>
+void _print(T x)
+{
+    cout << x << " ";
+}
+template <class T>
+void _print(vector<T> v)
+{
+    for (T i : v)
+        _print(i);
 }
 
 // Seive Algo
@@ -74,11 +79,36 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
+
 void solve()
 {
-    int x = 10;
-    vector<int> v{1, 2, 3, 4, 5};
-    debugv(v);
+    int n, c;
+    cin >> n >> c;
+    unordered_set<ll> st;
+    for (int i = 0; i < n; i++)
+    {
+        int temp;
+        cin >> temp;
+        st.insert(temp);
+    }
+    ll totalPair = n * (n - 1) / 2;
+    // krle kuch
+
+    ll count = 0;
+    for (int i = 0; i <= c; i++)
+    {
+        for (int j = i; j <= c; j++)
+        {
+            int num1 = i + j;
+            int num2 = j - i;
+            if (st.find(num1) == st.end() && st.find(num2) == st.end())
+            {
+                // cout << i << " " << j << endl;
+                count++;
+            }
+        }
+    }
+    cout << count << endl;
 }
 
 /*

@@ -6,9 +6,23 @@ using namespace std;
 #define ll long long int
 #define endl "\n"
 
-// Debug Template
-#define debug(x) cout << #x << 
- << x << endl;
+#define debug(x)        \
+    cout << #x << ": "; \
+    _print(x);          \
+    cout << endl;
+
+// Debug Functions (Nothing to see here!)
+template <class T>
+void _print(T x)
+{
+    cout << x << " ";
+}
+template <class T>
+void _print(vector<T> v)
+{
+    for (T i : v)
+        _print(i);
+}
 
 // Seive Algo
 const int N = 1e6 + 7;
@@ -67,7 +81,23 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+
+    string t = s;
+    reverse(t.begin(), t.end());
+    if (s <= t)
+    {
+        cout << s << endl;
+        return;
+    }
+
+    string ans = t;
+    reverse(t.begin(), t.end());
+    ans += t;
+    cout << ans << endl;
 }
 
 /*
