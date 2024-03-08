@@ -7,8 +7,8 @@ using namespace std;
 #define endl "\n"
 
 // Debug Template
-#define debug(x) cout << #x << 
- << x << endl;
+#define debug(x) cout << #x < <
+< < x << endl;
 
 // Seive Algo
 const int N = 1e6 + 7;
@@ -67,7 +67,6 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    
 }
 
 /*
