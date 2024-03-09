@@ -12,27 +12,28 @@ using namespace std;
 
 int lengthOfSubstring(string s)
 {
-    set<char> st;
+    // Sliding window
+    int i = 0;
     int n = s.size();
     if (n == 0)
         return 0;
+    int temp = 0;
+    map<char, int> mp;
     int ans = 1;
     for (int i = 0; i < n; i++)
     {
-        if (st.find(s[i]) == st.end())
+        if (mp.find(s[i]) == mp.end())
         {
-            st.insert(s[i]);
+            mp.insert({s[i], i});
         }
         else
         {
-            int t = st.size();
-            ans = max(ans, t);
-            st.clear();
-            st.insert(s[i]);
+            int p = i - mp[s[i]];
+            ans = max(ans, p);
+            mp[s[i]] = i;
         }
     }
-    int t = st.size();
-    return max(t, ans);
+    return ans;
 }
 
 int main()

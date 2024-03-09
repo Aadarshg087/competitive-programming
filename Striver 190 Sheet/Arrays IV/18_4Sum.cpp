@@ -10,22 +10,15 @@ using namespace std;
     - Try to prove yourself wrong
 */
 #define ll long long int
-void solve(vector<int> &nums, int target, int elements, int i, ll sum)
-{
-    // Base case
-    if (elements == 4 && sum == target)
-    {
-    }
-    if (elements == 4)
-    {
-        return;
-    }
-}
 
+// Brute force
 vector<vector<int>> fourSum(vector<int> &nums, int target)
 {
+    sort(nums.begin(), nums.end());
     int n = nums.size();
-    return solve(nums, target, 0, 0, 0);
+    int i = 0;
+    int j = n - 1;
+    
 }
 
 int main()
