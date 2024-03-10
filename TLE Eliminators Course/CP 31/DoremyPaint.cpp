@@ -81,25 +81,51 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    int n, m;
-    cin >> n >> m;
-    string s, x;
-    cin >> x >> s;
+    int n;
+    cin >> n;
+    vector<int> v(n);
+    for (int i = 0; i < n; i++)
+        cin >> v[i];
 
-    int count = 0;
-    while (true)
+    unordered_map<int, int> mp;
+    for (int i = 0; i < n; i++)
     {
-        if (x.find(s) != string::npos)
-        {
-            cout << count << endl;
-            return;
-        }
-        if (count > 1 && x.size() > s.size())
-            break;
-        x += x;
-        count++;
+        mp[v[i]]++;
     }
-    cout << -1 << endl;
+    if (mp.size() > 2)
+    {
+        cout << "No" << endl;
+        return;
+    }
+    else if (n == 2 || mp.size() == 1)
+    {
+        cout << "Yes" << endl;
+        return;
+    }
+    bool check = false;
+    for (auto i : mp)
+    {
+        // cout << i.first << " " << i.second << " " << mp.size() << endl;
+        int f = i.second;
+        // cout << f << endl;
+        if (n & 1)
+        {
+            if (f == ((n / 2) + 1) || f == (n / 2))
+            {
+
+                check = true;
+            }
+        }
+        else
+        {
+            if (f == n / 2)
+                check = true;
+        }
+    }
+    if ((check))
+        cout << "Yes" << endl;
+    else
+        cout << "No" << endl;
 }
 
 /*
