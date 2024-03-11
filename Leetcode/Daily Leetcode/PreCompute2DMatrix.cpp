@@ -42,25 +42,18 @@ int main()
     {
         for (int j = 0; j < cols; j++)
         {
-            if (1)
+            p[i][j] = v[i][j];
+            if (i - 1 >= 0)
             {
-                p[i][j] = v[i][j];
-                cout << p[i][j] << endl;
-                if (i - 1 >= 0)
-                {
-                    cout << "ffsdf" << v[i - 1][j] << endl;
-                    p[i][j] += p[i - 1][j];
-                }
-                if (j - 1 >= 0)
-                {
-                    cout << "sdfsd" << v[i][j - 1] << endl;
-                    p[i][j] += p[i][j - 1];
-                }
-                if (i - 1 >= 0 && j - 1 >= 0)
-                {
-                    cout << "asdasd" << v[i - 1][j - 1] << endl;
-                    p[i][j] -= p[i - 1][j - 1];
-                }
+                p[i][j] += p[i - 1][j];
+            }
+            if (j - 1 >= 0)
+            {
+                p[i][j] += p[i][j - 1];
+            }
+            if (i - 1 >= 0 && j - 1 >= 0)
+            {
+                p[i][j] -= p[i - 1][j - 1];
             }
         }
     }
