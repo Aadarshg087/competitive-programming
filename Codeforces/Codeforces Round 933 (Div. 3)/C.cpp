@@ -85,44 +85,32 @@ void solve()
     cin >> n;
     string s;
     cin >> s;
-    string t1 = "map";
-    string t2 = "pie";
+    string s1 = "map";
+    string s2 = "pie";
+    string s3 = "mapie";
+
     int count = 0;
-    while (1)
+    int i = 0;
+    while (i < n)
     {
-        bool c = 0;
-        bool p = 0;
-        if (s.find(t1) != string::npos && s.find(t2) != string::npos && s.find(t1) + 2 == s.find(t2))
+        if (i + 4 < n && s.substr(i, 5) == s3)
         {
-            s[s.find(t2)] = '-';
+            s[i + 2] = '-';
             count++;
-            c = 1;
-            p = 1;
+            i += 5;
         }
         else
         {
-            if (s.find(t1) != string::npos)
+            if (i + 2 < n && s.substr(i, 3) == s2 || s.substr(i, 3) == s1)
             {
-                int l = s.find(t1);
-                s[l + 1] = '-';
-                // string temp = s.substr(0, l + 1);
-                // temp += s.substr(l + 1);
-                // cout << temp << endl;
+                s[i + 1] = '-';
                 count++;
-                c = 1;
+                i += 3;
             }
-            if (s.find(t2) != string::npos)
+            else
             {
-                int l = s.find(t2);
-                s[l + 1] = '-';
-                count++;
-                p = 1;
+                i++;
             }
-        }
-
-        if (!c && !p)
-        {
-            break;
         }
     }
     cout << count << endl;

@@ -79,6 +79,7 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
+// Upsolve
 void solve()
 {
     int n;
@@ -87,18 +88,28 @@ void solve()
     for (int i = 0; i < n; i++)
         cin >> v[i];
 
-    for (int i = 1; i < n - 1; i++)
+    for (int i = 0; i < n - 2; i++)
     {
-        if (abs(v[i - 1] - v[i]) <= 3 && abs(v[i + 1] - v[i]) <= 3)
-        {
-        }
-        else
+        if (v[i] == 0)
+            continue;
+        v[i + 1] -= 2 * v[i];
+        v[i + 2] = v[i + 2] - v[i];
+        v[i] -= v[i];
+        // debug(v);
+        if (v[i + 1] < 0 || v[i + 2] < 0)
         {
             cout << "NO" << endl;
             return;
         }
     }
-    cout << "YES" << endl;
+    if (v[n - 1] == 0 && v[n - 2] == 0)
+    {
+        cout << "YES" << endl;
+    }
+    else
+    {
+        cout << "NO" << endl;
+    }
 }
 
 /*
