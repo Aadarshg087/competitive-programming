@@ -79,98 +79,47 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
-bool checkPalindrome(string s)
-{
-    int n = s.size();
-    int i = 0;
-    int j = n - 1;
-    while (i < j)
-    {
-        if (s[i] != s[j])
-            return false;
-        i++;
-        j--;
-    }
-    return true;
-}
-
 void solve()
 {
-    // Palindromes - even - all character freq should be even
-    // Odd - all character freq should be even and is allowed to have odd freq
-    int n, k;
-    cin >> n >> k;
-    string s;
-    cin >> s;
-    if (k == 0)
-    {
-        if (checkPalindrome(s))
-            cout << "YES" << endl;
-        else
-            cout << "NO" << endl;
-        return;
-    }
-
-    if (k + 1 == n)
-    {
-        cout << "YES" << endl;
-        return;
-    }
-
-    unordered_map<char, int> mp;
-
+    int n, q;
+    cin >> n >> q;
+    vector<int> v(n);
+    ll sum = 0;
     for (int i = 0; i < n; i++)
     {
-        mp[s[i]]++;
+        cin >> v[i];
+        sum += v[i];
     }
 
-    int countOdd = 0;
-    int countEven = 0;
-    for (auto i : mp)
+    int evenI = n / 2;
+    int oddI = n / 2;
+
+    if (n & 1)
     {
-        if (i.second & 1)
-            countOdd++;
+        evenI = n / 2 + 1;
+        oddI = n / 2;
+    }
+
+    vector<int> ans;
+    for (int i = 0; i < n; i++)
+    {
+        int temp1, temp2;
+        cin >> temp1;
+        cin >> temp2;
+        int a;
+        if (temp1 & 1)
+        {
+            a = oddI * temp2;
+        }
         else
-            countEven++;
+        {
+            a = evenI * temp2;
+        }
+        ans.push_back(sum + a);
     }
 
-    while (1)
-    {
-        for (auto &i : mp)
-        {
-            if (i.second & 1)
-            {
-                k--;
-                if (k == 0)
-                    break;
-                i.second--;
-            }
-            else if (i.second != 0)
-            {
-                k--;
-                i.second--;
-            }
-        }
-        if (k == 0)
-            break;
-    }
-
-    for (auto i : mp)
-    {
-        if (i.second & 1)
-        {
-            countOdd++;
-        }
-        else if (i.second != 0)
-        {
-            countEven++;
-        }
-    }
-
-    if ((countOdd == 1))
-        cout << "YES" << endl;
-    else
-        cout << "NO" << endl;
+    for (int i : ans)
+        cout << i << endl;
 }
 
 /*
