@@ -81,44 +81,44 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    int n, k;
-    cin >> n >> k;
-    string s;
-    cin >> s;
-
-    int countOdd = 0;
-    int countEven = 0;
-    unordered_map<char, int> mp;
+    int n, x;
+    cin >> n >> x;
+    vector<int> v(n);
     for (int i = 0; i < n; i++)
     {
-        mp[s[i]]++;
+        cin >> v[i];
     }
 
-    int count = 0;
-    for (auto i : mp)
+    ll maxi = *max_element(v.begin(), v.end());
+    ll mini = *min_element(v.begin(), v.end());
+
+    ll sum = 0;
+    for (int i = 1; i < n; i++)
     {
-        if (i.second & 1)
+        sum += abs(v[i] - v[i - 1]);
+    }
+
+    if (mini != 1)
+    {
+        ll sum1 = sum + min(abs(1 - v[0]), abs(1 - v[n - 1]));
+        for (int i = 1; i < n; i++)
         {
-            count += i.second;
-            countOdd++;
+            ll temp = sum - abs(v[i] - v[i - 1]) + abs(v[i] - 1) + abs(v[i - 1] - 1);
+            sum1 = min(sum1, temp);
         }
-        else
-            countEven++;
+        sum = sum1;
     }
-
-    if (k == n - 1)
+    if (maxi < x)
     {
-        cout << "YES" << endl;
-        return;
+        ll sum1 = sum + min(abs(x - v[0]), abs(x - v[n - 1]));
+        for (int i = 1; i < n; i++)
+        {
+            ll temp = sum - abs(v[i] - v[i - 1]) + abs(v[i] - x) + abs(v[i - 1] - x);
+            sum1 = min(sum1, temp);
+        }
+        sum = sum1;
     }
-
-    // kaise karun figure out k wala part?????
-    if (k < countOdd - 1)
-        cout << "NO" << endl;
-    else
-        cout << "YES" << endl;
-
-    return;
+    cout << sum << endl;
 }
 
 /*

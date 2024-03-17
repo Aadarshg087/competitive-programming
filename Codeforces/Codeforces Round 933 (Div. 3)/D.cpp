@@ -79,46 +79,81 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
-void solve()
+set<int> st;
+int dp(int n, vector<pair<int, char>> &v, int i, int t)
 {
-    int n, k;
-    cin >> n >> k;
-    string s;
-    cin >> s;
+    // Base case
+    if (i == v.size())
+        return 1;
 
-    int countOdd = 0;
-    int countEven = 0;
-    unordered_map<char, int> mp;
-    for (int i = 0; i < n; i++)
+    // debug(t);
+    st.insert(t);
+    // Recursive Relation
+    int f = v[i].first;
+    int s = v[i].second;
+    int ans = 0;
+    if (s == '?')
     {
-        mp[s[i]]++;
-    }
-
-    int count = 0;
-    for (auto i : mp)
-    {
-        if (i.second & 1)
+        int temp = i - f;
+        if (i - f <= 0)
         {
-            count += i.second;
-            countOdd++;
+            temp = f - i;
+            temp = n - temp;
+        }
+        // cout << "temp1: " << temp << endl;
+        int temp2 = i + f;
+        if (i + f > n)
+        {
+            temp2 = (i + f) % n;
+        }
+        ans = dp(n, v, i + 1, temp) + dp(n, v, i + 1, temp2);
+    }
+    else
+    {
+        if (s == '1')
+        {
+            int temp = i - f;
+            if (i - f <= 0)
+            {
+                temp = f - i;
+                temp = n - temp;
+            }
+            ans = dp(n, v, i + 1, temp);
         }
         else
-            countEven++;
+        {
+            int temp2 = i + f;
+            if (i + f > n)
+            {
+                temp2 = (i + f) % n;
+            }
+
+            ans = dp(n, v, i + 1, temp2);
+        }
     }
 
-    if (k == n - 1)
+    return ans;
+}
+
+// Upsolve
+void solve()
+{
+    int n, m, x;
+    cin >> n >> m >> x;
+    vector<pair<int, char>> v;
+    for (int i = 0; i < m; i++)
     {
-        cout << "YES" << endl;
-        return;
+        int temp1;
+        char temp2;
+        cin >> temp1 >> temp2;
+        v.push_back(make_pair(temp1, temp2));
     }
 
-    // kaise karun figure out k wala part?????
-    if (k < countOdd - 1)
-        cout << "NO" << endl;
-    else
-        cout << "YES" << endl;
-
-    return;
+    dp(n, v, 0, x);
+    cout << st.size() << endl;
+    for (int i : st)
+        cout << i << " ";
+    cout << endl;
 }
 
 /*
