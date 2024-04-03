@@ -10,20 +10,43 @@ using namespace std;
     - Try to prove yourself wrong
 */
 
+bool myComp(int a, int b)
+{
+    return a > b;
+}
+
+int solve(vector<int> &coins, int V, int i)
+{
+    if (i >= coins.size())
+        return INT_MAX;
+
+    if (V == 0)
+        return 1;
+    // Recurrence Relation
+    int t1 = solve(coins, V, i + 1);
+    if (t1 != INT_MAX)
+        t1++;
+    int temp = V / coins[i];
+    V = V % coins[i];
+    int t2 = solve(coins, V, i + 1);
+    if (t2 != INT_MAX)
+        t2++;
+
+    return min(t1, t2);
+}
+
 int minCoins(vector<int> &coins, int M, int V)
 {
-    sort(coins.begin(), coins.end(), greater<int>());
+    auto myLambda = [](int a, int b)
+    {
+        return a > b;
+    };
+    sort(coins.begin(), coins.end(), myLambda);
+    // sort(coins.begin(), coins.end(), myComp);
     int n = coins.size();
     int count = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (coins[i] > V)
-            continue;
-        int temp = V / coins[i];
-        V = V % coins[i];
-        count += temp;
-    }
-    return count;
+    // kuch smajh nhi aara, mai krra isse recursion se as supposed to greedy for sake of doing it on my own
+    return solve(coins, V, 0);
 }
 
 int main()
