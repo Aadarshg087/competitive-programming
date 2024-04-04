@@ -19,9 +19,6 @@ void solve(vector<int> &nums, vector<int> temp, vector<vector<int>> &ans, vector
         return;
     }
 
-    if (i >= nums.size())
-        return;
-
     // Recurrence Relatiom
     for (int j = 0; j < nums.size(); j++)
     {
