@@ -81,32 +81,21 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    ll a, b, c, d;
-    cin >> a >> b >> c >> d;
-    if (d < b)
+    ll a, b, n;
+    cin >> a >> b >> n;
+    vector<ll> v(n);
+    for (int i = 0; i < n; i++)
     {
-        cout << -1 << endl;
-        return;
+        cin >> v[i];
     }
-    else if (d <= b && c > a)
+    ll ans = b;
+    b = 1;
+    for (int i = 0; i < n; i++)
     {
-        cout << -1 << endl;
-        return;
+        ans += min(v[i], a - 1);
     }
 
-    int temp1 = (d - b);
-    a = a + temp1;
-    b = d;
-    // cout << a << " " << c << endl;
-    if (c > a)
-    {
-        cout << -1 << endl;
-        return;
-    }
-    int temp2 = abs(c - a);
-    // cout << a << " " << b << endl;
-    // cout << temp1 << " " << temp2 << endl;
-    cout << temp1 + abs(temp2) << endl;
+    cout << ans << endl;
 }
 
 /*

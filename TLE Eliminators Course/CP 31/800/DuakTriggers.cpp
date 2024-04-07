@@ -81,32 +81,23 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    ll a, b, c, d;
-    cin >> a >> b >> c >> d;
-    if (d < b)
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+    int count = 0;
+    for (char ch : s)
     {
-        cout << -1 << endl;
-        return;
-    }
-    else if (d <= b && c > a)
-    {
-        cout << -1 << endl;
-        return;
+        if (ch == '1')
+            count++;
     }
 
-    int temp1 = (d - b);
-    a = a + temp1;
-    b = d;
-    // cout << a << " " << c << endl;
-    if (c > a)
+    if (!(count & 1))
     {
-        cout << -1 << endl;
-        return;
+        cout << "YES" << endl;
     }
-    int temp2 = abs(c - a);
-    // cout << a << " " << b << endl;
-    // cout << temp1 << " " << temp2 << endl;
-    cout << temp1 + abs(temp2) << endl;
+    else
+        cout << "NO" << endl;
 }
 
 /*
