@@ -1,0 +1,17 @@
+Codeforces Blog
+Title - What it's like being a Newbie (3 months into CP)
+
+First of all, this is my first blog on codeforces.
+Motivation - I think writing these experiences about different stages in Competitve Programming Journey could be really helpful to peers. Although this journey is unique to everyone, but there are some overlapping experiences that could be worth sharing.
+
+I started Competitive Programming in November of 2023. Since then, there is not much of change in rating on my profile (From November to February). But I have realised a lot of change mentally when I look back to solutions or solves a problem which I have solved before. Here are list of changes that my brain has gone through
+
+1. First thing that I learnt is : Question(strike through) Problems
+
+2. I remember when I first started solving problems on Codeforces. Simply, absorbing the variable names and conditions written in terms of equation used to took so long to process. Looking at the variables and processing the conditions used to take good amount energy. Then, making observations and pruning the unnecessary items from it is cherry on top. 
+
+3. Programming/Implementation is the most exciting part of the whole process. As soon as I used to make an observation and got to the potential approach, I straight away get into the implementation and good amount of the time, I ends up getting a WA as a verdict.  Not thinking it through is the biggest mistake I did (still do) but the excitement of submitting the problem once you have a approach in your mind is something else. Proving yourself why your approach is correct and taking care of the corner cases usually the step I skipped mostly out of excitement. 
+
+4. After a month of practice and regularly giving contest, I begin to get comfortable with variables and usual conditions. Pruning of unnecessary items got better, clarity about the approach got better,  judgement the corner cases got better, implementation got better, opening codeforces felt nicer than ever before. 
+
+5. But then suddenly, you got introduced to the harder problems where you have no idea where you should start solving the problem (Bit Manipulation Supremacy).
