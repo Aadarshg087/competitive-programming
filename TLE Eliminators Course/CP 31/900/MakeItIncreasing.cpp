@@ -88,23 +88,42 @@ void solve()
     {
         cin >> v[i];
     }
-
-    bool c = 1;
-    int count = 0;
-    for (int i = 0; i < n; i++)
+    bool c = 0;
+    for (int i = 0; i < n - 1; i++)
     {
-        if (v[i] != 0 && c)
+        if (v[i] >= v[i + 1])
+            c = 1;
+    }
+    if (!c)
+    {
+        cout << 0 << endl;
+        return;
+    }
+
+    int count = 0;
+    c = 0;
+    while (v[0] != 1)
+    {
+        v[0] /= 2;
+        count++;
+    }
+    for (int i = 1; i < n; i++)
+    {
+        while (v[i] != 0 && v[i] > v[i - 1])
         {
+            v[i] /= 2;
             count++;
-            c = 0;
-        }
-        else if (v[i] == 0)
-        {
             c = 1;
         }
+        if (c)
+        {
+            v[i] *= 2;
+            count--;
+            c = 0;
+        }
     }
-    if (count > 2)
-        cout << 2 << endl;
+    if (!count)
+        cout << -1 << endl;
     else
         cout << count << endl;
 }

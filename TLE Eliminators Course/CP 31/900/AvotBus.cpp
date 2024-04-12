@@ -81,32 +81,52 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    int n;
+    ll n;
     cin >> n;
-    vector<int> v(n);
-    for (int i = 0; i < n; i++)
+    if (n & 1 || n <= 3)
     {
-        cin >> v[i];
+        cout << -1 << endl;
+        return;
     }
 
-    bool c = 1;
-    int count = 0;
-    for (int i = 0; i < n; i++)
+    ll ans1 = (n % 4 == 0) ? n / 4 : 0;
+    ll ans2 = (n % 6 == 0) ? n / 6 : 0;
+    if (ans1 && ans2)
     {
-        if (v[i] != 0 && c)
+        cout << ans2 << " " << ans1 << endl;
+        return;
+    }
+    else if (!ans1 && ans2)
+    {
+        if (n % 4 == 2)
+            ans1 = n / 4;
+        else
+            ans1 = n / 6;
+        cout << ans2 << " " << ans1 << endl;
+        return;
+    }
+    else if (ans1 && !ans2)
+    {
+        if (n % 6 == 2 || n % 6 == 4)
         {
-            count++;
-            c = 0;
+            ans2 = n / 6;
+            cout << ans2 + 1 << " " << ans1 << endl;
+            return;
         }
-        else if (v[i] == 0)
+        else
+            ans2 = n / 4;
+        cout << ans2 << " " << ans1 << endl;
+        return;
+    }
+    else
+    {
+        if ((n % 6 == 4 || n % 6 == 2) && n % 4 == 2)
         {
-            c = 1;
+            cout << n / 6 + 1 << " " << n / 4 << endl;
+            return;
         }
     }
-    if (count > 2)
-        cout << 2 << endl;
-    else
-        cout << count << endl;
+    cout << -1 << endl;
 }
 
 /*
