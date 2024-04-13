@@ -81,55 +81,37 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<int> v(n);
-    for (int i = 0; i < n; i++)
+    string s, f;
+    cin >> s >> f;
+    multiset<char> st;
+    int n = s.size();
+    int m = f.size();
+    int i = n - 1;
+    int j = m - 1;
+    while (j >= 0)
     {
-        cin >> v[i];
-    }
-
-    bool c = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (v[i] >= v[i + 1])
-            c = 1;
-    }
-    if (!c)
-    {
-        cout << 0 << endl;
-        return;
-    }
-    int count = 0;
-    int t = 0;
-    for (int i = n - 2; i >= 0; i--)
-    {
-        if (v[i] >= v[i + 1])
+        if (s[i] == f[j])
         {
-            while (v[i] >= v[i + 1])
+            if (st.find(s[i]) != st.end())
             {
-                v[i] /= 2;
-                count++;
-                if (v[i] == 0)
-                {
-                    t = i;
-                    break;
-                }
-            }
-            if (t != 0)
-            {
-                cout << -1 << endl;
+                cout << "NO" << endl;
                 return;
             }
+            j--;
+            i--;
+        }
+        else
+        {
+            st.insert(s[i]);
+            i--;
+        }
+        if (i < 0 && j >= 0)
+        {
+            cout << "NO" << endl;
+            return;
         }
     }
-    // if (n > 1 && v[0] >= v[1])
-    // {
-    //     cout << -1 << endl;
-    //     return;
-    // }
-
-    cout << count << endl;
+    cout << "YES" << endl;
 }
 
 /*

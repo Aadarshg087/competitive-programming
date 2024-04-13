@@ -10,53 +10,48 @@ using namespace std;
     - Try to prove yourself wrong
 */
 
-bool isValid(vector<vector<char>> &board, int a, int b, int r, int c, int p)
+bool isValid(vector<vector<char>> &board, char ch, int r, int c)
 {
-    for (int i = 1; i < r; i++)
+    for (int i = 0; i < 9; i++)
     {
-        if (board[i][b] == p)
+        if (board[r][i] == ch)
             return false;
-        if (board[a][i] == p)
+        if (board[i][c] == ch)
             return false;
-        // 3 x 3 box condition
+        if (board[3 * (r / 3) + i / 3][3 * (c / 3) + i % 3] == ch)
+            return false;
     }
-
-    return 1;
+    return true;
 }
 
-void solve(vector<vector<char>> &board, int r, int c, int a, int b)
+bool solve(vector<vector<char>> &board)
 {
-    // Base case
-
-    // Recurrence relation
-    for (int i = a; i < r; i++)
+    for (int i = 0; i < board.size(); i++)
     {
-        for (int j = b; j < c; j++)
+        for (int j = 0; j < board[0].size(); j++)
         {
             if (board[i][j] == '.')
             {
-                bool b = 0;
-                for (int p = 1; p <= 9; p++)
+                for (char ch = '1'; ch <= '9'; ch++)
                 {
-                    if (isValid(board, r, c, i, j, p))
+                    if (isValid(board, ch, i, j))
                     {
-                        board[i][j] = p;
-                        solve(board, r, c, i, j);
-                        b = 1;
+                        if (solve(board))
+                            return 1;
+                        else
+                            board[i][j] = '.';
                     }
                 }
-                if (!b)
-                    return;
             }
+            return 0;
         }
     }
-    return;
+    return 1;
 }
+
 void solveSudoku(vector<vector<char>> &board)
 {
-    int r = board.size();
-    int c = board[0].size();
-    solve(board, r, c, 0, 0);
+    solve(board);
 }
 
 int main()
