@@ -1,4 +1,4 @@
-// #include <iostream>
+#include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -79,42 +79,64 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
-bool check(int a, int b, int c)
-{
-    cout << a << " " << b << " " << c << endl;
-    if ((a - b) == (b - c))
-        return 1;
-    return 0;
-}
-
 void solve()
 {
-    ll a, b, c;
-    // cin >> a >> b >> c;
-    cout << 0 / 2 << endl;
+    ll n;
+    cin >> n;
+    if (n % 25 == 0)
+    {
+        cout << 0 << endl;
+        return;
+    }
 
-    // if ((a - b) == (b - c))
-    // {
-    //     cout << "YES" << endl;
-    //     return;
-    // }
-
-    // if ((a + c) % (2 * b) == 0)
-    // {
-    //     cout << "YES" << endl;
-    //     return;
-    // }
-    // if (((2 * b) - a) % c == 0 && ((2 * b) - a) > 0)
-    // {
-    //     cout << "YES" << endl;
-    //     return;
-    // }
-    // if (((2 * b) - c) % a == 0 && ((2 * b) - c) > 0)
-    // {
-    //     cout << "YES" << endl;
-    //     return;
-    // }
-    // cout << "NO" << endl;
+    string t = to_string(n);
+    // cout << t << endl;
+    int size = t.size();
+    int count = 0;
+    for (int i = size - 1; i >= 0; i--)
+    {
+        if (t[i] == '0')
+        {
+            int j = i - 1;
+            while (j >= 0)
+            {
+                if (t[j] == '0' || t[j] == '5')
+                {
+                    break;
+                }
+                count++;
+                j--;
+            }
+            if (j < 0)
+            {
+                count -= i;
+            }
+            else
+                break;
+        }
+        else if (t[i] == '5')
+        {
+            int j = i - 1;
+            while (j >= 0)
+            {
+                if (t[j] == '2' || t[j] == '7')
+                {
+                    break;
+                }
+                count++;
+                j--;
+            }
+            if (j < 0)
+            {
+                count -= i;
+            }
+            else
+                break;
+        }
+        else
+            count++;
+    }
+    cout << count << endl;
 }
 
 /*

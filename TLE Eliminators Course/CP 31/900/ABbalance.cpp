@@ -1,4 +1,4 @@
-// #include <iostream>
+#include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -79,42 +79,72 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
-bool check(int a, int b, int c)
-{
-    cout << a << " " << b << " " << c << endl;
-    if ((a - b) == (b - c))
-        return 1;
-    return 0;
-}
-
 void solve()
 {
-    ll a, b, c;
-    // cin >> a >> b >> c;
-    cout << 0 / 2 << endl;
+    string s;
+    cin >> s;
+    int n = s.size();
+    string a = "ab";
+    string b = "ba";
+    int counta = 0;
+    int countb = 0;
+    for (int i = 0; i < n - 1; i++)
+    {
+        string temp = "";
+        temp += s[i];
+        temp += s[i + 1];
+        if (temp == a)
+        {
+            counta++;
+        }
+        else if (temp == b)
+        {
+            countb++;
+        }
+    }
 
-    // if ((a - b) == (b - c))
-    // {
-    //     cout << "YES" << endl;
-    //     return;
-    // }
+    if (counta == countb)
+    {
+        cout << s << endl;
+        return;
+    }
 
-    // if ((a + c) % (2 * b) == 0)
-    // {
-    //     cout << "YES" << endl;
-    //     return;
-    // }
-    // if (((2 * b) - a) % c == 0 && ((2 * b) - a) > 0)
-    // {
-    //     cout << "YES" << endl;
-    //     return;
-    // }
-    // if (((2 * b) - c) % a == 0 && ((2 * b) - c) > 0)
-    // {
-    //     cout << "YES" << endl;
-    //     return;
-    // }
-    // cout << "NO" << endl;
+    // cout << counta << " " << countb << endl;
+    if (counta > countb)
+    {
+        for (int i = 0; i < n - 2; i++)
+        {
+            if (s[i] == 'a' && s[i + 1] == 'b' && s[i + 1] == 'a')
+            {
+                s[i] = 'b';
+                cout << s << endl;
+                return;
+            }
+        }
+        if (s[0] == 'a')
+        {
+            s[0] = 'b';
+        }
+    }
+    else
+    {
+        for (int i = 0; i < n - 2; i++)
+        {
+            if (s[i] == 'b' && s[i + 1] == 'a' && s[i + 1] == 'b')
+            {
+                s[i] = 'a';
+                cout << s << endl;
+                return;
+            }
+        }
+
+        if (s[0] == 'b')
+        {
+            s[0] = 'a';
+        }
+    }
+
+    cout << s << endl;
 }
 
 /*
