@@ -81,15 +81,40 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    int n, c;
-    cin >> n >> c;
-    vector<int> v(n);
-    for (int i = 0; i < n; i++)
-    {
-        cin >> v[i];
-    }
+    ll n;
+    cin >> n;
+    // set<ll> st = divisor(n);
 
-    sort(v.begin(), v.end());
+    for (int i = 2; i * i <= n; i++)
+    {
+        cout << i << endl;
+        if (n % i == 0)
+        {
+            cout << "YES" << endl;
+            ll f = n / i;
+            if ((i & 1) || ((f) & 1))
+            {
+                cout << "YES" << endl;
+                return;
+            }
+            // st.insert(n / i);
+        }
+    }
+    cout << "NO" << endl;
+    return;
+
+    // vector<ll> a(st.begin(), st.end());
+    // for (int i = 1; i < a.size(); i++)
+    // {
+    //     int f = a[i];
+    //     int s = n / a[i];
+    //     if ((f & 1) || (s & 1))
+    //     {
+    //         cout << "YES" << endl;
+    //         return;
+    //     }
+    // }
+    // cout << "NO" << endl;
 }
 
 /*

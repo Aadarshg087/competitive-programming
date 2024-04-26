@@ -81,15 +81,42 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    int n, c;
-    cin >> n >> c;
-    vector<int> v(n);
-    for (int i = 0; i < n; i++)
+    int n;
+    cin >> n;
+    vector<ll> v(n + 1);
+    for (int i = 1; i < n + 1; i++)
     {
         cin >> v[i];
     }
 
-    sort(v.begin(), v.end());
+    bool c = 0;
+    int first = 1;
+    int second = INT_MIN;
+    int third = INT_MIN;
+    for (int i = 1; i < n + 1; i++)
+    {
+        if (v[i] < v[first] && second == INT_MIN)
+        {
+            first = i;
+        }
+        else if (v[i] < v[second] && second != INT_MIN)
+        {
+            third = i;
+            c = 1;
+            break;
+        }
+        else if (v[i] > v[first])
+        {
+            second = i;
+        }
+    }
+    if (c)
+    {
+        cout << "YES" << endl;
+        cout << first << " " << second << " " << third << endl;
+    }
+    else
+        cout << "NO" << endl;
 }
 
 /*

@@ -79,17 +79,39 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
+int roundUp(int n)
+{
+    float t = (float)n / 2;
+    int t2 = n / 2;
+    if ((t - t2) != 0)
+    {
+        return t2 + 1;
+    }
+    else
+        return t2;
+}
+
 void solve()
 {
-    int n, c;
-    cin >> n >> c;
-    vector<int> v(n);
-    for (int i = 0; i < n; i++)
+    int n, k;
+    cin >> n >> k;
+    int size = n * k;
+    vector<int> v(size);
+    for (int i = 0; i < size; i++)
     {
         cin >> v[i];
     }
-
-    sort(v.begin(), v.end());
+    int mid = roundUp(n);
+    mid = n - mid;
+    int i = size - 1;
+    i -= mid;
+    ll sum = 0;
+    while (k--)
+    {
+        sum += v[i];
+        i -= mid + 1;
+    }
+    cout << sum << endl;
 }
 
 /*

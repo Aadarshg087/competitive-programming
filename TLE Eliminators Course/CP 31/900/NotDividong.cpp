@@ -81,7 +81,7 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    int n;
+    ll n;
     cin >> n;
     vector<ll> v(n);
     for (int i = 0; i < n; i++)
@@ -89,25 +89,14 @@ void solve()
         cin >> v[i];
     }
 
-    if (v[0] == 1)
-        v[0] += 2;
-    for (int i = 1; i < n; i++)
+    int count = 0;
+    for (int i = 0; i < n; i++)
     {
-        if (v[i] == 1)
-        {
-            v[i] += 2;
-        }
-        if (v[i] % v[i - 1] == 0)
-        {
-            v[i - 1]++;
-            if (i >= 2 && v[i - 1] % v[i - 2] == 0)
-            {
-                v[i - 1]++;
-            }
-        }
+        
     }
+    cout << "count: " << count << endl;
 
-    for (int i : v)
+    for (ll i : v)
         cout << i << " ";
     cout << endl;
 }

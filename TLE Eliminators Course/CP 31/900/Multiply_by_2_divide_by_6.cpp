@@ -81,15 +81,58 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    int n, c;
-    cin >> n >> c;
-    vector<int> v(n);
-    for (int i = 0; i < n; i++)
+    ll n;
+    cin >> n;
+    ll count2 = 0;
+    ll count3 = 0;
+    // if n is raised to power 2, return -1 or count of 2 greater than count of 3
+    if (n == 1)
     {
-        cin >> v[i];
+        cout << 0 << endl;
+        return;
     }
 
-    sort(v.begin(), v.end());
+    while (1)
+    {
+        if (n == 1)
+        {
+            break;
+        }
+        if (n % 2 == 0)
+        {
+            n /= 2;
+            count2++;
+        }
+        else if (n % 3 == 0)
+        {
+            n /= 3;
+            count3++;
+        }
+        else
+        {
+            cout << -1 << endl;
+            return;
+        }
+    }
+    ll ans = 0;
+    if (count2 > count3)
+    {
+        cout << -1 << endl;
+        return;
+    }
+    else if (count2 == count3)
+    {
+        cout << count2 << endl;
+        return;
+    }
+    else if (count2 < count3)
+    {
+        ans = count2;
+        ans += count3 - count2;
+        ans += count3 - count2;
+    }
+
+    cout << ans << endl;
 }
 
 /*

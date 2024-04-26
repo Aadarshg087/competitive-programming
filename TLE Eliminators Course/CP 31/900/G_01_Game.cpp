@@ -81,15 +81,38 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    int n, c;
-    cin >> n >> c;
-    vector<int> v(n);
-    for (int i = 0; i < n; i++)
+    string s;
+    cin >> s;
+    int n = s.size();
+    int t = n / 2;
+    string a = "10";
+    string b = "01";
+    bool c = 0;
+    while (1)
     {
-        cin >> v[i];
+        if (s.find(a) == string::npos && s.find(b) == string::npos)
+        {
+            if (c)
+                cout << "DA" << endl;
+            else
+                cout << "NET" << endl;
+            return;
+        }
+        else
+        {
+            c = !c;
+            if (s.find(a) != string::npos)
+            {
+                int f = s.find(a);
+                s.erase(f, 2);
+            }
+            else
+            {
+                int f = s.find(b);
+                s.erase(f, 2);
+            }
+        }
     }
-
-    sort(v.begin(), v.end());
 }
 
 /*
