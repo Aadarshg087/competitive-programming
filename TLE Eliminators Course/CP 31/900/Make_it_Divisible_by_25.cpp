@@ -83,60 +83,50 @@ void solve()
 {
     ll n;
     cin >> n;
-    if (n % 25 == 0)
-    {
-        cout << 0 << endl;
-        return;
-    }
-
-    string t = to_string(n);
-    // cout << t << endl;
-    int size = t.size();
+    string s = to_string(n);
+    n = s.size();
+    int ans = INT_MAX;
     int count = 0;
-    for (int i = size - 1; i >= 0; i--)
+    // 50
+    for (int i = n - 1; i >= 0; i--)
     {
-        if (t[i] == '0')
+        if (s[i] == '0')
         {
             int j = i - 1;
-            while (j >= 0)
+            while (j >= 0 && s[j] != '5' && s[j] != '0')
             {
-                if (t[j] == '0' || t[j] == '5')
-                {
-                    break;
-                }
                 count++;
                 j--;
             }
-            if (j < 0)
+            if (j >= 0)
             {
-                count -= i;
+                ans = min(count, ans);
             }
-            else
-                break;
-        }
-        else if (t[i] == '5')
-        {
-            int j = i - 1;
-            while (j >= 0)
-            {
-                if (t[j] == '2' || t[j] == '7')
-                {
-                    break;
-                }
-                count++;
-                j--;
-            }
-            if (j < 0)
-            {
-                count -= i;
-            }
-            else
-                break;
         }
         else
             count++;
     }
-    cout << count << endl;
+    count = 0;
+
+    for (int i = n - 1; i >= 0; i--)
+    {
+        if (s[i] == '5')
+        {
+            int j = i - 1;
+            while (j >= 0 && s[j] != '2' && s[j] != '7')
+            {
+                count++;
+                j--;
+            }
+            if (j >= 0)
+            {
+                ans = min(count, ans);
+            }
+        }
+        else
+            count++;
+    }
+    cout << ans << endl;
 }
 
 /*

@@ -90,29 +90,13 @@ void solve()
     for (int i = 0; i < n; i++)
     {
         cin >> v[i];
-        if (v[i] > maxi)
-        {
-            index = i;
-            maxi = v[i];
-        }
-        if (v[i] == 0)
-            c = 1;
     }
-
-    if (c)
+    int ad = v[0];
+    for (int i = 0; i < n; i++)
     {
-        cout << 0 << endl;
-        return;
+        ad &= v[i];
     }
-
-    int i = 0;
-    ll ans = INT_MAX;
-    while (i <= n - 1)
-    {
-        ans = min(ans, (v[index] & v[i]));
-        i++;
-    }
-    cout << ans << endl;
+    cout << ad << endl;
 }
 
 /*
