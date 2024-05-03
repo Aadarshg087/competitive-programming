@@ -14,15 +14,15 @@ using namespace std;
 int kthElement(int arr1[], int arr2[], int n, int m, int k)
 {
     vector<int> v;
-    for (int i : arr1)
-    {
-        v.push_back(i);
-    }
+    // for (int i : arr1)
+    // {
+    //     v.push_back(i);
+    // }
 
-    for (int i : arr2)
-    {
-        v.push_back(i);
-    }
+    // for (int i : arr2)
+    // {
+    //     v.push_back(i);
+    // }
     sort(v.begin(), v.end());
 
     return v[k - 1];
@@ -56,9 +56,7 @@ int kthElement(int arr1[], int arr2[], int n, int m, int k)
     return v[k - 1];
 }
 
-
 // Optimal Approach --------------------------
-
 
 int main()
 {

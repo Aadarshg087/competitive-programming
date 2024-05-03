@@ -81,29 +81,38 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    ll n;
+    int n;
     cin >> n;
-    if (n & 1)
+    vector<ll> v(n);
+    ll maxi = 0;
+    int index = 0;
+    bool c = 0;
+    for (int i = 0; i < n; i++)
     {
-        cout << "YES" << endl;
+        cin >> v[i];
+        if (v[i] > maxi)
+        {
+            index = i;
+            maxi = v[i];
+        }
+        if (v[i] == 0)
+            c = 1;
+    }
+
+    if (c)
+    {
+        cout << 0 << endl;
         return;
     }
-    while (n != 1)
+
+    int i = 0;
+    ll ans = INT_MAX;
+    while (i <= n - 1)
     {
-        if (n % 2 == 0)
-            n /= 2;
-        else if (n & 1)
-        {
-            cout << "YES" << endl;
-            return;
-        }
-        else if (isPrime[n])
-        {
-            cout << "YES" << endl;
-            return;
-        }
+        ans = min(ans, (v[index] & v[i]));
+        i++;
     }
-    cout << "NO" << endl;
+    cout << ans << endl;
 }
 
 /*
@@ -121,7 +130,7 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
     // solve();
-    seiveAlgo();
+    // seiveAlgo();
     int t;
     cin >> t;
     while (t--)

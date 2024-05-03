@@ -81,29 +81,37 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    ll n;
-    cin >> n;
-    if (n & 1)
+    ll n, m, i, j;
+    cin >> n >> m >> i >> j;
+    ll ans1 = INT_MIN; // first farthest
+    ll ans2 = INT_MIN; // second farthest
+    ll a = 0;
+    ll b = 0;
+    ll c = 0;
+    ll d = 0;
+    ll ans = 0;
+    ll sum = abs(i - 1) + abs(j - m);
+    ll sum2 = abs(i - n) + abs(j - 1);
+    if (sum + sum2 >= ans)
     {
-        cout << "YES" << endl;
-        return;
+        a = 1;
+        b = m;
+        c = n;
+        d = 1;
+        ans = sum + sum2;
     }
-    while (n != 1)
+    sum = abs(i - 1) + abs(j - 1);
+    sum2 = abs(i - n) + abs(j - m);
+    if (sum + sum2 > ans)
     {
-        if (n % 2 == 0)
-            n /= 2;
-        else if (n & 1)
-        {
-            cout << "YES" << endl;
-            return;
-        }
-        else if (isPrime[n])
-        {
-            cout << "YES" << endl;
-            return;
-        }
+        a = 1;
+        b = 1;
+        c = n;
+        d = m;
+        ans = sum + sum2;
     }
-    cout << "NO" << endl;
+
+    cout << a << " " << b << " " << c << " " << d << endl;
 }
 
 /*
@@ -121,7 +129,7 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
     // solve();
-    seiveAlgo();
+    // seiveAlgo();
     int t;
     cin >> t;
     while (t--)

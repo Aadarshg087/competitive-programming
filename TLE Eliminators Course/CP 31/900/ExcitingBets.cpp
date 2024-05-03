@@ -79,31 +79,43 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
+int test(int n, int divisor)
+{
+    int temp = n / divisor;
+    cout << temp * divisor << " " << n << " " << (temp * divisor) + divisor << endl;
+    return min(n - temp * divisor, temp * divisor + divisor - n);
+}
+
 void solve()
 {
-    ll n;
-    cin >> n;
-    if (n & 1)
+    ll a, b;
+    cin >> a >> b;
+
+    if (a == 0 || b == 0)
     {
-        cout << "YES" << endl;
+        cout << max(a, b) << " " << 0 << endl;
         return;
     }
-    while (n != 1)
+
+    if (a == b)
     {
-        if (n % 2 == 0)
-            n /= 2;
-        else if (n & 1)
-        {
-            cout << "YES" << endl;
-            return;
-        }
-        else if (isPrime[n])
-        {
-            cout << "YES" << endl;
-            return;
-        }
+        cout << 0 << " " << 0 << endl;
+        return;
     }
-    cout << "NO" << endl;
+
+    ll diff = abs(a - b);
+    ll mini = min(a, b);
+    ll temp = mini % diff;
+    ll temp2 = mini / diff;
+    if (temp == 0)
+    {
+        cout << diff << " " << temp << endl;
+    }
+    else
+    {
+        ll ans = min(mini - (temp2 * diff), ((temp2 * diff) + diff) - mini);
+        cout << diff << " " << ans << endl;
+    }
 }
 
 /*
@@ -121,7 +133,7 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
     // solve();
-    seiveAlgo();
+    // seiveAlgo();
     int t;
     cin >> t;
     while (t--)
