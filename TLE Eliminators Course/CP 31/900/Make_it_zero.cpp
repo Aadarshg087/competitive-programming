@@ -85,44 +85,24 @@ void solve()
     cin >> n;
     vector<int> v(n);
     for (int i = 0; i < n; i++)
+    {
         cin >> v[i];
-
-    int XOR = 0;
-    for (int i = 0; i < n; i++)
-    {
-        // if (i >= 3 && i <= 6)
-        {
-            // cout << i << ": " << v[i] << endl;
-            XOR ^= v[i];
-            cout << XOR << " ";
-        }
-    }
-    cout << endl;
-
-    for (int i = 0; i < n; i++)
-    {
-        // if (i >= 3 && i <= 6)
-        {
-            // cout << i << ": " << v[i] << endl;
-            // XOR ^= v[i];
-            // cout << XOR << " ";
-            v[i] = XOR;
-        }
     }
 
-    // XOR = 0;
-    // for (int i = 0; i < n; i++)
-    // {
-    // XOR ^= v[i];
-    // }
-
-    // cout << XOR << endl;
-    for (int &i : v)
-        i = XOR;
-
-    for (int i : v)
-        cout << i << " ";
-    cout << endl;
+    if (n & 1)
+    {
+        cout << 4 << endl;
+        cout << 1 << " " << n - 1 << endl;
+        cout << 1 << " " << n - 1 << endl;
+        cout << n - 1 << " " << n << endl;
+        cout << n - 1 << " " << n << endl;
+    }
+    else
+    {
+        cout << 2 << endl;
+        cout << 1 << " " << n << endl;
+        cout << 1 << " " << n << endl;
+    }
 }
 
 /*

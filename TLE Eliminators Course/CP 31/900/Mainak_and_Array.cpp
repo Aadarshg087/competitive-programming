@@ -85,29 +85,56 @@ void solve()
     cin >> n;
     vector<int> v(n);
     int maxi = INT_MIN;
-    int loc = 0;
     int mini = INT_MAX;
     for (int i = 0; i < n; i++)
     {
         cin >> v[i];
-        if (v[i] > maxi)
-        {
-            loc = i;
-            maxi = v[i];
-        }
-        if (v[i] < mini)
-            mini = v[i];
     }
-
-    int ans = maxi - v[0];
-    if (loc == n - 1)
+    int ans = INT_MIN;
+    if (n == 1)
     {
-        cout << maxi - mini << endl;
+        cout << 0 << endl;
         return;
     }
+    // max element except the first one
+    for (int i = 1; i < n; i++)
+    {
+        maxi = max(v[i], maxi);
+    }
 
-    int ans2 = v[loc] - v[loc + 1];
-    cout << max(ans, ans2) << endl;
+    // finding the min element except the last one
+    for (int i = 0; i < n - 1; i++)
+    {
+        mini = min(v[i], mini);
+    }
+
+    set<int, greater<int>> st;
+    st.insert((maxi - v[0]));
+    ans = max(ans, maxi - v[0]);
+    st.insert((v[n - 1] - mini));
+    ans = max(ans, v[n - 1] - mini);
+
+    maxi = *max_element(v.begin(), v.end());
+    mini = *min_element(v.begin(), v.end());
+
+    // cout << maxi << " " << mini << endl;
+    for (int i = 0; i < n; i++)
+    {
+        if (v[i] == maxi && i != n - 1)
+        {
+            st.insert(maxi - v[i + 1]);
+            ans = max(ans, maxi - v[i + 1]);
+        }
+        if (v[i] == mini && i != 0)
+        {
+            st.insert(v[i - 1] - mini);
+            ans = max(ans, v[n - 1] - mini);
+        }
+    }
+    st.insert(v[n - 1] - v[0]);
+    cout << ans << endl;
+
+    // cout << *st.begin() << endl;
 }
 
 /*

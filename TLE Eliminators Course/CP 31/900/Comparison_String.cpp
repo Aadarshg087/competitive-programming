@@ -82,33 +82,38 @@ ll __lcm(ll a, ll b)
 void solve()
 {
     int n;
-    cin >> n;   
+    cin >> n;
     string s;
     cin >> s;
 
-    vector<int> v;
-    n = s.size();
-    v.push_back(1);
+    int ans = 0;
+    int count = 0;
+    int count2 = 0;
     for (int i = 0; i < n; i++)
     {
-        if (s[i] == '>')
+        if (s[i] == '<')
         {
-            v.push_back(v.back() - 1);
+            count++;
+            ans = max(ans, count);
+            count2 = 0;
         }
         else
         {
-            v.push_back(v.back() + 1);
+            count2++;
+            ans = max(ans, count2);
+            count = 0;
         }
     }
+    if (ans == 0)
+        cout << n + 1 << endl;
+    else
+        cout << ans + 1 << endl;
     // // Debug
     // for (int i : v)
     // {
     //     cout << i << " ";
     // }
     // cout << endl;
-
-    set<int> st(v.begin(), v.end());
-    cout << (int)st.size() << endl;
 }
 
 /*
