@@ -114,25 +114,14 @@ void solve()
     st.insert((v[n - 1] - mini));
     ans = max(ans, v[n - 1] - mini);
 
-    maxi = *max_element(v.begin(), v.end());
-    mini = *min_element(v.begin(), v.end());
-
-    // cout << maxi << " " << mini << endl;
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < n - 1; i++)
     {
-        if (v[i] == maxi && i != n - 1)
+        if (v[i] - v[i + 1] > *st.begin())
         {
-            st.insert(maxi - v[i + 1]);
-            ans = max(ans, maxi - v[i + 1]);
-        }
-        if (v[i] == mini && i != 0)
-        {
-            st.insert(v[i - 1] - mini);
-            ans = max(ans, v[n - 1] - mini);
+            st.insert(v[i] - v[i + 1]);
         }
     }
-    st.insert(v[n - 1] - v[0]);
-    cout << ans << endl;
+    cout << *st.begin() << endl;
 
     // cout << *st.begin() << endl;
 }

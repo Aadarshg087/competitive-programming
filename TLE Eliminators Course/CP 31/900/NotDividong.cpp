@@ -89,13 +89,17 @@ void solve()
         cin >> v[i];
     }
 
-    int count = 0;
-    for (int i = 0; i < n; i++)
+    ll count = 2 * n;
+    bool c = 1;
+    for (int i = n - 1; i > 0; i--)
     {
-        
+        while (v[i] % v[i - 1] == 0)
+        {
+            v[i - 1]++;
+            count--;
+        }
     }
-    cout << "count: " << count << endl;
-
+    // cout << count << " " << 2 * n - count << endl;
     for (ll i : v)
         cout << i << " ";
     cout << endl;

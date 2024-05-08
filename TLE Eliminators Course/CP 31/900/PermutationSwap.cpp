@@ -88,6 +88,7 @@ void solve()
     {
         cin >> v[i];
     }
+
     int ans = INT_MAX;
     for (int i = 1; i < n + 1; i++)
     {
@@ -97,6 +98,7 @@ void solve()
             ans = min(ans, abs(i - num));
         }
     }
+    
     cout << ans << endl;
 }
 
