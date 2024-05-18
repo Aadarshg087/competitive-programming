@@ -79,28 +79,79 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
+bool check(vector<ll> &v, int k)
+{
+    int n = v.size();
+    int OR = v[0];
+    for (int i = 0; i < k; i++)
+    {
+        OR |= v[i];
+    }
+    int i = 0;
+    int j = k - 1;
+    while (j < n && j >= 0)
+    {
+        int oldOR = OR;
+        OR = OR ^ v[i];
+        OR = OR | v[j];
+        if (oldOR != OR)
+        {
+            return false;
+        }
+        i++;
+        j++;
+    }
+    return 1;
+}
+
 void solve()
 {
-    ll n;
+    int n;
     cin >> n;
     vector<ll> v(n);
     for (int i = 0; i < n; i++)
     {
         cin >> v[i];
-        v[i]++;
     }
 
-    for (int i = 1; i < n; i++)
+    vector<int> ans;
+    int OR = v[0];
+    for (int i = 0; i < n; i++)
     {
-        if (v[i] % v[i - 1] == 0)
+        OR = OR | v[i];
+        ans.push_back(OR);
+    }
+    vector<int> pre(n);
+    OR = v[n - 1];
+    for (int i = n - 1; i >= 0; i--)
+    {
+        OR = OR | v[i];
+        pre[i] = OR;
+    }
+
+    vector<int> p;
+    int j = pre.size() - 1;
+    for (int i = 0; i < n; i++)
+    {
+        if (pre[j--] == ans[i])
         {
-            v[i]++;
+            p.push_back(i + 1);
         }
     }
-
-    for (ll i : v)
-        cout << i << " ";
-    cout << endl;
+    // debug(ans);
+    // debug(pre);
+    sort(p.begin(), p.end());
+    int res = INT_MAX;
+    debug(p);
+    for (int i = 0; i < p.size(); i++)
+    {
+        if (check(v, p[i]))
+        {
+            cout << p[i] << endl;
+            res = min(res, p[i]);
+        }
+    }
+    cout << res << endl;
 }
 
 /*

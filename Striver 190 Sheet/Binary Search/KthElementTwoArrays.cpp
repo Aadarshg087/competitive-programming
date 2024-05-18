@@ -10,25 +10,37 @@ using namespace std;
     - Try to prove yourself wrong
 */
 // Basic Approach ----------------------
+/*
+- Put them in one array and sort them and simply return the k - 1 position
+- T.C - O((m + n)log(m + n))
+- S.C - O(m + n)
+*/
 
 int kthElement(int arr1[], int arr2[], int n, int m, int k)
 {
     vector<int> v;
-    // for (int i : arr1)
-    // {
-    //     v.push_back(i);
-    // }
+    for (int i = 0; i < n; i++)
+    {
+        v.push_back(arr1[i]);
+    }
 
-    // for (int i : arr2)
-    // {
-    //     v.push_back(i);
-    // }
+    for (int i = 0; i < m; i++)
+    {
+        v.push_back(arr2[i]);
+    }
+
     sort(v.begin(), v.end());
 
     return v[k - 1];
 }
 
 // Better Approach ---------------------------
+/*
+- Use the approach of merge sort and fill the element according to the value
+- Now, you will have the sorted array and simply return the k - 1 position
+- T.C - O(m + n)
+- S.C - O(m + n)
+*/
 
 int kthElement(int arr1[], int arr2[], int n, int m, int k)
 {
@@ -44,6 +56,12 @@ int kthElement(int arr1[], int arr2[], int n, int m, int k)
         else
         {
             v.push_back(arr2[j++]);
+        }
+
+        // Bit optimization, this will make  O(k) time complexity
+        if (v.size() == k)
+        {
+            return v.back();
         }
     }
 

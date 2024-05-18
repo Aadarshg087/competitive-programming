@@ -15,6 +15,7 @@ using namespace std;
 - Put all the element into a vector and sort.
 - Since all the element will be odd(given condition)
 - we could return the location size/2 of the vector created
+
 - T.C - O(R*C) + O((R*C)log(R*C))
 - S.C - O(R*C)
 */
@@ -33,6 +34,8 @@ int median(vector<vector<int>> &matrix, int R, int C)
     sort(ans.begin(), ans.end());
     return ans[ans.size() / 2];
 }
+
+
 
 int main()
 {

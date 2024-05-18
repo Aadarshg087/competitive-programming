@@ -89,16 +89,12 @@ void solve()
         cin >> v[i];
     }
 
-    int ans = INT_MAX;
+    int ans = abs(v[1] - 1);
     for (int i = 1; i < n + 1; i++)
     {
-        int num = v[i];
-        if (abs(i - num) != 0)
-        {
-            ans = min(ans, abs(i - num));
-        }
+        ans = __gcd(ans, abs(v[i] - i));
     }
-    
+
     cout << ans << endl;
 }
 

@@ -81,26 +81,57 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    ll n;
-    cin >> n;
-    vector<ll> v(n);
-    for (int i = 0; i < n; i++)
-    {
-        cin >> v[i];
-        v[i]++;
-    }
+    int a, b, c;
+    cin >> a >> b >> c;
+    ll sum = a + b + c;
+    // if (sum & 1)
+    // {
+    //     cout << -1 << endl;
+    //     return;
+    // }
 
-    for (int i = 1; i < n; i++)
+    int ans = 0;
+    int sum1 = 0;
+    int t = b;
+    int i = 1;
+    int cc = 1;
+    while (i <= t)
     {
-        if (v[i] % v[i - 1] == 0)
+
+        // cout << b - t << " " << c - cc << endl;
+        ans++;
+        // cout << b << " " << i << endl;
+        // cout << c << " " << cc << endl;
+        if ((b - i) + (c - cc) == a)
         {
-            v[i]++;
+            ans += a;
+            break;
         }
+        i++;
+        cc++;
     }
 
-    for (ll i : v)
-        cout << i << " ";
-    cout << endl;
+    int ans1 = min(b, c);
+    int ans2 = 0;
+    c = c - b;
+    b = 0;
+    int maxi = max(a, c);
+    int mini = min(a, c);
+    // cout << maxi << " " << mini << endl;
+    if ((maxi - mini) % 2 == 0)
+    {
+        // cout << maxi - mini << endl;
+        ans1 += min(maxi, mini);
+        // cout << ans1 << endl;
+    }
+    else
+    {
+
+        cout << -1 << endl;
+        return;
+    }
+    // cout << ans << " " << ans1 << endl;
+    cout << max(ans, ans1) << endl;
 }
 
 /*
