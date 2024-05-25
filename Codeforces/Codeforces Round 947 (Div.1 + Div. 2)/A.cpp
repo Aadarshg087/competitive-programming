@@ -83,36 +83,38 @@ void solve()
 {
     int n;
     cin >> n;
-    string s;
-    cin >> s;
-    string r = "";
+    vector<int> v(n);
+    for (int i = 0; i < n; i++)
+        cin >> v[i];
+    vector<int> ans;
+    int breakk = 0;
     for (int i = 0; i < n; i++)
     {
-        if (r.find(s[i]) == string ::npos)
+        if (v[i] > v[i + 1])
         {
-            r += s[i];
+            breakk = i + 1;
+            break;
         }
     }
-    sort(r.begin(), r.end());
-    // cout << r << endl;
-    // reverse(s.begin(), s.end());
-    // cout << s << endl;
-    vector<char> ch(26);
-    // int j = r.size() - 1;
-    for (int i = 0; i < r.size(); i++)
+    if (breakk == 0)
+        cout << "Yes" << endl;
+    else
     {
-        ch[r[i] - 'a'] = r[r.size() - i];
-        // j--;
-    }
-    // for (auto i : mp)
-    //     cout << i.first << " " << i.second << endl;
+        for (int i = breakk; i < n; i++)
+            ans.push_back(v[i]);
+        for (int i = 0; i < breakk; i++)
+            ans.push_back(v[i]);
 
-    string ans = "";
-    for (int i = 0; i < n; i++)
-    {
-        ans += ch[s[i] - 'a'];
+        for (int i = 0; i < n - 1; i++)
+        {
+            if (ans[i] > ans[i + 1])
+            {
+                cout << "No" << endl;
+                return;
+            }
+        }
+        cout << "Yes" << endl;
     }
-    cout << ans << endl;
 }
 
 /*

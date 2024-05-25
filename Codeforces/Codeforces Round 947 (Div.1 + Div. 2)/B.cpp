@@ -79,67 +79,78 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
-ll check(vector<int> &v, int i)
-{
-    int n = v.size();
-    ll ans = 0;
-    int a = v[i - 1];
-    int b = v[i];
-    int c = v[i + 1];
-    while (i + 2 < n)
-    {
-        // cout << i << " " << endl;
-        if (a == v[i] && b == v[i + 1] && c != v[i + 2])
-        {
-            ans++;
-        }
-        else if (a == v[i] && b != v[i + 1] && c == v[i + 2])
-        {
-            ans++;
-        }
-        else if (a != v[i] && b == v[i + 1] && c == v[i + 2])
-        {
-            ans++;
-        }
-        i++;
-    }
-    return ans;
-}
-
 void solve()
 {
     int n;
     cin >> n;
-    vector<int> v(n);
+    vector<ll> v(n);
+    bool c = 0;
     for (int i = 0; i < n; i++)
     {
         cin >> v[i];
+        if (v[i] == 1)
+            c = 1;
     }
-    ll ans = 0;
-    int i = 0;
-    while (i < n - 2)
+    if (c)
     {
-        ans += check(v, i + 1);
-        i++;
+        cout << "Yes" << endl;
+        return;
     }
-    cout << ans << endl;
-    // vector<vector<int>> vv;
-    // for (int i = 0; i < n - 2; i++)
-    // {
-    //     vector<int> temp;
-    //     temp.push_back(v[i]);
-    //     temp.push_back(v[i + 1]);
-    //     temp.push_back(v[i + 2]);
-    //     vv.push_back(temp);
-    // }
-    // int t = 3;
-    // // vector<vector<int>> bb(vv.size(), vector<int>(3, 0));
-    // // sort(vv.begin(), vv.end());
-    // // ll ans = 0;
-    // for (int i = 0; i < vv.size() - 1; i++)
-    // {
-    // }
-    // cout << ans << endl;
+    ll gcd = v[0];
+    for (int i = 0; i < n; i++)
+    {
+        gcd = __gcd(gcd, v[i]);
+    }
+
+    sort(v.begin(), v.end());
+    auto it = lower_bound(v.begin(), v.end(), gcd);
+    if (*it == gcd)
+    {
+        cout << "Yes" << endl;
+        return;
+    }
+    ll first = 0;
+    ll second = -1;
+    for (int i = 0; i < n; i++)
+    {
+        if (first == -1)
+            first = v[i];
+        if (first != v[i])
+        {
+            second = v[i];
+            break;
+        }
+    }
+    if (second == -1)
+    {
+        cout << "Yes" << endl;
+        return;
+    }
+
+    // debug(v);
+    // cout << first << " " << second << endl;
+    for (int i = 0; i < n; i++)
+    {
+        if (v[i] % first == 0)
+        {
+            v[i] = -1;
+        }
+        else if (v[i] % second == 0)
+        {
+            v[i] = -2;
+        }
+        else
+        {
+            cout << "No" << endl;
+            return;
+        }
+    }
+
+    // debug(v);
+
+    // debug(v);
+
+    cout << "Yes" << endl;
 }
 
 /*

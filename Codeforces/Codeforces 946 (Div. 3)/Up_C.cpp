@@ -79,38 +79,51 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
+ll check(vector<int> &v, int i)
+{
+    int n = v.size();
+    ll ans = 0;
+    int a = v[i - 1];
+    int b = v[i];
+    int c = v[i + 1];
+    while (i + 2 < n)
+    {
+        // cout << i << " " << endl;
+        if (a == v[i] && b == v[i + 1] && c != v[i + 2])
+        {
+            ans++;
+        }
+        else if (a == v[i] && b != v[i + 1] && c == v[i + 2])
+        {
+            ans++;
+        }
+        else if (a != v[i] && b == v[i + 1] && c == v[i + 2])
+        {
+            ans++;
+        }
+        i++;
+    }
+    return ans;
+}
+
 void solve()
 {
     int n;
     cin >> n;
-    string s;
-    cin >> s;
-    string r = "";
+    vector<int> v(n);
     for (int i = 0; i < n; i++)
     {
-        if (r.find(s[i]) == string ::npos)
-        {
-            r += s[i];
-        }
+        cin >> v[i];
     }
-    sort(r.begin(), r.end());
-    // cout << r << endl;
-    // reverse(s.begin(), s.end());
-    // cout << s << endl;
-    vector<char> ch(26);
-    // int j = r.size() - 1;
-    for (int i = 0; i < r.size(); i++)
+    map<vector<int>, int> FirstSecond, LastSecond, FirstLast;
+    map<vector<int>, int> total;
+    ll ans = 0;
+    for (int i = 0; i < n - 2; i++)
     {
-        ch[r[i] - 'a'] = r[r.size() - i];
-        // j--;
-    }
-    // for (auto i : mp)
-    //     cout << i.first << " " << i.second << endl;
-
-    string ans = "";
-    for (int i = 0; i < n; i++)
-    {
-        ans += ch[s[i] - 'a'];
+        ans += FirstSecond[{v[i], v[i + 1]}]++;
+        ans += LastSecond[{v[i + 1], v[i + 2]}]++;
+        ans += FirstLast[{v[i], v[i + 2]}]++;
+        ans -= 3 * total[{v[i], v[i + 1], v[i + 2]}]++;
     }
     cout << ans << endl;
 }
