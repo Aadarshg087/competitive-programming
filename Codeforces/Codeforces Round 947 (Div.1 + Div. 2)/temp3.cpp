@@ -78,79 +78,51 @@ ll __lcm(ll a, ll b)
 {
     return (a * b) / __gcd(a, b);
 }
-
+int checkOnes(string &s, int i)
+{
+    i++;
+    int n = s.size();
+    bool c = 0;
+    int ans = 0;
+    for (int j = 0; j < n; j++)
+    {
+        if (s[j] == '1' && c == 1)
+        {
+            ans++;
+        }
+        else
+            c = 1;
+    }
+    return ans;
+}
 void solve()
 {
     int n;
     cin >> n;
-    vector<ll> v(n);
-    bool c = 0;
-    for (int i = 0; i < n; i++)
+    string s;
+    cin >> s;
+    int count1 = 0;
+    for (char ch : s)
     {
-        cin >> v[i];
-        if (v[i] == 1)
-            c = 1;
-    }
-    if (c)
-    {
-        cout << "Yes" << endl;
-        return;
-    }
-    ll gcd = v[0];
-    for (int i = 0; i < n; i++)
-    {
-        gcd = __gcd(gcd, v[i]);
+        if (ch == '1')
+            count1++;
     }
 
-    sort(v.begin(), v.end());
-    auto it = lower_bound(v.begin(), v.end(), gcd);
-    if (*it == gcd)
+    int i = 0;
+    int ans = 0;
+    int c = 0;
+    while (i < n)
     {
-        cout << "Yes" << endl;
-        return;
-    }
-    ll first = -1;
-    ll second = -1;
-    for (int i = 0; i < n; i++)
-    {
-        if (first == -1)
-            first = v[i];
-        if (first != v[i] && v[i] % first != 0)
-        {
-            second = v[i];
+        if (n - 1 - i + 1 == count1)
             break;
-        }
-    }
-    if (second == -1)
-    {
-        cout << "Yes" << endl;
-        return;
-    }
-
-    // debug(v);
-    // cout << first << " " << second << endl;
-    for (int i = 0; i < n; i++)
-    {
-        if (v[i] % first == 0)
+        if (s[i] == '1')
         {
-            v[i] = -1;
+            c = checkOnes(s, i);
         }
-        else if (v[i] % second == 0)
-        {
-            v[i] = -2;
-        }
-        else
-        {
-            cout << "No" << endl;
-            return;
-        }
+        ans += c + 1;
+        i++;
     }
-
-    // debug(v);
-
-    // debug(v);
-
-    cout << "Yes" << endl;
+    cout << ans << endl;
 }
 
 /*

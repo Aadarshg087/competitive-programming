@@ -81,76 +81,25 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<ll> v(n);
-    bool c = 0;
-    for (int i = 0; i < n; i++)
+    ll x;
+    cin >> x;
+    vector<int> ans(31);
+    int i = 1;
+    int pos = 0;
+    int t = 32;
+    while (t--)
     {
-        cin >> v[i];
-        if (v[i] == 1)
-            c = 1;
-    }
-    if (c)
-    {
-        cout << "Yes" << endl;
-        return;
-    }
-    ll gcd = v[0];
-    for (int i = 0; i < n; i++)
-    {
-        gcd = __gcd(gcd, v[i]);
-    }
-
-    sort(v.begin(), v.end());
-    auto it = lower_bound(v.begin(), v.end(), gcd);
-    if (*it == gcd)
-    {
-        cout << "Yes" << endl;
-        return;
-    }
-    ll first = -1;
-    ll second = -1;
-    for (int i = 0; i < n; i++)
-    {
-        if (first == -1)
-            first = v[i];
-        if (first != v[i] && v[i] % first != 0)
+        if (x & i)
         {
-            second = v[i];
-            break;
+            ans[pos] = 1;
         }
+        pos++;
+        i = i << 1;
     }
-    if (second == -1)
-    {
-        cout << "Yes" << endl;
-        return;
-    }
-
-    // debug(v);
-    // cout << first << " " << second << endl;
-    for (int i = 0; i < n; i++)
-    {
-        if (v[i] % first == 0)
-        {
-            v[i] = -1;
-        }
-        else if (v[i] % second == 0)
-        {
-            v[i] = -2;
-        }
-        else
-        {
-            cout << "No" << endl;
-            return;
-        }
-    }
-
-    // debug(v);
-
-    // debug(v);
-
-    cout << "Yes" << endl;
+    cout << ans.size() << endl;
+    for (int i : ans)
+        cout << i << " ";
+    cout << endl;
 }
 
 /*
