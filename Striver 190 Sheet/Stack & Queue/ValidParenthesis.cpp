@@ -19,10 +19,6 @@ Make sure to handle some edges like "](". Just dry run adjust the logic accordin
 - Time Complexity - O(n) + O(6)
 - Space Complexity - O(n)
 
-
-
-
-
 */
 
 bool isValid(string s)
