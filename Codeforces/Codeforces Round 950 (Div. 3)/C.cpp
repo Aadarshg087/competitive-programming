@@ -1,0 +1,174 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+// ------------------------ Macros -------------------------
+#define ll long long int
+#define endl "\n"
+
+#define debug(x)        \
+    cout << #x << ": "; \
+    _print(x);          \
+    cout << endl;
+
+// ---------------------- Debug Functions -------------------------
+template <class T>
+void _print(T x)
+{
+    cout << x << " ";
+}
+template <class T>
+void _print(vector<T> v)
+{
+    for (T i : v)
+        _print(i);
+}
+
+// Seive Algo -------------------
+const int N = 1e6 + 7;
+vector<bool> isPrime(N, true);
+void seiveAlgo()
+{
+    isPrime[0] = isPrime[1] = false;
+    for (int i = 2; i < N; i++)
+    {
+        if (isPrime[i] == true)
+        {
+            for (int j = 2 * i; j < N; j += i)
+            {
+                isPrime[j] = false;
+            }
+        }
+    }
+}
+
+// Binary Exponentiation - (Check MOD Value) -------------------
+ll BinaryExpoRecur(ll a, ll p)
+{
+    const int mod = 1e9 + 7;
+    if (p == 1)
+        return a;
+    ll ans = BinaryExpoRecur(a, p / 2);
+    if (p & 1)
+    {
+        return (((ans * ans) % mod) * a) % mod;
+    }
+    else
+    {
+        return (ans * ans) % mod;
+    }
+    return ans;
+}
+
+// One side divisors (1 included, sorted) -------------------
+set<ll> divisor(ll n)
+{
+    set<ll> st;
+    for (int i = 1; i * i <= n; i++)
+    {
+        if (n % i == 0)
+        {
+            st.insert(n / i);
+        }
+    }
+    return st;
+}
+
+ll __lcm(ll a, ll b)
+{
+    return (a * b) / __gcd(a, b);
+}
+
+void solve()
+{
+    ll n, m;
+    cin >> n;
+    vector<ll> a(n);
+    vector<ll> b(n);
+    for (int i = 0; i < n; i++)
+    {
+        cin >> a[i];
+    }
+    multiset<ll> st;
+    map<ll, ll> mp;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> b[i];
+        st.insert(b[i]);
+        mp[b[i]]++;
+    }
+
+    cin >> m;
+    vector<ll> d(m);
+    multiset<ll> st2;
+    map<ll, ll> mp2;
+    for (int i = 0; i < m; i++)
+    {
+        cin >> d[i];
+        st2.insert(d[i]);
+        mp2[d[i]]++;
+    }
+    ll count = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (a[i] != b[i])
+        {
+            count++;
+        }
+    }
+
+    if (count > d.size())
+    {
+        cout << "NO" << endl;
+        return;
+    }
+
+    if (st.find(d[d.size() - 1]) == st.end())
+    {
+        cout << "NO" << endl;
+        return;
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        if (a[i] != b[i] && st2.find(b[i]) == st2.end())
+        {
+            cout << "NO" << endl;
+            return;
+        }
+        else if (a[i] != b[i])
+        {
+            auto it = mp2.find(b[i]);
+            if (it->second < mp[b[i]])
+            {
+                cout << "NO" << endl;
+                return;
+            }
+        }
+    }
+
+    cout << "YES" << endl;
+}
+
+/*
+    - Read the problem twice
+    - Check for overflow
+    - Add brackets while using bitwise
+    - Check corner cases (out of bounds for loops)
+    - Revise the code
+    - Try to prove yourself wrong
+*/
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    // solve();
+    // seiveAlgo();
+    int t;
+    cin >> t;
+    while (t--)
+        solve();
+    return 0;
+}
