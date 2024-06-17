@@ -9,47 +9,103 @@ using namespace std;
     - Revise the code
     - Try to prove yourself wrong
 */
-bool isPossible(vector<int> &A, int B, int mid)
+
+/*
+// BASIC APPROACH
+- We are just simply doing the linear search and finding the maximum answer
+
+*/
+
+int isPossible(vector<int> &A, int B, int pages)
 {
-    int pages = 0;
-    int AlloStudents = 1;
+    int sum = 0;
+    int Student = 1;
     for (int i = 0; i < A.size(); i++)
     {
-        if (A[i] > mid)
-            return false;
-        if (pages + A[i] > mid)
+        if (sum + A[i] <= pages)
         {
-            AlloStudents++;
-            pages += A[i];
+            sum += A[i];
         }
         else
         {
-            pages += A[i];
+            sum = A[i];
+            Student++;
         }
     }
-
-    if (AlloStudents > B)
+    if (Student < B)
         return false;
-    else
-        return 1;
+    return true;
 }
 
 int books(vector<int> &A, int B)
 {
-    int low = 0;
+    int low = *max_element(A.begin(), A.end());
     int high = accumulate(A.begin(), A.end(), high);
-    int ans = 0;
-    while (low <= high)
+    if (A.size() < B)
+        return -1;
+
+    for (int i = low; i <= high; i++)
     {
-        int mid = (high + low) >> 1;
-        if (isPossible(A, B, mid))
+        if (isPossible(A, B, i))
+            ;
+        else
+            return i + 1;
+    }
+    return -1;
+}
+
+// ------------------------------------------
+
+/*
+// BETTER APPROACH
+- The core concept is students > B, that means the size of each bag/pages is relatively less.
+- That's why, we need more students as it is getting filled quickly
+- If the bag is too big, it adjust more books and eventually only one students is needed to accomodate all the books
+- Therefore, we are finding as asked in the questions
+
+T.C - O(log(sum - max + 1)) * O(n)
+S.C -  O(1)
+*/
+
+int countStudents(vector<int> &A, int pages)
+{
+    int students = 1;
+    int sum = 0;
+    for (int i = 0; i < A.size(); i++)
+    {
+        if (sum + A[i] <= pages)
         {
-            ans = mid;
-            high = mid - 1;
+            sum += A[i];
         }
         else
         {
+            sum = A[i];
+            students++;
+        }
+    }
+    return students;
+}
+
+int books(vector<int> &A, int B)
+{
+    int low = *max_element(A.begin(), A.end());
+    int high = accumulate(A.begin(), A.end(), high);
+    int ans = -1;
+    if (B > A.size())
+        return -1;
+
+    while (low <= high)
+    {
+        int mid = (high + low) >> 1;
+        int students = countStudents(A, mid);
+        if (students > B)
+        {
+            ans = mid;
             low = mid + 1;
+        }
+        else
+        {
+            high = mid - 1;
         }
     }
     return low;

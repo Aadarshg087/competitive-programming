@@ -81,28 +81,24 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    ll n, m, d;
-    cin >> n >> m >> d;
-    vector<ll> v(n);
-    for (int i = 0; i < n; i++)
-        cin >> v[i];
-
-    ll small = 0;
-    ll topksum = 0;
-    multiset<ll> st;
-    ll ans = LLONG_MIN;
-    for (int i = 0; i < n; i++)
+    ll a, b;
+    cin >> a >> b;
+    ll ans = 1 ;
+    while (1)
     {
-        small = v[i] - (d * (i + 1)) + topksum;
-        st.insert(v[i]);
-        topksum += v[i];
-        ans = max(ans, small);
-        if (st.size() > m - 1)
+        ll a1 = max(a - b, b);
+        ll b1 = min(a - b, b);
+        cout << a << " " << b << endl;
+        if (a1 == b1)
         {
-            int sml = *st.begin();
-            topksum -= sml;
-            st.erase(st.find(sml));
+            ans++;
+            break;
         }
+        a1 = max(a - b, b);
+        b1 = min(a - b, b);
+        a = a1;
+        b = b1;
+        ans++;
     }
     cout << ans << endl;
 }
@@ -121,11 +117,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // solve();
+    solve();
     // seiveAlgo();
-    int t;
-    cin >> t;
-    while (t--)
-        solve();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    //     solve();
     return 0;
 }

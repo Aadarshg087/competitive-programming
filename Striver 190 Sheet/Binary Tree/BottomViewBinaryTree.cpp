@@ -25,25 +25,27 @@ struct Node
 
 void solve(Node *root, vector<int> &ans, set<int> &st, int level)
 {
-    st.insert(level);
+    // st.insert(level);
     // Base case
     if (root == NULL)
         return;
-    if (!root->left && !root->right)
+    if (!root->left && !root->right && st.find(level) == st.end())
     {
         ans.push_back(root->data);
+        st.insert(level);
         return;
     }
 
     // recurrence relation
     solve(root->left, ans, st, level - 1);
 
-    if (!root->left->left && !root->left->right && !root->right->left && !root->right->right)
+    if (!root->left->left && !root->left->right && !root->right->left && !root->right->right && st.find(level) == st.end())
     {
         ans.push_back(root->data);
+        st.insert(level);
     }
 
-    if (root->left && !root->right && st.find(level) == st.end())
+    if (st.find(level)  root->left && !root->right && st.find(level) == st.end())
         ans.push_back(root->data);
     if (!root->left && root->right && st.find(level) == st.end())
         ans.push_back(root->data);
@@ -54,7 +56,7 @@ vector<int> bottomView(Node *root)
 {
     vector<int> ans;
     set<int> st;
-    st.insert(0);
+    // st.insert(0);
     solve(root, ans, st, 0);
     return ans;
 }

@@ -81,30 +81,76 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    ll n, m, d;
-    cin >> n >> m >> d;
-    vector<ll> v(n);
-    for (int i = 0; i < n; i++)
-        cin >> v[i];
-
-    ll small = 0;
-    ll topksum = 0;
-    multiset<ll> st;
-    ll ans = LLONG_MIN;
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+    int e = 0;
+    int o = 0;
+    n = s.size();
     for (int i = 0; i < n; i++)
     {
-        small = v[i] - (d * (i + 1)) + topksum;
-        st.insert(v[i]);
-        topksum += v[i];
-        ans = max(ans, small);
-        if (st.size() > m - 1)
+        if (s[i] & 1)
+            o++;
+        else
+            e++;
+    }
+    int i = n - 1;
+    string ans = "";
+    if (o & 1)
+    {
+        while (i >= 0)
         {
-            int sml = *st.begin();
-            topksum -= sml;
-            st.erase(st.find(sml));
+            if (s[i] & 1)
+            {
+                ans += s.substr(0, i);
+                ans += (i + 1 < n) ? s.substr(i + 1) : "";
+                s = ans;
+                break;
+                // cout << ans << endl;
+                // return;
+            }
+            else
+                i--;
         }
     }
-    cout << ans << endl;
+    // cout << s << endl;
+    i = s.size() - 1;
+    while (i >= 0)
+    {
+        if (!(s[i] & 1))
+        {
+            s.pop_back();
+            e--;
+            i--;
+        }
+        else
+            break;
+    }
+    if (i < 0)
+    {
+        cout << -1 << endl;
+        return;
+    }
+
+    i = n - 1;
+
+    // cout << s << endl;
+    i = 0;
+    for (i = 0; i < s.size(); i++)
+    {
+        if (s[i] != '0')
+            break;
+    }
+    if (i != s.size())
+    {
+        s = s.substr(i);
+        cout << s << endl;
+    }
+    else
+    {
+        cout << -1 << endl;
+    }
 }
 
 /*

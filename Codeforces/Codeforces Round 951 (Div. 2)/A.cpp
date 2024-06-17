@@ -81,30 +81,33 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    ll n, m, d;
-    cin >> n >> m >> d;
+    ll n;
+    cin >> n;
     vector<ll> v(n);
     for (int i = 0; i < n; i++)
+    {
         cin >> v[i];
-
-    ll small = 0;
-    ll topksum = 0;
-    multiset<ll> st;
-    ll ans = LLONG_MIN;
+    }
+    vector<ll> b;
+    ll a = *min_element(v.begin(), v.end());
+    int a1 = find(v.begin(), v.end(), a) - v.begin();
     for (int i = 0; i < n; i++)
     {
-        small = v[i] - (d * (i + 1)) + topksum;
-        st.insert(v[i]);
-        topksum += v[i];
-        ans = max(ans, small);
-        if (st.size() > m - 1)
+        if (a == v[i])
         {
-            int sml = *st.begin();
-            topksum -= sml;
-            st.erase(st.find(sml));
+            if (i - 1 >= 0)
+            {
+                b.push_back(v[i - 1]);
+            }
+            if (i + 1 < n)
+            {
+                b.push_back(v[i + 1]);
+            }
         }
     }
-    cout << ans << endl;
+    // debug(b);
+    sort(b.begin(), b.end());
+    cout << b[0] - 1 << endl;
 }
 
 /*
