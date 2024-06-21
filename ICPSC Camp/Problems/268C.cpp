@@ -10,18 +10,18 @@ using namespace std;
     cout << #x << ": "; \
     _print(x);          \
     cout << endl;
- 
-// ---------------------- Debug Functions ------------------------- 
-template <class T> 
-void _print(T x) 
-{ 
-    cout << x << " "; 
-} 
-template <class T> 
-void _print(vector<T> v) 
-{ 
-    for (T i : v) 
-        _print(i); 
+
+// ---------------------- Debug Functions -------------------------
+template <class T>
+void _print(T x)
+{
+    cout << x << " ";
+}
+template <class T>
+void _print(vector<T> v)
+{
+    for (T i : v)
+        _print(i);
 }
 
 // Seive Algo -------------------
@@ -81,7 +81,30 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    
+    int n, m;
+    cin >> n >> m;
+    int count = 0;
+    vector<pair<int, int>> v;
+    int x = n;
+    int y = 0;
+    while (1)
+    {
+        // cout << x << " " << y << endl;
+        if (x < 0 || y > m)
+        {
+            break;
+        }
+        count++;
+        v.push_back({x, y});
+        x--;
+        y++;
+    }
+
+    cout << count << endl;
+    for (auto i : v)
+    {
+        cout << i.first << " " << i.second << endl;
+    }
 }
 
 /*
@@ -98,11 +121,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // solve();
+    solve();
     // seiveAlgo();
-    int t;
-    cin >> t;
-    while (t--)
-        solve();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    //     solve();
     return 0;
 }
