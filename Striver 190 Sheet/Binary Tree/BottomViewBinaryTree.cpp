@@ -23,41 +23,39 @@ struct Node
     }
 };
 
-void solve(Node *root, vector<int> &ans, set<int> &st, int level)
-{
-    // st.insert(level);
-    // Base case
-    if (root == NULL)
-        return;
-    if (!root->left && !root->right && st.find(level) == st.end())
-    {
-        ans.push_back(root->data);
-        st.insert(level);
-        return;
-    }
-
-    // recurrence relation
-    solve(root->left, ans, st, level - 1);
-
-    if (!root->left->left && !root->left->right && !root->right->left && !root->right->right && st.find(level) == st.end())
-    {
-        ans.push_back(root->data);
-        st.insert(level);
-    }
-
-    if (st.find(level)  root->left && !root->right && st.find(level) == st.end())
-        ans.push_back(root->data);
-    if (!root->left && root->right && st.find(level) == st.end())
-        ans.push_back(root->data);
-    solve(root->right, ans, st, level + 1);
-}
-
+// Approach
+/*
+- Basic BFS on a tree, we are keeping queue of node and col and map of col and node
+- Queue is used for Level order traversal from top to bottom and upate the any new element found later in the same col
+- The edge case(two element in the same spot- same col & same height/row) will also be handled as we traversing from left to right and we have to pick the right most element if there is clash(given in the question)
+- since map will keep col sorted and we can simply deduce the element from each col
+T.C - O(n)
+S.C - O(n)
+*/
 vector<int> bottomView(Node *root)
 {
     vector<int> ans;
-    set<int> st;
-    // st.insert(0);
-    solve(root, ans, st, 0);
+    if (root == NULL)
+        return ans;
+    map<int, Node *> mp;
+    queue<pair<Node *, int>> q;
+
+    q.push({root, 0});
+    while (!q.empty())
+    {
+        auto it = q.front();
+        mp[it.second] = it.first;
+        q.pop();
+        if (it.first->left)
+            q.push({it.first->left, it.second - 1});
+        if (it.first->right)
+            q.push({it.first->right, it.second + 1});
+    }
+
+    for (auto it : mp)
+    {
+        ans.push_back(it.second->data);
+    }
     return ans;
 }
 
