@@ -1,4 +1,3 @@
-#include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -79,39 +78,33 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
-void fill(vector<vector<int>> &v, int x, int y)
+void print(int i, int j, int n, int m)
 {
-    while (1)
+    int c = 1;
+    while (i < n)
     {
-        bool c = 0;
-        if (y < v[0].size() && y >= 0)
+        if (c)
         {
-            cout << x << " " << y << " ";
-            v[x][y] = 1;
-            if (c)
-                y--;
-            else
-                y++;
+
+            while (j < m)
+            {
+                cout << i + 1 << " " << j + 1 << " ";
+                j++;
+            }
+            j = m - 1;
+            c = 0;
         }
         else
         {
-            x++;
-            if (y == v[0].size())
+            while (j >= 0)
             {
-                c = 1;
-                y = v[0].size() - 1;
+                cout << i + 1 << " " << j + 1 << " ";
+                j--;
             }
-            else
-            {
-                c = 0;
-                y = 0;
-            }
+            j = 0;
+            c = 1;
         }
-
-        if (x == v.size() - 1 && y == 0 && v[v.size() - 1][v[0].size() - 1] == 1)
-            break;
-        if (x == v.size() - 1 && y == v[0].size() - 1 && v[v.size() - 1][0] == 1)
-            break;
+        i++;
     }
 }
 
@@ -119,43 +112,125 @@ void solve()
 {
     int n, m, k;
     cin >> n >> m >> k;
-    int total = n * m;
-    int temp = total / 2;
-    vector<vector<int>> v(4, vector<int>(5, 0));
-    cout << v.size() << " " << v[0].size() << endl;
-    return;
+    int x = 0;
+    int y = 0;
+    bool c = 1;
 
-    int i = 1;
-    int x = 0, y = 0;
-    while (i <= k)
+    int j = 0;
+    int cnt = 1;
+    int p = 1;
+    int check = 0;
+    if (k == 1)
     {
-        if (i == k)
+        cout << n * m << " ";
+        print(0, 0, n, m);
+        return;
+    }
+    cout << 2 << " ";
+    for (int i = 0; i < n; i++)
+    {
+        if (c == 1)
         {
-            cout << n * m - 2 * (k - 1) << " ";
-            fill(v, x, y);
-            break;
-        }
-        cout << 2 << " ";
-        cout << x << " " << y << " " << x + 1 << " " << y << endl;
-        v[x][y] = 1;
-        v[x + 1][y] = 1;
-        y++;
-        if (y == m)
-        {
-            x += 2;
-            y = 0;
+            while (j < m)
+            {
+                cout << i + 1 << " " << j + 1 << " ";
+                if (cnt == 2)
+                {
+                    cout << endl;
+                    p++;
+                    if (p == k)
+                    {
+                        x = i;
+                        y = j;
+                        check = 1;
+                        break;
+                    }
+                    cout << 2 << " ";
+                    cnt = 1;
+                }
+                else
+                    cnt++;
+                j++;
+            }
+            if (check == 1)
+                break;
+            c = 0;
+            j = m - 1;
+            // cout << endl;
         }
         else
-            x = 0;
-        i++;
-    }
-    cout << endl;
+        {
+            while (j >= 0)
+            {
+                // debug(j);
+                cout << i + 1 << " " << j + 1 << " ";
+                if (cnt == 2)
+                {
+                    cout << endl;
+                    p++;
+                    if (p == k)
+                    {
+                        x = i;
+                        y = j;
+                        check = 1;
+                        break;
+                    }
+                    cout << 2 << " ";
+                    cnt = 1;
+                }
+                else
+                    cnt++;
 
-    for (vector<int> v1 : v)
+                j--;
+            }
+            // cout << endl;
+            if (check == 1)
+                break;
+            j = 0;
+            c = 1;
+        }
+    }
+
+    int i = x;
+    j = y;
+    // fix the points
+    bool g = 1;
+    cout << n * m - (2 * (k - 1)) << " ";
+    while (i < n)
     {
-        for (int i : v1)
-            cout << i << " ";
-        cout << endl;
+        if (c)
+        {
+            while (j < m)
+            {
+                if (g)
+                {
+                    g = 0;
+                    j++;
+                    continue;
+                }
+                cout << i + 1 << " " << j + 1 << " ";
+                j++;
+            }
+            j = m - 1;
+            c = 0;
+        }
+        else
+        {
+            while (j >= 0)
+            {
+                if (g)
+                {
+                    g = 0;
+                    j--;
+                    continue;
+                }
+                cout << i + 1 << " " << j + 1 << " ";
+                j--;
+            }
+            j = 0;
+            c = 1;
+        }
+        i++;
     }
 }
 
