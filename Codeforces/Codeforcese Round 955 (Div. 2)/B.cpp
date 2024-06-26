@@ -1,4 +1,3 @@
-#include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -83,30 +82,36 @@ void solve()
 {
     ll x, y, k;
     cin >> x >> y >> k;
-    ll i = 1;
-    while (k)
+    ll temp = 0;
+    while (k && x > 1)
     {
-        ll temp = (x % y != y && x % y != 0) ? y - (x % y) : 0;
-        if (temp <= k)
+        temp = y - (x % y);
+        if (temp >= k)
         {
-            // c = 1;
-            k -= temp;
-            x += temp;
+            x += k;
+            k = 0;
         }
         else
         {
-            x += k;
-            break;
-            // i++;
+            x += temp;
+            k -= temp;
         }
-        // cout << x << endl;
-        while (x != 0 && x % y == 0)
+        while (x % y == 0)
         {
             x /= y;
         }
+        // if (x == 1)
+        //     break;
 
         // debug(i);
-        i++;
+    }
+
+    if (k > 0)
+    {
+        ll t = k % (y - 1);
+        x += t;
+        // while (x % y == 0)
+        //     x /= y;
     }
     cout << x << endl;
 }
