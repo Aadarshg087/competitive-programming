@@ -78,76 +78,47 @@ ll __lcm(ll a, ll b)
 {
     return (a * b) / __gcd(a, b);
 }
-
-vector<int> leftToRight(vector<int> &v)
+int check(vector<ll> &v, ll mid, ll k)
 {
     int n = v.size();
-    vector<int> temp(n);
-    stack<int> st;
+    ll need = 0;
     for (int i = 0; i < n; i++)
     {
-        while (!st.empty() && v[st.top()] >= v[i])
-            st.pop();
-
-        if (st.empty())
-        {
-            temp[i] = -1;
-            st.push(i);
-        }
-        else
-        {
-            temp[i] = st.top();
-            st.push(i);
-        }
+        if (v[i] < mid)
+            need += mid - v[i];
+        if (need > k)
+            return 0;
     }
-    return temp;
-}
-
-vector<int> rightToLeft(vector<int> &v)
-{
-    int n = v.size();
-    vector<int> temp(n);
-    stack<int> st;
-    for (int i = n - 1; i >= 0; i--)
-    {
-        while (!st.empty() && v[st.top()] >= v[i])
-            st.pop();
-        if (st.empty())
-        {
-            temp[i] = -1;
-            st.push(i);
-        }
-        else
-        {
-            temp[i] = st.top();
-            st.push(i);
-        }
-    }
-    return temp;
+    return 1;
 }
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<int> v(n);
-    for (int i = 0; i < n; i++)
+    ll n, k;
+    cin >> n >> k;
+    vector<ll> v(n + 1);
+    ll mini = __LONG_LONG_MAX__;
+    for (int i = 1; i <= n; i++)
     {
         cin >> v[i];
     }
 
-    vector<int> pre = leftToRight(v); // prev smaller
-    vector<int> suf = rightToLeft(v); // next smaller
-    // Next  smaller element wala concept
+    ll start = 0;
+    ll end = INT_MAX;
     ll ans = 0;
-    for (int i = 0; i < n; i++)
+    while (start <= end)
     {
-        int num1 = (pre[i] == -1) ? i : abs(i - pre[i]) - 1;
-        int num2 = (suf[i] == -1) ? n - i : abs(suf[i] - i);
-        ll temp = 1LL * v[i] * (num1 + num2);
-        ans = max(temp, ans);
+        ll mid = (start + end) >> 1;
+        if (check(v, mid, k))
+        {
+            ans = max(ans, mid);
+            start = mid + 1;
+        }
+        else
+            end = mid - 1;
     }
-    cout << ans << endl;
+
+    
 }
 
 /*

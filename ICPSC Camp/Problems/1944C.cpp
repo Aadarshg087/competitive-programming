@@ -79,75 +79,79 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
-vector<int> leftToRight(vector<int> &v)
-{
-    int n = v.size();
-    vector<int> temp(n);
-    stack<int> st;
-    for (int i = 0; i < n; i++)
-    {
-        while (!st.empty() && v[st.top()] >= v[i])
-            st.pop();
-
-        if (st.empty())
-        {
-            temp[i] = -1;
-            st.push(i);
-        }
-        else
-        {
-            temp[i] = st.top();
-            st.push(i);
-        }
-    }
-    return temp;
-}
-
-vector<int> rightToLeft(vector<int> &v)
-{
-    int n = v.size();
-    vector<int> temp(n);
-    stack<int> st;
-    for (int i = n - 1; i >= 0; i--)
-    {
-        while (!st.empty() && v[st.top()] >= v[i])
-            st.pop();
-        if (st.empty())
-        {
-            temp[i] = -1;
-            st.push(i);
-        }
-        else
-        {
-            temp[i] = st.top();
-            st.push(i);
-        }
-    }
-    return temp;
-}
-
 void solve()
 {
     int n;
     cin >> n;
     vector<int> v(n);
+    map<int, int> mp;
+    int maxi = 0;
     for (int i = 0; i < n; i++)
     {
         cin >> v[i];
+        mp[v[i]]++;
+        maxi = max(maxi, v[i]);
+    }
+    vector<pair<int, int>> vv;
+    for (auto it : mp)
+    {
+        vv.push_back({it.second, it.first});
     }
 
-    vector<int> pre = leftToRight(v); // prev smaller
-    vector<int> suf = rightToLeft(v); // next smaller
-    // Next  smaller element wala concept
-    ll ans = 0;
-    for (int i = 0; i < n; i++)
+    sort(vv.begin(), vv.end()); // freq , element
+    vector<int> ans;
+    bool c = 1;
+    for (auto i : vv)
     {
-        int num1 = (pre[i] == -1) ? i : abs(i - pre[i]) - 1;
-        int num2 = (suf[i] == -1) ? n - i : abs(suf[i] - i);
-        ll temp = 1LL * v[i] * (num1 + num2);
-        ans = max(temp, ans);
+        if (c)
+        {
+            ans.push_back(i.second);
+            i.first--;
+            c = 0;
+        }
+        else
+        {
+            i.first--;
+            if (i.first >= 1)
+            {
+                ans.push_back(i.second);
+                i.first--;
+            }
+            c = 1;
+        }
     }
-    cout << ans << endl;
+    // debug(ans);
+    int ii = 0;
+    set<int> st(ans.begin(), ans.end());
+    for (auto i : st)
+    {
+        if (i != ii)
+        {
+            cout << ii << endl;
+            return;
+        }
+        ii++;
+    }
+    cout << st.size() << endl;
+
+    // Dukh dard peedaaa ...
+
+    // for (int i = 0; i <= maxi; i++)
+    // {
+    //     if (mp.find(i) == mp.end())
+    //     {
+    //         cout << i << endl;
+    //         return;
+    //     }
+    //     auto it = mp.find(i);
+    //     if (it->first != 0 && it->second == 1)
+    //     {
+    //         cout << it->first << endl;
+    //         return;
+    //     }
+    // }
+
+    // cout << maxi + 1 << endl;
 }
 
 /*
