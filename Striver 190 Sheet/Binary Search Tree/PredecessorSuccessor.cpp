@@ -23,7 +23,9 @@ struct Node
         right = NULL;
     }
 };
-void solve(Node *root, Node *&pre, Node *&suc, int key)
+
+// Basic Approach
+void solve(Node *root, vector<Node *> &v)
 {
     // base case
     if (root == NULL)
@@ -31,19 +33,67 @@ void solve(Node *root, Node *&pre, Node *&suc, int key)
 
     // Recurrence Relation
 
-    pre = root;
-    solve(root->left, pre, suc, key);
-    solve(root->right, pre, suc, key);
-    if (root->key > key)
-    {
-        root = root;
-        return;
-    }
+    solve(root->left, v);
+    v.push_back(root);
+    solve(root->right, v);
 }
 
 void findPreSuc(Node *root, Node *&pre, Node *&suc, int key)
 {
-    solve(root, pre, suc, key);
+    vector<Node *> v;
+    solve(root, v);
+    for (auto i : v)
+    {
+        if (i->key < key)
+            pre = i;
+        else if (i->key > key)
+        {
+            suc = i;
+            break;
+        }
+    }
+}
+
+// Second Apprach
+/*
+
+
+
+T.C - O(H)
+S.C - O(1)
+*/
+
+void findPreSuc(Node *root, Node *&pre, Node *&suc, int key)
+{
+    // Successor
+    Node *temp = root;
+    while (temp != NULL)
+    {
+        if (temp->key <= key)
+        {
+            temp = temp->right;
+        }
+        else
+        {
+            suc = temp;
+            temp = temp->left;
+        }
+    }
+
+    // predecessor
+    temp = root;
+    while ((temp != NULL))
+    {
+        if (temp->key >= key)
+        {
+            temp = temp->left;
+        }
+        else
+        {
+            pre = temp;
+            temp = temp->right;
+        }
+    }
 }
 
 int main()
