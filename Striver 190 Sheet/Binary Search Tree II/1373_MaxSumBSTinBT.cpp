@@ -22,6 +22,18 @@ S.C - O(K)
 // Code here
 
 // Better Approach
+
+/*
+- We construct the structure so that we can track the values at every node
+- Main concept is : the left subtree of fevery node, the maxValue should be less than the node->val
+and right subtree of every node, the minValue should be more that the node value
+- Initially we the maxNode and minNode as optimal as possible so leaf node comes out to be valid BST
+- As we come up from the bottom of the tree, we will check the maxNode of left and minNode of right
+- if true, will send the updated value
+- otherwise , there is no point in checking the above tree as lowest tree is not a BST, so we sent the worst value to pass the valid BST condition (main point)
+T.C - O(n)
+S.C - O(1)
+*/
 struct TreeNode
 {
     int val;
@@ -41,27 +53,34 @@ public:
         maxSum = c;
     }
 };
-Node maxSumHelper(TreeNode *root)
+// isBST, sum
+Node solve(TreeNode *root, int &ans)
 {
-    if (!root)
+    // Base case
+    if (root == NULL)
     {
         return Node(INT_MIN, INT_MAX, 0);
     }
 
-    Node l = maxSumHelper(root->left);
-    Node r = maxSumHelper(root->right);
-    // check for BST
-    if (l.maxNode < root->val < r.minNode)
-    {
-        return Node(max(l.maxNode, root->val), min(r.minNode, root->val), l.maxSum + r.maxSum + root->val);
-    }
+    // Recurrence Relation
+    Node l = solve(root->left, ans);
+    Node r = solve(root->right, ans);
 
-    return Node(INT_MIN, INT_MAX, max(l.maxSum, r.maxSum));
+    if (l.maxNode < root->val && r.minNode > root->val)
+    {
+        ans = max(ans, root->val + l.maxSum + r.maxSum);
+        int maxi = max({l.maxNode, r.maxNode, root->val});
+        int mini = min({l.minNode, r.minNode, root->val});
+        return Node(maxi, mini, root->val + l.maxSum + r.maxSum);
+    }           // left  right
+    return Node(INT_MAX, INT_MIN, 0);
 }
 
 int maxSumBST(TreeNode *root)
 {
-    return maxSumHelper(root).maxSum;
+    int ans = 0;
+    solve(root, ans);
+    return ans;
 }
 
 int main()
