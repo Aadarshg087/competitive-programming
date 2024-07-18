@@ -6,7 +6,8 @@ using namespace std;
 #define ll long long int
 #define endl "\n"
 
-#define debug(x)        \
+#define all(v) begin(v), end(v)
+#define print(x)        \
     cout << #x << ": "; \
     _print(x);          \
     cout << endl;
@@ -78,45 +79,49 @@ ll __lcm(ll a, ll b)
 {
     return (a * b) / __gcd(a, b);
 }
-
-bool check(unordered_map<char, int> &mp, string &s, int i, int j)
+// int tt[100100];
+int t[100100];
+int solve2(int n, int k)
 {
-    // unordered_set<char> st;
-    // while (i <= j)
-    // {
-    //     st.insert(s[i]);
-    //     i++;
-    // }
+    // base case
+    // print(n);
 
-    for (auto it : mp)
-    {
-        if (it.second > (int)mp.size())
-            return 0;
-    }
-    return 1;
+    if (n == 0 || n == 1)
+        return 0;
+    if (n < k)
+        return 1 + solve2(1, k);
+    // recurrence relation
+    int a = 1 + solve2(n - (k - 1), k);
+    return a;
 }
 
 void solve()
 {
-    int n;
-    cin >> n;
-    string s;
-    cin >> s;
-    ll count = 0;
-    for (int i = 0; i < n; i++)
-    {
-        unordered_map<char, int> mp;
-        for (int j = i; j - i + 1 <= 100 && j < n; j++)
-        {
-            mp[s[j]]++;
-            if (check(mp, s, i, j))
-            {
-                count++;
-                // cout << "i : " << i << " " << s.substr(i, j - i + 1) << endl;
-            }
-        }
-    }
-    cout << count << endl;
+    int n, k;
+    cin >> n >> k;
+    // memset(tt, -1, sizeof(tt));
+    memset(t, -1, sizeof(t));
+    cout << solve2(n, k) << endl;
+    // multiset<int, greater<int>> mt;
+    // mt.insert(n);
+    // int count = 0;
+    // vector<int> v(n + 1, 0);
+    // while (*mt.begin() != 1)
+    // {
+    //     int maxi = *mt.begin();
+    //     if (maxi == 1)
+    //         break;
+    //     mt.erase(mt.begin());
+    //     int temp = maxi / k;
+    //     if (temp == 0)
+    //     {
+    //         mt.
+    //     }
+    //     else
+    //     {
+    //     }
+    // }
+    // cout << count << endl;
 }
 
 /*

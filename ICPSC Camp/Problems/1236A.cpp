@@ -6,7 +6,8 @@ using namespace std;
 #define ll long long int
 #define endl "\n"
 
-#define debug(x)        \
+#define all(v) begin(v), end(v)
+#define print(x)        \
     cout << #x << ": "; \
     _print(x);          \
     cout << endl;
@@ -79,42 +80,30 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
-bool check(unordered_map<char, int> &mp, string &s, int i, int j)
-{
-    // unordered_set<char> st;
-    // while (i <= j)
-    // {
-    //     st.insert(s[i]);
-    //     i++;
-    // }
-
-    for (auto it : mp)
-    {
-        if (it.second > (int)mp.size())
-            return 0;
-    }
-    return 1;
-}
-
 void solve()
 {
-    int n;
-    cin >> n;
-    string s;
-    cin >> s;
-    ll count = 0;
+    int n = 3;
+    vector<int> v(n);
     for (int i = 0; i < n; i++)
+        cin >> v[i];
+
+    int i = 1;
+    int count = 0;
+    while (v[i] >= 1 && v[i + 1] >= 2)
     {
-        unordered_map<char, int> mp;
-        for (int j = i; j - i + 1 <= 100 && j < n; j++)
-        {
-            mp[s[j]]++;
-            if (check(mp, s, i, j))
-            {
-                count++;
-                // cout << "i : " << i << " " << s.substr(i, j - i + 1) << endl;
-            }
-        }
+        count += 1;
+        count += 2;
+        v[i]--;
+        v[i + 1] -= 2;
+    }
+
+    i = 0;
+    while (v[i] >= 1 && v[i + 1] >= 2)
+    {
+        count += 1;
+        count += 2;
+        v[i]--;
+        v[i + 1] -= 2;
     }
     cout << count << endl;
 }

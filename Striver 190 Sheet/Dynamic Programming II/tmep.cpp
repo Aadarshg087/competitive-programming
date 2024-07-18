@@ -6,22 +6,23 @@ using namespace std;
 #define ll long long int
 #define endl "\n"
 
-#define debug(x)        \
+#define all(v) begin(v), end(v)
+#define print(x)        \
     cout << #x << ": "; \
     _print(x);          \
     cout << endl;
-
-// ---------------------- Debug Functions -------------------------
-template <class T>
-void _print(T x)
-{
-    cout << x << " ";
-}
-template <class T>
-void _print(vector<T> v)
-{
-    for (T i : v)
-        _print(i);
+ 
+// ---------------------- Debug Functions ------------------------- 
+template <class T> 
+void _print(T x) 
+{ 
+    cout << x << " "; 
+} 
+template <class T> 
+void _print(vector<T> v) 
+{ 
+    for (T i : v) 
+        _print(i); 
 }
 
 // Seive Algo -------------------
@@ -79,44 +80,9 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
-bool check(unordered_map<char, int> &mp, string &s, int i, int j)
-{
-    // unordered_set<char> st;
-    // while (i <= j)
-    // {
-    //     st.insert(s[i]);
-    //     i++;
-    // }
-
-    for (auto it : mp)
-    {
-        if (it.second > (int)mp.size())
-            return 0;
-    }
-    return 1;
-}
-
 void solve()
 {
-    int n;
-    cin >> n;
-    string s;
-    cin >> s;
-    ll count = 0;
-    for (int i = 0; i < n; i++)
-    {
-        unordered_map<char, int> mp;
-        for (int j = i; j - i + 1 <= 100 && j < n; j++)
-        {
-            mp[s[j]]++;
-            if (check(mp, s, i, j))
-            {
-                count++;
-                // cout << "i : " << i << " " << s.substr(i, j - i + 1) << endl;
-            }
-        }
-    }
-    cout << count << endl;
+    
 }
 
 /*

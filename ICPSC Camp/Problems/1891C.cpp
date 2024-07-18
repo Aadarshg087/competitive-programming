@@ -6,7 +6,8 @@ using namespace std;
 #define ll long long int
 #define endl "\n"
 
-#define debug(x)        \
+#define all(v) begin(v), end(v)
+#define print(x)        \
     cout << #x << ": "; \
     _print(x);          \
     cout << endl;
@@ -79,44 +80,40 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
-bool check(unordered_map<char, int> &mp, string &s, int i, int j)
-{
-    // unordered_set<char> st;
-    // while (i <= j)
-    // {
-    //     st.insert(s[i]);
-    //     i++;
-    // }
-
-    for (auto it : mp)
-    {
-        if (it.second > (int)mp.size())
-            return 0;
-    }
-    return 1;
-}
-
 void solve()
 {
-    int n;
+    ll n;
     cin >> n;
-    string s;
-    cin >> s;
-    ll count = 0;
+    vector<ll> v(n);
+    multiset<ll> mt;
     for (int i = 0; i < n; i++)
     {
-        unordered_map<char, int> mp;
-        for (int j = i; j - i + 1 <= 100 && j < n; j++)
-        {
-            mp[s[j]]++;
-            if (check(mp, s, i, j))
-            {
-                count++;
-                // cout << "i : " << i << " " << s.substr(i, j - i + 1) << endl;
-            }
-        }
+        cin >> v[i];
+        mt.insert(v[i]);
     }
-    cout << count << endl;
+    sort(all(v));
+    ll sum = 0;
+    sum = accumulate(all(v), sum);
+
+    ll ans = 0;
+    int i = 0;
+    int j = n - 1;
+    ll curr = 0;
+    while (i < j)
+    {
+        while (curr < v[j] && i < j)
+        {
+            curr += v[i];
+            i++;
+        }
+        ans += curr;
+        curr = abs(curr - v[j]);
+        ans++;
+        v[j] = 0;
+        j--;
+    }
+    curr = abs(curr) + v[i];
+    cout << ans + (abs(curr) + 1) / 2 << endl;
 }
 
 /*
