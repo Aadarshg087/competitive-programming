@@ -84,23 +84,35 @@ void solve()
 {
     int n;
     cin >> n;
-    vector<int> v(n);
-    unordered_map<int, int> mp;
+    vector<int> a(n);
+    vector<int> b(n);
     for (int i = 0; i < n; i++)
     {
-        cin >> v[i];
-        mp[v[i]]++;
+        cin >> a[i];
     }
+    for (int i = 0; i < n; i++)
+        cin >> b[i];
 
-    for (auto it : mp)
+    sort(all(a));
+    sort(all(b));
+    int MOD = 1e9 + 7;
+    for (int i = 0; i < n; i++)
     {
-        if (it.second & 1)
+        if (a[i] <= b[i])
         {
-            cout << "YES" << endl;
+            cout << 0 << endl;
             return;
         }
     }
-    cout << "NO" << endl;
+
+    ll ans = 1;
+    for (int i = 0; i < n; i++)
+    {
+        int t = lower_bound(all(b), a[i]) - b.begin();
+        t -= i;
+        ans = (ans * t) % MOD;
+    }
+    cout << ans << endl;
 }
 
 /*

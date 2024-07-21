@@ -82,25 +82,12 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<int> v(n);
-    unordered_map<int, int> mp;
-    for (int i = 0; i < n; i++)
-    {
-        cin >> v[i];
-        mp[v[i]]++;
-    }
-
-    for (auto it : mp)
-    {
-        if (it.second & 1)
-        {
-            cout << "YES" << endl;
-            return;
-        }
-    }
-    cout << "NO" << endl;
+    string s;
+    cin >> s;
+    int n = s.size();
+    int ans = 26;
+    ans += n * 25;
+    cout << ans << endl;
 }
 
 /*
@@ -117,11 +104,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // solve();
+    solve();
     // seiveAlgo();
-    int t;
-    cin >> t;
-    while (t--)
-        solve();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    //     solve();
     return 0;
 }

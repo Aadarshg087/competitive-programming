@@ -82,33 +82,48 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    ll n, l, smoke;
-    cin >> n >> l >> smoke;
-    vector<ll> v(n);
-    vector<ll> t(n);
-    for (int i = 0; i < n; i++)
-    {
-        cin >> v[i];
-    }
-    for (int i = 0; i < n; i++)
-        cin >> t[i];
-
-    ll b = 0;
+    ll n, L, smoke;
+    cin >> n >> L >> smoke;
     ll prev = 0;
-    for (int i = 0; i < n; i++)
+    ll ans = 0;
+    while (n--)
     {
-        if (v[i] - prev >= smoke)
+        ll t, l;
+        cin >> t >> l;
+        if (t - prev >= smoke)
         {
-            b += (v[i] - prev) / smoke;
-            prev = v[i] + t[i];
+            ans += (t - prev) / smoke;
         }
-        else
-        {
-            prev = v[i] + t[i];
-        }
+        prev = t + l;
     }
-    b += (l - prev) / smoke;
-    cout << b << endl;
+
+    ans += (L - prev) / smoke;
+    cout << ans << endl;
+    // vector<ll> v(n);
+    // vector<ll> t(n);
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cin >> v[i];
+    // }
+    // for (int i = 0; i < n; i++)
+    //     cin >> t[i];
+
+    // ll b = 0;
+    // ll prev = 0;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     if (v[i] - prev >= smoke)
+    //     {
+    //         b += (v[i] - prev) / smoke;
+    //         prev = v[i] + t[i];
+    //     }
+    //     else
+    //     {
+    //         prev = v[i] + t[i];
+    //     }
+    // }
+    // b += (l - prev) / smoke;
+    // cout << b << endl;
 }
 
 /*

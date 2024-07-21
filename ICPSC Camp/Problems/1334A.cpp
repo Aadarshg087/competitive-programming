@@ -84,23 +84,23 @@ void solve()
 {
     int n;
     cin >> n;
-    vector<int> v(n);
-    unordered_map<int, int> mp;
+    int pp = -1;
+    int pc = -1;
+    bool f = 1;
     for (int i = 0; i < n; i++)
     {
-        cin >> v[i];
-        mp[v[i]]++;
-    }
-
-    for (auto it : mp)
-    {
-        if (it.second & 1)
+        int t1, t2;
+        cin >> t1 >> t2; // t1 - no of plays and t2 no of clear
+        if (t1 >= t2 && t1 >= pp && t2 >= pc && t1 - pp >= t2 - pc && f)
         {
-            cout << "YES" << endl;
-            return;
+            pp = t1;
+            pc = t2;
+            f = 1;
         }
+        else
+            f = 0;
     }
-    cout << "NO" << endl;
+    cout << (f ? "YES" : "NO") << endl;
 }
 
 /*

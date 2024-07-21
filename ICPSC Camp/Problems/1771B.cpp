@@ -80,27 +80,73 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
+int fact(int n)
+{
+    if (n == 0)
+        return 0;
+    int i = 1;
+    int ans = 0;
+    while (i <= n)
+    {
+        ans += i;
+        i++;
+    }
+    return ans;
+}
+
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<int> v(n);
-    unordered_map<int, int> mp;
-    for (int i = 0; i < n; i++)
+    int n, m;
+    cin >> n >> m;
+    unordered_map<int, vector<int>> mp;
+    for (int i = 0; i < m; i++)
     {
-        cin >> v[i];
-        mp[v[i]]++;
+        int temp1, temp2;
+        cin >> temp1 >> temp2;
+        mp[temp1].push_back(temp2);
+        mp[temp2].push_back(temp1);
     }
 
-    for (auto it : mp)
+    vector<int> v(n);
+    for (int i = 0; i < n; i++)
     {
-        if (it.second & 1)
+        v[i] = i + 1;
+    }
+
+    unordered_set<int> st;
+    int i = 0;
+    ll ans = 0;
+    while (i < n)
+    {
+        // print(i);
+        bool c = 1;
+        int temp = v[i];
+        // can we take this element
+        // correspoonding ele should not present in set
+        for (auto it : mp[temp])
         {
-            cout << "YES" << endl;
-            return;
+            if (st.find(it) != st.end())
+            {
+                c = 0;
+                break;
+            }
+            if (st.empty())
+                break;
+        }
+        if (c)
+        {
+            st.insert(v[i]);
+            i++;
+        }
+        else
+        {
+            ans += fact((int)st.size() - 1);
+            st.clear();
         }
     }
-    cout << "NO" << endl;
+
+    ans += fact((int)st.size() - 1);
+    cout << ans + n << endl;
 }
 
 /*

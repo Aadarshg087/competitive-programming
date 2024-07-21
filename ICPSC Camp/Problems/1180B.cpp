@@ -84,23 +84,25 @@ void solve()
 {
     int n;
     cin >> n;
-    vector<int> v(n);
-    unordered_map<int, int> mp;
-    for (int i = 0; i < n; i++)
+    int corner = 0;
+    if (n == 1)
     {
-        cin >> v[i];
-        mp[v[i]]++;
+        cout << 1 << endl;
+        return;
     }
 
-    for (auto it : mp)
+    int i = 2;
+    int prev = 1;
+    corner = 0;
+    while (i <= n)
     {
-        if (it.second & 1)
-        {
-            cout << "YES" << endl;
-            return;
-        }
+        int ans = 4 + prev + corner;
+        corner += 4;
+        prev = ans;
+        // cout << ans << endl;
+        i++;
     }
-    cout << "NO" << endl;
+    cout << prev << endl;
 }
 
 /*
@@ -117,11 +119,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // solve();
+    solve();
     // seiveAlgo();
-    int t;
-    cin >> t;
-    while (t--)
-        solve();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    //     solve();
     return 0;
 }

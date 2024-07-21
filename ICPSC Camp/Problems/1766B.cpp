@@ -84,21 +84,20 @@ void solve()
 {
     int n;
     cin >> n;
-    vector<int> v(n);
-    unordered_map<int, int> mp;
-    for (int i = 0; i < n; i++)
-    {
-        cin >> v[i];
-        mp[v[i]]++;
-    }
+    string s;
+    cin >> s;
 
-    for (auto it : mp)
+    string temp = "";
+    for (int i = 0; i < n - 1; i++)
     {
-        if (it.second & 1)
+        string f = s.substr(i, 2);
+        int ind = temp.find(f);
+        if (ind != string ::npos)
         {
             cout << "YES" << endl;
             return;
         }
+        temp.push_back(s[i]);
     }
     cout << "NO" << endl;
 }

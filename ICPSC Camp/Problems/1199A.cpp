@@ -80,27 +80,51 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
+bool check(vector<int> &v, int i, int x, int y)
+{
+    int j = i - 1;
+    while (j > 0 && x--)
+    {
+        if (v[j] < v[i])
+        {
+            return false;
+        }
+        j--;
+    }
+
+    j = i + 1;
+    while (y-- && j < (int)v.size())
+    {
+        if (v[j] < v[i])
+        {
+            return false;
+        }
+        j++;
+    }
+
+    return 1;
+}
+
 void solve()
 {
-    int n;
-    cin >> n;
+    int n, x, y;
+    cin >> n >> x >> y;
     vector<int> v(n);
-    unordered_map<int, int> mp;
     for (int i = 0; i < n; i++)
     {
         cin >> v[i];
-        mp[v[i]]++;
     }
 
-    for (auto it : mp)
+    int s = x - 1;
+    int e = n - 1 - y;
+    for (int i = 0; i < n; i++)
     {
-        if (it.second & 1)
+        if (check(v, i, x, y))
         {
-            cout << "YES" << endl;
+            cout << i + 1 << endl;
             return;
         }
     }
-    cout << "NO" << endl;
 }
 
 /*
@@ -117,11 +141,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // solve();
+    solve();
     // seiveAlgo();
-    int t;
-    cin >> t;
-    while (t--)
-        solve();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    //     solve();
     return 0;
 }

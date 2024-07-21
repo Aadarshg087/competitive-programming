@@ -84,23 +84,23 @@ void solve()
 {
     int n;
     cin >> n;
-    vector<int> v(n);
-    unordered_map<int, int> mp;
-    for (int i = 0; i < n; i++)
+    if (n & 1)
     {
-        cin >> v[i];
-        mp[v[i]]++;
+        while (n--)
+        {
+            cout << 1 << " ";
+        }
+        cout << endl;
+        return;
     }
 
-    for (auto it : mp)
+    cout << 1 << " " << 3 << " ";
+    n -= 2;
+    while (n--)
     {
-        if (it.second & 1)
-        {
-            cout << "YES" << endl;
-            return;
-        }
+        cout << 2 << " ";
     }
-    cout << "NO" << endl;
+    cout << endl;
 }
 
 /*

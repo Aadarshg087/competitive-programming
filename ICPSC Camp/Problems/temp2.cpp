@@ -11,18 +11,18 @@ using namespace std;
     cout << #x << ": "; \
     _print(x);          \
     cout << endl;
-
-// ---------------------- Debug Functions -------------------------
-template <class T>
-void _print(T x)
-{
-    cout << x << " ";
-}
-template <class T>
-void _print(vector<T> v)
-{
-    for (T i : v)
-        _print(i);
+ 
+// ---------------------- Debug Functions ------------------------- 
+template <class T> 
+void _print(T x) 
+{ 
+    cout << x << " "; 
+} 
+template <class T> 
+void _print(vector<T> v) 
+{ 
+    for (T i : v) 
+        _print(i); 
 }
 
 // Seive Algo -------------------
@@ -82,25 +82,7 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<int> v(n);
-    unordered_map<int, int> mp;
-    for (int i = 0; i < n; i++)
-    {
-        cin >> v[i];
-        mp[v[i]]++;
-    }
-
-    for (auto it : mp)
-    {
-        if (it.second & 1)
-        {
-            cout << "YES" << endl;
-            return;
-        }
-    }
-    cout << "NO" << endl;
+    
 }
 
 /*
