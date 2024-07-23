@@ -82,43 +82,32 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    int n, x;
-    cin >> n >> x;
-    vector<int> v(n);
-    for (int i = 0; i < n; i++)
+    int r1, r2, c1, c2, d1, d2;
+    cin >> r1 >> r2 >> c1 >> c2 >> d1 >> d2;
+    for (int i = 1; i < r2; i++)
     {
-        cin >> v[i];
-    }
+        int first = i;
+        int other = r2 - i;
+        if (other == i)
+            continue;
+        int ff = c1 - first;
+        int ss = c2 - other;
+        if (other > 9 || i > 9 || ff > 9 || ss > 9)
+            continue;
 
-    ll sum = 0;
-    int ans1 = -1;
-    for (int i = 0; i < n; i++)
-    {
-        sum += v[i];
-        if (sum % x != 0)
+        if (other < 1 || i < 1 || ff < 1 || ss < 1)
+            continue;
+
+        if (ff == ss || ff == i || ss == other || ff == other || ss == i)
+            continue;
+        if (ss + i == d2 && ff + other == d1)
         {
-            ans1 = i;
+            cout << ff << " " << ss << endl;
+            cout << i << " " << other << endl;
+            return;
         }
     }
-    ans1++;
-    sum = 0;
-    int ans2 = -1;
-    for (int i = n - 1; i >= 0; i--)
-    {
-        sum += v[i];
-        if (sum % x != 0)
-        {
-            ans2 = n - 1 - i;
-        }
-    }
-
-    ans2++;
-    if (ans1 == 0 && ans2 == 0)
-    {
-        cout << -1 << endl;
-        return;
-    }
-    cout << max(ans1, ans2) << endl;
+    cout << -1 << endl;
 }
 
 /*
@@ -135,11 +124,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // solve();
+    solve();
     // seiveAlgo();
-    int t;
-    cin >> t;
-    while (t--)
-        solve();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    //     solve();
     return 0;
 }

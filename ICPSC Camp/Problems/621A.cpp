@@ -82,43 +82,25 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    int n, x;
-    cin >> n >> x;
-    vector<int> v(n);
+    int n;
+    cin >> n;
+    vector<ll> v(n);
+    multiset<ll> st;
     for (int i = 0; i < n; i++)
     {
         cin >> v[i];
+        if (v[i] & 1)
+            st.insert(v[i]);
     }
 
     ll sum = 0;
-    int ans1 = -1;
-    for (int i = 0; i < n; i++)
+    sum = accumulate(all(v), sum);
+    if ((sum & 1))
     {
-        sum += v[i];
-        if (sum % x != 0)
-        {
-            ans1 = i;
-        }
-    }
-    ans1++;
-    sum = 0;
-    int ans2 = -1;
-    for (int i = n - 1; i >= 0; i--)
-    {
-        sum += v[i];
-        if (sum % x != 0)
-        {
-            ans2 = n - 1 - i;
-        }
+        sum -= *st.begin();
     }
 
-    ans2++;
-    if (ans1 == 0 && ans2 == 0)
-    {
-        cout << -1 << endl;
-        return;
-    }
-    cout << max(ans1, ans2) << endl;
+    cout << sum << endl;
 }
 
 /*
@@ -135,11 +117,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // solve();
+    solve();
     // seiveAlgo();
-    int t;
-    cin >> t;
-    while (t--)
-        solve();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    //     solve();
     return 0;
 }

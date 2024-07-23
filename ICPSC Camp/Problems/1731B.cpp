@@ -82,43 +82,16 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    int n, x;
-    cin >> n >> x;
-    vector<int> v(n);
-    for (int i = 0; i < n; i++)
-    {
-        cin >> v[i];
-    }
+    ll n;
+    cin >> n;
+    ll ans = n;
+    ll MOD = 1e9 + 7;
+    ans = ((2022 * ans * ((2022 * (n + 1)) % MOD) % MOD) % MOD) % MOD;
+    ans = ((2022 * ans * ((2022 * (2 * n + 1)) % MOD) % MOD) % MOD) % MOD;
+    ans = ans / 6;
+    
 
-    ll sum = 0;
-    int ans1 = -1;
-    for (int i = 0; i < n; i++)
-    {
-        sum += v[i];
-        if (sum % x != 0)
-        {
-            ans1 = i;
-        }
-    }
-    ans1++;
-    sum = 0;
-    int ans2 = -1;
-    for (int i = n - 1; i >= 0; i--)
-    {
-        sum += v[i];
-        if (sum % x != 0)
-        {
-            ans2 = n - 1 - i;
-        }
-    }
 
-    ans2++;
-    if (ans1 == 0 && ans2 == 0)
-    {
-        cout << -1 << endl;
-        return;
-    }
-    cout << max(ans1, ans2) << endl;
 }
 
 /*

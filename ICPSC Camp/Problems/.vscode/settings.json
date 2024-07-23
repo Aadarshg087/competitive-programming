@@ -17,6 +17,7 @@
     "regex": "cpp",
     "valarray": "cpp",
     "utility": "cpp",
-    "random": "cpp"
+    "random": "cpp",
+    "cstdlib": "cpp"
   }
 }
