@@ -80,27 +80,85 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
+bool check(vector<int> &a, vector<int> &b, int mid, int k)
+{
+    // first find thhe kth element
+
+    // step 1 : first corrrect element in a
+    int n = a.size();
+    int m = b.size();
+    int ind1 = (k / n) - 1;
+    k %= n;
+    int ind2 = b.size() - 1;
+    if (k % m != 0)
+        ind2 = (k % m) - 1;
+    int kth = a[ind1] + b[ind2];
+    if (mid < kth)
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<int> v(n);
-    unordered_map<int, int> mp;
+    int n, m;
+    int k;
+    // cin >> n >> m;
+    // cin >> k;
+
+    // k = 1;
+    // // k--;
+
+    // n = 2;
+    // m = 2;
+    // vector<int> a{1, 2};
+    // vector<int> b{4, 5};
+
+    cin >> n >> m >> k;
+    vector<int> a(n);
+    vector<int> b(m);
+    for (int i = 0; i < n; i++)
+        cin >> a[i];
+
+    for (int i = 0; i < m; i++)
+        cin >> b[i];
+    // k--;
+
+    vector<int> total;
     for (int i = 0; i < n; i++)
     {
-        cin >> v[i];
-        mp[v[i]]++;
-    }
-
-    for (auto it : mp)
-    {
-        if (it.second & 1)
+        for (int j = 0; j < m; j++)
         {
-            cout << "YES" << endl;
-            return;
+            total.push_back(a[i] + b[j]);
         }
     }
-    cout << "NO" << endl;
+    sort(all(total));
+    print(total);
+
+    sort(all(a));
+    sort(all(b));
+
+    int low = a[0] + b[0];
+    int high = a.back() + b.back();
+    int ans = -1;
+    while (low <= high)
+    {
+        int mid = (low + high) >> 1;
+        if (check(a, b, mid, k)) // kya mid kth element hai ya usse bada hai,
+        {
+            ans = mid;
+            high = mid - 1;
+        }
+        else
+        {
+            low = mid + 1;
+        }
+    }
+    cout << ans << endl;
 }
 
 /*

@@ -82,9 +82,14 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    ll a, b, c, d;
-    cin >> a >> b >> c >> d;
-    cout << max(abs(a - c), abs(b - d)) << endl;
+    int n;
+    cin >> n;
+    int i = 1;
+    int MOD = 5;
+    while (i <= n)
+    {
+        ans = ans + BinaryExpoRecur(i, n);
+    }
 }
 
 /*
@@ -101,11 +106,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    solve();
+    // solve();
     // seiveAlgo();
-    // int t;
-    // cin >> t;
-    // while (t--)
-    //     solve();
+    int t;
+    cin >> t;
+    while (t--)
+        solve();
     return 0;
 }

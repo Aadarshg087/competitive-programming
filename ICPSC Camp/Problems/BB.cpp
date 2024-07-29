@@ -82,9 +82,19 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    ll a, b, c, d;
-    cin >> a >> b >> c >> d;
-    cout << max(abs(a - c), abs(b - d)) << endl;
+    int n, x;
+    cin >> n >> x;
+    int ans = 0;
+    for (int a = 1; a <= x; a++)
+    {
+        for (int b = 1; a * b <= n && a + b <= x; b++)
+        {
+            int c1 = x - a - b;
+            int c2 = (n - a * b) / (a + b);
+            ans += min(c1, c2);
+        }
+    }
+    cout << ans << endl;
 }
 
 /*
@@ -101,11 +111,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    solve();
+    // solve();
     // seiveAlgo();
-    // int t;
-    // cin >> t;
-    // while (t--)
-    //     solve();
+    int t;
+    cin >> t;
+    while (t--)
+        solve();
     return 0;
 }

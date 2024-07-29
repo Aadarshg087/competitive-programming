@@ -82,9 +82,36 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    ll a, b, c, d;
-    cin >> a >> b >> c >> d;
-    cout << max(abs(a - c), abs(b - d)) << endl;
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+    char f = s[0] - 1;
+    int ind1 = -1;
+    int ind2 = -1;
+    for (int i = 0; i < n; i++)
+    {
+        if (s[i] > f)
+        {
+            f = s[i];
+            ind1 = i;
+        }
+        if (s[i] < f)
+        {
+            ind2 = i;
+            break;
+        }
+    }
+
+    if (ind2 != -1)
+    {
+        cout << "YES" << endl;
+        cout << ind1 + 1 << " " << ind2 + 1 << endl;
+    }
+    else
+    {
+        cout << "NO" << endl;
+    }
 }
 
 /*

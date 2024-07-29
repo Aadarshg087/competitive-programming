@@ -85,145 +85,26 @@ void solve()
     ll n, m;
     cin >> n >> m;
     vector<ll> v(n);
-    map<ll, ll> mp;
-    set<ll> st;
     for (int i = 0; i < n; i++)
-    {
         cin >> v[i];
-        mp[v[i]]++;
-        st.insert(v[i]);
-    }
-    vector<ll> vv(all(st));
-    // print(vv);
-    sort(all(vv));
-    n = vv.size();
-    ll ans = INT_MIN;
-    for (int i = 0; i < n; i++)
+
+    sort(all(v));
+    ll l = 0;
+    ll r = 0;
+    ll ans = 0;
+    ll sum = 0;
+    while (l < n)
     {
-        ll mm = m;
-        ll temp = 0;
-        ll need = m / vv[i];
-        ll temp1 = 0;
-        if (need >= mp[vv[i]])
+        while (r < n && sum + v[r] <= m && v[r] - v[l] <= 1)
         {
-            temp1 = mp[vv[i]] * vv[i];
-            // print(temp1);
-            mm -= temp1;
+            sum += v[r];
+            r++;
         }
-        else
-        {
-            temp1 = need * vv[i];
-            mm -= temp1;
-            ans = max(ans, temp1);
-        }
-        // print(mm);
-        // cout << mm << " ";
-
-        ll temp2 = 0;
-        if (i != n - 1 && abs(vv[i + 1] - vv[i]) == 1)
-        {
-            ll need = mm / vv[i + 1];
-            if (need >= mp[vv[i + 1]])
-            {
-                temp2 = mp[vv[i + 1]] * vv[i + 1];
-                mm -= temp2;
-            }
-            else
-            {
-                temp2 = need * vv[i + 1];
-                // print(temp2);
-                mm -= temp2;
-            }
-            // cout << mm << ": ";
-        }
-        ans = max(ans, temp1 + temp2);
-        // cout << temp1 + temp2 << endl;
-    }
-    reverse(all(vv));
-
-    for (int i = 0; i < n; i++)
-    {
-        ll mm = m;
-        ll temp = 0;
-        ll need = m / vv[i];
-        ll temp1 = 0;
-        if (need >= mp[vv[i]])
-        {
-            temp1 = mp[vv[i]] * vv[i];
-            // print(temp1);
-            mm -= temp1;
-        }
-        else
-        {
-            temp1 = need * vv[i];
-            mm -= temp1;
-            ans = max(ans, temp1);
-        }
-        // print(mm);
-        // cout << mm << " ";
-
-        ll temp2 = 0;
-        if (i != n - 1 && abs(vv[i + 1] - vv[i]) == 1)
-        {
-            ll need = mm / vv[i + 1];
-            if (need >= mp[vv[i + 1]])
-            {
-                temp2 = mp[vv[i + 1]] * vv[i + 1];
-                mm -= temp2;
-            }
-            else
-            {
-                temp2 = need * vv[i + 1];
-                // print(temp2);
-                mm -= temp2;
-            }
-            // cout << mm << ": ";
-        }
-        ans = max(ans, temp1 + temp2);
-        // cout << temp1 + temp2 << endl;
+        ans = max(sum, ans);
+        sum -= v[l];
+        l++;
     }
     cout << ans << endl;
-
-    // ll ans = INT_MIN;
-    // for (int i = 0; i < vv.size(); i++)
-    // {
-    //     ll temp = 0;
-    //     ll mm = m;
-    //     temp += mp[vv[i]] * vv[i];
-    //     // print(temp);
-    //     // mm -= temp;
-    //     if (mm - temp <= 0)
-    //     {
-    //         print(temp);
-    //         ll t = m / (vv[i]);
-    //         temp = t * vv[i];
-    //         mm -= temp;
-    //     }
-    //     ll temp2 = 0;
-    //     if (i != vv.size() - 1 && abs(vv[i + 1] - vv[i]) == 1)
-    //     {
-    //         temp2 = mp[vv[i + 1]] * vv[i + 1];
-    //         if (mm - temp2 <= 0)
-    //         {
-    //             print(temp2);
-    //              // ans = max(ans, mm);
-    //             ll t = m / (vv[i + 1]);
-    //             temp2 = t * vv[i + 1];
-    //             mm -= temp2;
-    //         }
-    //         // print(temp);
-    //     }
-    //     ans = max(ans, temp + temp2);
-    //     // if (mm - temp <= 0)
-    //     // {
-    //     //     cout << m << endl;
-    //     //     return;
-    //     // }
-    //     // ans = max(ans, temp);
-    //     // mm -= temp;
-    //     // cout << "ans: " << ans << endl;
-    // }
-    // cout << ans << endl;
 }
 
 /*

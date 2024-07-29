@@ -82,7 +82,7 @@ ll __lcm(ll a, ll b)
 
 int fact(int n)
 {
-    if (n == 0)
+    if (n <= 0)
         return 0;
     int i = 1;
     int ans = 0;
@@ -98,54 +98,78 @@ void solve()
 {
     int n, m;
     cin >> n >> m;
-    unordered_map<int, vector<int>> mp;
+    unordered_map<int, set<int>> mp;
     for (int i = 0; i < m; i++)
     {
         int temp1, temp2;
         cin >> temp1 >> temp2;
-        mp[temp1].push_back(temp2);
-        mp[temp2].push_back(temp1);
+        mp[temp1].insert(temp2);
+        mp[temp2].insert(temp1);
     }
 
     vector<int> v(n);
     for (int i = 0; i < n; i++)
     {
         v[i] = i + 1;
+        if (mp.find(v[i]) == mp.end())
+        {
+            mp[v[i]] = {0};
+        }
     }
 
-    unordered_set<int> st;
-    int i = 0;
+    // print("Printing the map: ");
+    // for (auto it : mp)
+    // {
+    //     cout << it.first << ": ";
+    //     print(it.second);
+    // }
+
+    set<int> st;
+    int i = 1;
     ll ans = 0;
-    while (i < n)
+    while (i <= n)
     {
         // print(i);
         bool c = 1;
-        int temp = v[i];
+        int temp = i;
+        int found = 1;
         // can we take this element
         // correspoonding ele should not present in set
         for (auto it : mp[temp])
         {
-            if (st.find(it) != st.end())
-            {
-                c = 0;
-                break;
-            }
             if (st.empty())
                 break;
+
+            if (st.find(it) != st.end()) // if found
+            {
+                c = 0; // if not excecuted, means we can take
+                found = it;
+                break;
+            }
         }
         if (c)
         {
-            st.insert(v[i]);
+            st.insert(i);
             i++;
         }
         else
         {
+            // print(i);
+            // cout << "Subsegments: ";
+            // for (auto itt : st)
+            //     cout << itt << " ";
+            // cout << endl;
             ans += fact((int)st.size() - 1);
+            i = found + 1;
+            // cout << i << "sdf" << endl;
             st.clear();
         }
     }
 
     ans += fact((int)st.size() - 1);
+    // for (auto it : st)
+    //     cout << it << " ";
+    // cout << endl;
     cout << ans + n << endl;
 }
 

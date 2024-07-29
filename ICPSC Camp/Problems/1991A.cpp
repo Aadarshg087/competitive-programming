@@ -82,9 +82,38 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    ll a, b, c, d;
-    cin >> a >> b >> c >> d;
-    cout << max(abs(a - c), abs(b - d)) << endl;
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    vector<int> b(n - 1);
+    for (int i = 0; i < n - 1; i++)
+    {
+        cin >> b[i];
+    }
+
+    a[0] = b[0];
+    for (int i = 1; i < n - 1; i++)
+    {
+        a[i] = (b[i] | b[i - 1]);
+    }
+    a[n - 1] = b[n - 2];
+
+    bool check = 1;
+    for (int i = 0; i < n - 1; i++)
+    {
+        if ((a[i] & a[i + 1]) != b[i])
+        {
+            check = false;
+            cout << -1 << endl;
+            return;
+        }
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << a[i] << " ";
+    }
+    cout << endl;
 }
 
 /*
@@ -101,11 +130,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    solve();
+    // solve();
     // seiveAlgo();
-    // int t;
-    // cin >> t;
-    // while (t--)
-    //     solve();
+    int t;
+    cin >> t;
+    while (t--)
+        solve();
     return 0;
 }
