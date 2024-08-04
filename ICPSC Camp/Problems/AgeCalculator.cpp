@@ -80,21 +80,6 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
-void solve()
-{
-    ll n;
-    cin >> n;
-    ll nn = n % 5;
-    ll i = 1;
-    ll ans = 0;
-    while (i <= 4)
-    {
-        ans += (BinaryExpoRecur(i, nn) % 5);
-        i++;
-    }
-    cout << ans % 5 << endl;
-}
-
 /*
     - Read the problem twice
     - Check for overflow
@@ -106,14 +91,35 @@ void solve()
 
 int main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    solve();
-    // seiveAlgo();
-    // int t;
-    // cin >> t;
-    // while (t--)
-    //     solve();
+    // ios_base::sync_with_stdio(false);
+    // cin.tie(NULL);
+    // cout.tie(NULL);
+
+    // -------------------
+    cout << "Enter you date of birth (DD/MM/YYYY) : ";
+    string DB;
+    cin >> DB;
+    stringstream ss(DB);
+    string token;
+    vector<string> v1;
+    while (getline(ss, token, '/'))
+    {
+        v1.push_back(token);
+    }
+
+    cout << "Enter the second date/today's date (DD/MM/YYYY) : ";
+    string date;
+    cin >> date;
+    stringstream ss1(date);
+    string token2;
+    vector<string> v2;
+    while (getline(ss1, token2, '/'))
+    {
+        v2.push_back(token2);
+    }
+
+    print(v1);
+    print(v2);
+
     return 0;
 }

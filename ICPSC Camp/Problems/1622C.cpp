@@ -82,17 +82,47 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    ll n;
-    cin >> n;
-    ll nn = n % 5;
-    ll i = 1;
-    ll ans = 0;
-    while (i <= 4)
+    ll n, k;
+    cin >> n >> k;
+    vector<ll> v(n);
+    ll sum = 0;
+    for (int i = 0; i < n; i++)
     {
-        ans += (BinaryExpoRecur(i, nn) % 5);
-        i++;
+        cin >> v[i];
+        sum += v[i];
     }
-    cout << ans % 5 << endl;
+    if (sum <= k)
+    {
+        cout << 0 << endl;
+        return;
+    }
+
+    sort(all(v), greater<int>());
+    print(v);
+    ll mini = *min_element(all(v));
+    ll countMini = count(all(v), mini);
+    ll ans = 0;
+
+    if ((n - countMini) * mini + (countMini * mini) > k)
+    {
+        ans += n - countMini; // make other are smallest (moves)
+        ll currSum = mini * n;
+        ans += abs(currSum - k); // 
+        cout << ans << endl;
+        return;
+    }
+
+    ll currSum = 0;
+    currSum = accumulate(all(v), currSum);
+    for (int i = 0; i < n; i++)
+    {
+        currSum -= (v[i]);
+        currSum += mini;
+        ans++;
+        if (currSum <= k)
+            break;
+    }
+    cout << ans << endl;
 }
 
 /*
@@ -109,11 +139,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    solve();
+    // solve();
     // seiveAlgo();
-    // int t;
-    // cin >> t;
-    // while (t--)
-    //     solve();
+    int t;
+    cin >> t;
+    while (t--)
+        solve();
     return 0;
 }

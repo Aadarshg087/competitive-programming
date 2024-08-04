@@ -18,6 +18,7 @@
     "valarray": "cpp",
     "utility": "cpp",
     "random": "cpp",
-    "cstdlib": "cpp"
+    "cstdlib": "cpp",
+    "iosfwd": "cpp"
   }
 }

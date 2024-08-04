@@ -82,17 +82,24 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    ll n;
-    cin >> n;
-    ll nn = n % 5;
-    ll i = 1;
-    ll ans = 0;
-    while (i <= 4)
+    string s;
+    cin >> s;
+    string ss = "hello";
+    int j = 0;
+    for (int i = 0; i < s.size(); i++)
     {
-        ans += (BinaryExpoRecur(i, nn) % 5);
-        i++;
+        if (s[i] == ss[j])
+        {
+            j++;
+        }
+        if (j == ss.size())
+        {
+
+            cout << "YES" << endl;
+            return;
+        }
     }
-    cout << ans % 5 << endl;
+    cout << "NO" << endl;
 }
 
 /*

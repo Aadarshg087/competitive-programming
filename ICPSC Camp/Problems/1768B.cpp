@@ -82,17 +82,20 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    ll n;
-    cin >> n;
-    ll nn = n % 5;
-    ll i = 1;
-    ll ans = 0;
-    while (i <= 4)
+    int n, k;
+    cin >> n >> k;
+    vector<int> v(n);
+    for (int i = 0; i < n; i++)
     {
-        ans += (BinaryExpoRecur(i, nn) % 5);
-        i++;
+        cin >> v[i];
     }
-    cout << ans % 5 << endl;
+
+    int small = n + 1;
+    int ans = n + 1;
+    for (int i = n; i >= 1; i++)
+    {
+        
+    }
 }
 
 /*
@@ -109,11 +112,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    solve();
+    // solve();
     // seiveAlgo();
-    // int t;
-    // cin >> t;
-    // while (t--)
-    //     solve();
+    int t;
+    cin >> t;
+    while (t--)
+        solve();
     return 0;
 }
