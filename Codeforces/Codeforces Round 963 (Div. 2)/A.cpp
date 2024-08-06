@@ -82,17 +82,25 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    int n = 2 * 1e5;
-    int count = 0;
-    int nn = n;
-    while (n != 0)
+    unordered_map<char, int> mp;
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+    for (auto it : s)
     {
-        count++;
-        n /= 3;
+        mp[it]++;
     }
 
-    cout << count << endl;
-    int ans = log(nn) / log(3) + 1;
+    int ans = 0;
+    for (auto it : mp)
+    {
+        // cout << it.first << " " << it.second << endl;
+        if (it.first != '?')
+        {
+            ans += min(n, it.second);
+        }
+    }
     cout << ans << endl;
 }
 

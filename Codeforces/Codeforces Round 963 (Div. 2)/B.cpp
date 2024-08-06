@@ -82,17 +82,60 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    int n = 2 * 1e5;
-    int count = 0;
-    int nn = n;
-    while (n != 0)
+    ll n;
+    cin >> n;
+    vector<ll> v(n);
+    ll countOdd = 0;
+    ll countEven = 0;
+    vector<ll> even;
+    ll maxi = INT_MIN;
+    for (int i = 0; i < n; i++)
     {
-        count++;
-        n /= 3;
+        cin >> v[i];
+        if (v[i] & 1)
+        {
+            countOdd++;
+            maxi = max(maxi, v[i]);
+        }
+        else
+        {
+            countEven++;
+            even.push_back(v[i]);
+        }
+    }
+    if (countOdd == 0 || countEven == 0)
+    {
+        cout << 0 << endl;
+        return;
+    }
+    // sort(all(v));
+    ll ans = 0;
+    bool f = 0;
+    sort(all(even));
+    for (int i = 0; i < even.size(); i++)
+    {
+        if (even[i] > maxi) // 39 26
+        {
+            ans += 2;
+            ans += even.size() - 1 - i;
+            // cout << even.size() - 1 << " " << i - 1 << endl;
+            f = 1;
+            break;
+            // ans += 2;
+            // maxi = even[i] + maxi;
+            // maxi += even[i];
+            // even[i] = maxi;
+        }
+        else
+        {
+            ans++;
+            // maxi is odd always
+            maxi = even[i] + maxi;
+            even[i] = maxi;
+        }
     }
 
-    cout << count << endl;
-    int ans = log(nn) / log(3) + 1;
+    // print(even);
     cout << ans << endl;
 }
 

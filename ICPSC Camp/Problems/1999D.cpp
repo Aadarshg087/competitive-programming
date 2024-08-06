@@ -82,17 +82,44 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    int n = 2 * 1e5;
-    int count = 0;
-    int nn = n;
-    while (n != 0)
+    string s;
+    cin >> s;
+    string t;
+    cin >> t;
+
+    int j = 0;
+    string ans = "";
+    for (int i = 0; i < s.size(); i++)
     {
-        count++;
-        n /= 3;
+
+        if (j >= t.size())
+        {
+            if (s[i] == '?') // my choice
+                ans.push_back('a');
+            else
+                ans.push_back(s[i]); // copying
+            continue;
+        }
+        if (s[i] == '?')
+        {
+            ans.push_back(t[j]); // needed element
+            j++;
+        }
+        else if (s[i] == t[j])
+        {
+            ans.push_back(t[j]); // next element in t
+            j++;
+        }
+        else
+            ans.push_back(s[i]);
+    }
+    if (j < t.size())
+    {
+        cout << "NO" << endl;
+        return;
     }
 
-    cout << count << endl;
-    int ans = log(nn) / log(3) + 1;
+    cout << "YES" << endl;
     cout << ans << endl;
 }
 

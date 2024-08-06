@@ -80,20 +80,90 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
+const int NN = 2e5 + 7;
+vector<int> arr(NN);
+
+void pre()
+{
+    arr[0] = 0;
+    for (int i = 1; i <= NN; i++)
+    {
+        int nn = i;
+        int count = 0;
+        while (nn != 0)
+        {
+            nn /= 3;
+            count++;
+        }
+        arr[i] = arr[i - 1] + count;
+    }
+    // for (int i : arr)
+    //     cout << i << endl;
+}
+
 void solve()
 {
-    int n = 2 * 1e5;
-    int count = 0;
-    int nn = n;
-    while (n != 0)
-    {
-        count++;
-        n /= 3;
-    }
-
-    cout << count << endl;
-    int ans = log(nn) / log(3) + 1;
+    ll l, r;
+    cin >> l >> r;
+    int ans = 0;
+    ans += arr[r] - arr[l - 1];
+    ans += arr[l] - arr[l - 1];
     cout << ans << endl;
+    arr.clear();
+    // -------------------------
+    // vector<ll> v(r - l + 1);
+    // for (int i = 0; i < v.size(); i++)
+    // {
+    //     v[i] = l;
+    //     l++;
+    // }
+    // // print(v);
+
+    // if (v[0] < 3)
+    // {
+    //     ans++;
+    //     v[1] = 3 * v[1];
+    // }
+    // else
+    // {
+    //     // ans += (v[0] / 3) + 1;
+    //     // v[1] = (v[1]) * ((v[0] / 3) + 1);
+
+    //     // int count = 0;
+    //     // while (v[0] != 0)
+    //     // {
+    //     //     v[0] /= 3;
+    //     //     v[1] *= 3;
+    //     //     ans++;
+    //     //     count++;
+    //     // }
+    //     int count = (log(v[0]) / log(3)) + 1;
+    //     ans += count;
+    //     v[1] *= BinaryExpoRecur(3, count);
+    //     // print(count);
+    // }
+
+    // for (int i = 1; i < v.size(); i++)
+    // {
+    //     if (v[i] < 3 && v[i] >= 1)
+    //     {
+    //         ans++;
+    //         v[i + 1] = v[i + 1] * 3;
+    //     }
+    //     else if (v[i] >= 3)
+    //     {
+    //         int count = (log(v[i]) / log(3)) + 1;
+    //         ans += count;
+    //         // while (v[i] != 0)
+    //         // {
+    //         //     v[i] /= 3;
+    //         //     ans++;
+    //         //     count++;
+    //         // }
+    //         // cout << count << endl;
+    //     }
+    // }
+    // cout << ans << endl;
 }
 
 /*
@@ -112,6 +182,7 @@ int main()
     cout.tie(NULL);
     // solve();
     // seiveAlgo();
+    pre();
     int t;
     cin >> t;
     while (t--)

@@ -82,18 +82,32 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    int n = 2 * 1e5;
-    int count = 0;
-    int nn = n;
-    while (n != 0)
+    int n, s, m;
+    cin >> n >> s >> m;
+    vector<pair<int, int>> v(n);
+    for (auto &i : v)
     {
-        count++;
-        n /= 3;
+        cin >> i.first >> i.second;
     }
 
-    cout << count << endl;
-    int ans = log(nn) / log(3) + 1;
-    cout << ans << endl;
+    bool c = 0;
+    if (v[0].first - 0 >= s)
+        c = 1;
+    if (m - v.back().second >= s)
+        c = 1;
+
+    for (int i = 1; i < n; i++)
+    {
+        if (v[i].first - v[i - 1].second >= s)
+        {
+            c = 1;
+            break;
+        }
+    }
+    if (c)
+        cout << "YES" << endl;
+    else
+        cout << "NO" << endl;
 }
 
 /*

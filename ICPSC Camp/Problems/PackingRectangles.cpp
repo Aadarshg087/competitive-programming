@@ -80,19 +80,33 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
+bool check(ll side, ll w, ll h, ll n)
+{
+    ll a = side / w;
+    ll b = side / h;
+    if (b > 0 && a >= ((n + b - 1) / b))
+        return true;
+    return false;456B
+}
+
 void solve()
 {
-    int n = 2 * 1e5;
-    int count = 0;
-    int nn = n;
-    while (n != 0)
+    ll w, h, n;
+    cin >> w >> h >> n;
+    ll low = 0;
+    ll high = 1e18;
+    ll ans = 0;
+    while (low <= high)
     {
-        count++;
-        n /= 3;
+        ll mid = (1LL * low + high) >> 1;
+        if (check(mid, w, h, n))
+        {
+            ans = mid;
+            high = mid - 1;
+        }
+        else
+            low = mid + 1;
     }
-
-    cout << count << endl;
-    int ans = log(nn) / log(3) + 1;
     cout << ans << endl;
 }
 
@@ -110,11 +124,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // solve();
+    solve();
     // seiveAlgo();
-    int t;
-    cin >> t;
-    while (t--)
-        solve();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    //     solve();
     return 0;
 }

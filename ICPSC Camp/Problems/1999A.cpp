@@ -82,20 +82,17 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    int n = 2 * 1e5;
-    int count = 0;
-    int nn = n;
-    while (n != 0)
+    int n;
+    cin >> n;
+    int ans = 0;
+    while (n > 0)
     {
-        count++;
-        n /= 3;
+        ans += n % 10;
+        n /= 10;
     }
-
-    cout << count << endl;
-    int ans = log(nn) / log(3) + 1;
     cout << ans << endl;
 }
-
+1
 /*
     - Read the problem twice
     - Check for overflow

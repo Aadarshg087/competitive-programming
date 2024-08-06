@@ -46,7 +46,7 @@ void seiveAlgo()
 // Binary Exponentiation - (Check MOD Value) -------------------
 ll BinaryExpoRecur(ll a, ll p)
 {
-    const int mod = 1e9 + 7;
+    const int mod = 5;
     if (p == 1)
         return a;
     ll ans = BinaryExpoRecur(a, p / 2);
@@ -82,17 +82,33 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    ll n;
-    cin >> n;
-    ll nn = n % 5;
-    ll i = 1;
-    ll ans = 0;
-    while (i <= 4)
+    string num;
+    cin >> num;
+    int res = 1;
+    int aa = 4;
+    for (int i = 0; i < num.length(); i++)
+        res = (res * 10 + num[i] - '0') % aa;
+    ll a = 1, b = 1, c = 1, d = 1;
+    for (int i = 0; i < res; i++)
     {
-        ans += (BinaryExpoRecur(i, nn) % 5);
-        i++;
+        a *= 1;
+        b *= 2;
+        c *= 3;
+        d *= 4;
     }
-    cout << ans % 5 << endl;
+    cout << (a + b + c + d) % 5 << endl;
+    //     string s;
+    //     cin >> s;
+    //     int n = stoi(s.substr(s.size() - 2, 2));
+    //     n %= 5;
+    //     int i = 1;
+    //     int ans = 0;
+    //     while (i <= 4)
+    //     {
+    //         ans = (ans + BinaryExpoRecur(i, n)) % 5;
+    //         i++;
+    //     }
+    //     cout << ans << endl;
 }
 
 /*

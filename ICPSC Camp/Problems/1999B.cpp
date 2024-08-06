@@ -82,18 +82,44 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    int n = 2 * 1e5;
-    int count = 0;
-    int nn = n;
-    while (n != 0)
-    {
-        count++;
-        n /= 3;
-    }
+    int n = 4;
+    vector<int> v(n);
+    for (int i = 0; i < n; i++)
+        cin >> v[i];
 
-    cout << count << endl;
-    int ans = log(nn) / log(3) + 1;
-    cout << ans << endl;
+    int ans = 0;
+    int i = 0;
+    int s = 0;
+    int ss = 0;
+
+    // I round
+    if (v[0] > v[2])
+        s++;
+    else if (v[0] < v[2])
+        ss++;
+    if (v[1] > v[3])
+        s++;
+    else if (v[1] < v[3])
+        ss++;
+
+    ans += (s > ss) ? 1 : 0;
+    s = 0;
+    ss = 0;
+
+    // II round
+    if (v[1] > v[2])
+        s++;
+    else if (v[1] < v[2])
+        ss++;
+
+    if (v[0] > v[3])
+        s++;
+    else if (v[0] < v[3])
+        ss++;
+
+    ans += (s > ss) ? 1 : 0;
+
+    cout << ans * 2 << endl;
 }
 
 /*

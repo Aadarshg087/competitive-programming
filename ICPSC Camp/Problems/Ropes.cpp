@@ -11,18 +11,18 @@ using namespace std;
     cout << #x << ": "; \
     _print(x);          \
     cout << endl;
-
-// ---------------------- Debug Functions -------------------------
-template <class T>
-void _print(T x)
-{
-    cout << x << " ";
-}
-template <class T>
-void _print(vector<T> v)
-{
-    for (T i : v)
-        _print(i);
+ 
+// ---------------------- Debug Functions ------------------------- 
+template <class T> 
+void _print(T x) 
+{ 
+    cout << x << " "; 
+} 
+template <class T> 
+void _print(vector<T> v) 
+{ 
+    for (T i : v) 
+        _print(i); 
 }
 
 // Seive Algo -------------------
@@ -80,20 +80,10 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
+
 void solve()
 {
-    int n = 2 * 1e5;
-    int count = 0;
-    int nn = n;
-    while (n != 0)
-    {
-        count++;
-        n /= 3;
-    }
-
-    cout << count << endl;
-    int ans = log(nn) / log(3) + 1;
-    cout << ans << endl;
+    
 }
 
 /*
