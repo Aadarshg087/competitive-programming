@@ -80,59 +80,43 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
-bool check(vector<pair<int, int>> &v, int k)
+bool check(vector<ll> &v, ll time, ll t)
 {
-    pair<int, int> p = {0, 0};
-    for (int i = 0; i < (int)v.size(); i++)
+    ll n = v.size();
+    ll total = 0;
+    for (int i = 0; i < n; i++)
     {
-        pair<int, int> reach = v[i];
-        if (p.second + k >= reach.first)
-        {
-            p.first = reach.first;
-            p.second = min(p.second + k, reach.second);
-        }
-        else if (p.first - k <= reach.second)
-        {
-            p.first = max(p.first - k, reach.first);
-            p.second = reach.second;
-        }
-        else
-            return 0;
-
-        if (p.first > p.second)
-            return 0;
+        total += time / v[i];
+        if (total >= t)
+            return 1;
     }
-    return 1;
+    return 0;
 }
 
 void solve()
 {
-    int n, k;
-    cin >> n;
-    vector<pair<int, int>> v(n);
+    int n, t;
+    cin >> n >> t;
+    vector<ll> v(n);
     for (int i = 0; i < n; i++)
     {
-        int t1, t2;
-        cin >> t1 >> t2;
-        v[i] = {t1, t2};
+        cin >> v[i];
     }
 
-    int low = 0;
-    int high = 1e9 + 1;
-    int ans = 0;
+    ll low = 1;
+    ll high = t * (*max_element(all(v)));
+    ll ans = 0;
     while (low <= high)
     {
-        int mid = (1LL * low + high) >> 1;
-        if (check(v, mid))
+        ll mid = (low + high) >> 1;
+        if (check(v, mid, t))
         {
-            cout << mid << endl;   
             ans = mid;
             high = mid - 1;
         }
         else
             low = mid + 1;
     }
-
     cout << ans << endl;
 }
 
@@ -150,11 +134,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // solve();
+    solve();
     // seiveAlgo();
-    int t;
-    cin >> t;
-    while (t--)
-        solve();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    //     solve();
     return 0;
 }

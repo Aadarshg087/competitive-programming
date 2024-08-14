@@ -79,60 +79,72 @@ ll __lcm(ll a, ll b)
 {
     return (a * b) / __gcd(a, b);
 }
+#define int long long
 
-bool check(vector<pair<int, int>> &v, int k)
+bool check(vector<int> &cities, vector<int> &tower, int r)
 {
-    pair<int, int> p = {0, 0};
-    for (int i = 0; i < (int)v.size(); i++)
+    vector<pair<int, int>> temp;
+    int m = tower.size();
+    for (int i = 0; i < m; i++)
     {
-        pair<int, int> reach = v[i];
-        if (p.second + k >= reach.first)
-        {
-            p.first = reach.first;
-            p.second = min(p.second + k, reach.second);
-        }
-        else if (p.first - k <= reach.second)
-        {
-            p.first = max(p.first - k, reach.first);
-            p.second = reach.second;
-        }
-        else
-            return 0;
-
-        if (p.first > p.second)
-            return 0;
+        temp.push_back({tower[i] - r, tower[i] + r});
     }
-    return 1;
+    // }
+    // for (int i = 0; i < temp.size(); i++)
+    // {
+    //     cout << temp[i].first << " " << temp[i].second << endl;
+    // }
+
+    int n = cities.size();
+    int j = 0;
+    for (auto it : temp)
+    {
+        int first = it.first;
+        int second = it.second;
+        while (j < n && cities[j] >= first && cities[j] <= second)
+        {
+            j++;
+        }
+        if (j == n)
+            break;
+    }
+    return j == n;
 }
 
 void solve()
 {
-    int n, k;
-    cin >> n;
-    vector<pair<int, int>> v(n);
+    int n, m;
+    cin >> n >> m;
+    vector<int> cities(n);
+    vector<int> towers(m);
     for (int i = 0; i < n; i++)
     {
-        int t1, t2;
-        cin >> t1 >> t2;
-        v[i] = {t1, t2};
+        cin >> cities[i];
     }
+    for (int i = 0; i < m; i++)
+    {
+        cin >> towers[i];
+    }
+    sort(all(cities));
+    sort(all(towers));
+    // print(cities);
+    // print(towers);
 
     int low = 0;
-    int high = 1e9 + 1;
-    int ans = 0;
+    int high = 2e9 + 7;
+    int ans = -1;
     while (low <= high)
     {
         int mid = (1LL * low + high) >> 1;
-        if (check(v, mid))
+        // print(mid);
+        if (check(cities, towers, mid))
         {
-            cout << mid << endl;   
             ans = mid;
             high = mid - 1;
         }
         else
             low = mid + 1;
     }
-
     cout << ans << endl;
 }
 
@@ -145,16 +157,16 @@ void solve()
     - Try to prove yourself wrong
 */
 
-int main()
+signed main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // solve();
+    solve();
     // seiveAlgo();
-    int t;
-    cin >> t;
-    while (t--)
-        solve();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    //     solve();
     return 0;
 }

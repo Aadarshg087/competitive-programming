@@ -80,60 +80,49 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
-bool check(vector<pair<int, int>> &v, int k)
+bool check(vector<pair<double, double>> &people, double time)
 {
-    pair<int, int> p = {0, 0};
-    for (int i = 0; i < (int)v.size(); i++)
+    pair<double, double> curr = {-1e9, 1e9};
+    for (auto it : people)
     {
-        pair<int, int> reach = v[i];
-        if (p.second + k >= reach.first)
-        {
-            p.first = reach.first;
-            p.second = min(p.second + k, reach.second);
-        }
-        else if (p.first - k <= reach.second)
-        {
-            p.first = max(p.first - k, reach.first);
-            p.second = reach.second;
-        }
-        else
-            return 0;
-
-        if (p.first > p.second)
-            return 0;
+        auto point = it.first;
+        auto speed = it.second;
+        curr = {max(curr.first, point - speed * time), min(curr.second, point + speed * time)};
     }
-    return 1;
+    if (curr.first <= curr.second)
+        return 1;
+    return 0;
 }
 
 void solve()
 {
-    int n, k;
+    int n;
     cin >> n;
-    vector<pair<int, int>> v(n);
+    vector<pair<double, double>> people(n);
     for (int i = 0; i < n; i++)
     {
-        int t1, t2;
+        double t1, t2;
         cin >> t1 >> t2;
-        v[i] = {t1, t2};
+        people[i] = {t1, t2};
     }
 
-    int low = 0;
-    int high = 1e9 + 1;
-    int ans = 0;
-    while (low <= high)
+    double low = 0;
+    double high = 1e9;
+    double ans = 0;
+    double error = 1e-6;
+    for (int i = 0; i < 60; i++)
     {
-        int mid = (1LL * low + high) >> 1;
-        if (check(v, mid))
+        double mid = (low + high) / 2;
+        if (check(people, mid))
         {
-            cout << mid << endl;   
             ans = mid;
-            high = mid - 1;
+            high = mid - error;
         }
         else
-            low = mid + 1;
+            low = mid + error;
     }
 
-    cout << ans << endl;
+    cout << setprecision(6) << fixed << ans << endl;
 }
 
 /*
@@ -150,11 +139,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // solve();
+    solve();
     // seiveAlgo();
-    int t;
-    cin >> t;
-    while (t--)
-        solve();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    //     solve();
     return 0;
 }

@@ -80,59 +80,49 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
-bool check(vector<pair<int, int>> &v, int k)
+bool check(vector<int> &v, int maxDist, int cows)
 {
-    pair<int, int> p = {0, 0};
-    for (int i = 0; i < (int)v.size(); i++)
-    {
-        pair<int, int> reach = v[i];
-        if (p.second + k >= reach.first)
-        {
-            p.first = reach.first;
-            p.second = min(p.second + k, reach.second);
-        }
-        else if (p.first - k <= reach.second)
-        {
-            p.first = max(p.first - k, reach.first);
-            p.second = reach.second;
-        }
-        else
-            return 0;
+    int pos = v[0];
+    int currCows = 1;
 
-        if (p.first > p.second)
-            return 0;
+    for (int i = 1; i < v.size(); i++)
+    {
+        if (v[i] - pos >= maxDist)
+        {
+            pos = v[i];
+            currCows++;
+        }
     }
-    return 1;
+
+    return currCows >= cows;
 }
 
 void solve()
 {
-    int n, k;
-    cin >> n;
-    vector<pair<int, int>> v(n);
+    int n, c;
+    cin >> n >> c;
+    vector<int> v(n);
     for (int i = 0; i < n; i++)
     {
-        int t1, t2;
-        cin >> t1 >> t2;
-        v[i] = {t1, t2};
+        cin >> v[i];
     }
 
+    sort(all(v));
+
     int low = 0;
-    int high = 1e9 + 1;
+    int high = v[n - 1] - v[0];
     int ans = 0;
     while (low <= high)
     {
-        int mid = (1LL * low + high) >> 1;
-        if (check(v, mid))
+        int mid = (low + high) >> 1;
+        if (check(v, mid, c))
         {
-            cout << mid << endl;   
             ans = mid;
-            high = mid - 1;
+            low = mid + 1;
         }
         else
-            low = mid + 1;
+            high = mid - 1;
     }
-
     cout << ans << endl;
 }
 

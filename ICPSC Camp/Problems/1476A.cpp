@@ -80,59 +80,16 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
-bool check(vector<pair<int, int>> &v, int k)
-{
-    pair<int, int> p = {0, 0};
-    for (int i = 0; i < (int)v.size(); i++)
-    {
-        pair<int, int> reach = v[i];
-        if (p.second + k >= reach.first)
-        {
-            p.first = reach.first;
-            p.second = min(p.second + k, reach.second);
-        }
-        else if (p.first - k <= reach.second)
-        {
-            p.first = max(p.first - k, reach.first);
-            p.second = reach.second;
-        }
-        else
-            return 0;
-
-        if (p.first > p.second)
-            return 0;
-    }
-    return 1;
-}
-
 void solve()
 {
-    int n, k;
-    cin >> n;
-    vector<pair<int, int>> v(n);
-    for (int i = 0; i < n; i++)
+    ll n, k;
+    cin >> n >> k;
+    if (k < n)
     {
-        int t1, t2;
-        cin >> t1 >> t2;
-        v[i] = {t1, t2};
+        ll temp = (n + k - 1) / k;
+        k *= temp;
     }
-
-    int low = 0;
-    int high = 1e9 + 1;
-    int ans = 0;
-    while (low <= high)
-    {
-        int mid = (1LL * low + high) >> 1;
-        if (check(v, mid))
-        {
-            cout << mid << endl;   
-            ans = mid;
-            high = mid - 1;
-        }
-        else
-            low = mid + 1;
-    }
-
+    ll ans = (k + n - 1) / n;
     cout << ans << endl;
 }
 

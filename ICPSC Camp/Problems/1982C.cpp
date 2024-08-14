@@ -80,59 +80,62 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
-bool check(vector<pair<int, int>> &v, int k)
+bool check(vector<ll> &v, ll l, ll r, ll round)
 {
-    pair<int, int> p = {0, 0};
-    for (int i = 0; i < (int)v.size(); i++)
+    // can he win round number of rounds;
+    ll sum = 0;
+    int j = 0;
+    while (j < (int)v.size() && sum + v[j] <= r)
     {
-        pair<int, int> reach = v[i];
-        if (p.second + k >= reach.first)
+        sum += v[j];
+        j++;
+    }
+    ll ans = 1;
+    sum = 0;
+    int i = 0;
+    while (j < (int)v.size())
+    {
+        if (sum + v[j] <= r)
         {
-            p.first = reach.first;
-            p.second = min(p.second + k, reach.second);
-        }
-        else if (p.first - k <= reach.second)
-        {
-            p.first = max(p.first - k, reach.first);
-            p.second = reach.second;
+            sum += v[j];
         }
         else
-            return 0;
+        {
+            sum -= v[i++];
+        }
+        if (v[j] <= r && v[j] <= l)
+            ans++;
 
-        if (p.first > p.second)
-            return 0;
+        if (v[i])
+            if (sum <= r && sum >= l)
+                ans++;
     }
-    return 1;
 }
 
 void solve()
 {
-    int n, k;
-    cin >> n;
-    vector<pair<int, int>> v(n);
+    ll n, l, r;
+    cin >> n >> l >> r;
+    vector<ll> v(n);
     for (int i = 0; i < n; i++)
     {
-        int t1, t2;
-        cin >> t1 >> t2;
-        v[i] = {t1, t2};
+        cin >> v[i];
     }
 
-    int low = 0;
-    int high = 1e9 + 1;
-    int ans = 0;
+    ll low = 0;
+    ll high = n + 1;
+    ll ans = 0;
     while (low <= high)
     {
-        int mid = (1LL * low + high) >> 1;
-        if (check(v, mid))
+        ll mid = (low + high) >> 1;
+        if (check(v, l, r, mid)) // can he win mid number of rounds
         {
-            cout << mid << endl;   
             ans = mid;
-            high = mid - 1;
+            low = mid + 1;
         }
         else
-            low = mid + 1;
+            high = mid - 1;
     }
-
     cout << ans << endl;
 }
 

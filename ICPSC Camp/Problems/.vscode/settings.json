@@ -19,6 +19,8 @@
     "utility": "cpp",
     "random": "cpp",
     "cstdlib": "cpp",
-    "iosfwd": "cpp"
+    "iosfwd": "cpp",
+    "limits": "cpp",
+    "complex": "cpp"
   }
 }

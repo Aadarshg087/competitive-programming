@@ -4,7 +4,7 @@ using namespace std;
 
 // ------------------------ Macros -------------------------
 #define ll long long int
-#define endl "\n"
+// #define endl '\n'
 
 #define all(v) begin(v), end(v)
 #define print(x)        \
@@ -80,60 +80,43 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
-bool check(vector<pair<int, int>> &v, int k)
+int ask(int l, int r)
 {
-    pair<int, int> p = {0, 0};
-    for (int i = 0; i < (int)v.size(); i++)
-    {
-        pair<int, int> reach = v[i];
-        if (p.second + k >= reach.first)
-        {
-            p.first = reach.first;
-            p.second = min(p.second + k, reach.second);
-        }
-        else if (p.first - k <= reach.second)
-        {
-            p.first = max(p.first - k, reach.first);
-            p.second = reach.second;
-        }
-        else
-            return 0;
-
-        if (p.first > p.second)
-            return 0;
-    }
-    return 1;
+    cout << "? " << l << " " << r << endl;
+    int smIndex;
+    cin >> smIndex;
+    return smIndex;
 }
 
 void solve()
 {
-    int n, k;
+    int n;
     cin >> n;
-    vector<pair<int, int>> v(n);
-    for (int i = 0; i < n; i++)
+    int l = 1;
+    int r = n;
+    int nn = log(n) / log(2);
+    while (nn--)
     {
-        int t1, t2;
-        cin >> t1 >> t2;
-        v[i] = {t1, t2};
-    }
-
-    int low = 0;
-    int high = 1e9 + 1;
-    int ans = 0;
-    while (low <= high)
-    {
-        int mid = (1LL * low + high) >> 1;
-        if (check(v, mid))
+        int mid = (l + r) / 2;
+        int sm = ask(l, r);
+        if (sm < mid)
         {
-            cout << mid << endl;   
-            ans = mid;
-            high = mid - 1;
+            if (ask(l, mid - 1) == sm)
+            {
+                r = mid;
+            }
+            else
+                l = mid + 1;
         }
         else
-            low = mid + 1;
+        {
+            if (ask(mid, r) == sm)
+                l = mid;
+            else
+                r = mid + 1;
+        }
     }
-
-    cout << ans << endl;
+    cout << "! " << l << endl;
 }
 
 /*

@@ -79,61 +79,54 @@ ll __lcm(ll a, ll b)
 {
     return (a * b) / __gcd(a, b);
 }
-
-bool check(vector<pair<int, int>> &v, int k)
+int ask(ll l, ll r)
 {
-    pair<int, int> p = {0, 0};
-    for (int i = 0; i < (int)v.size(); i++)
-    {
-        pair<int, int> reach = v[i];
-        if (p.second + k >= reach.first)
-        {
-            p.first = reach.first;
-            p.second = min(p.second + k, reach.second);
-        }
-        else if (p.first - k <= reach.second)
-        {
-            p.first = max(p.first - k, reach.first);
-            p.second = reach.second;
-        }
-        else
-            return 0;
+    cout << "? " << l << " " << r << endl;
+    cout.flush();
 
-        if (p.first > p.second)
-            return 0;
-    }
-    return 1;
+    ll num;
+    cin >> num;
+    return num;
 }
 
 void solve()
 {
-    int n, k;
+    int n;
     cin >> n;
-    vector<pair<int, int>> v(n);
-    for (int i = 0; i < n; i++)
+    vector<ll> pre(n, 0);
+    int nn = n;
+    pre[0] = 0;
+    ll l = 1;
+    ll r = l + 1;
+    int i = 1;
+    int prevSum = 0;
+    while (n--)
     {
-        int t1, t2;
-        cin >> t1 >> t2;
-        v[i] = {t1, t2};
+        int num = ask(l, r);
+        pre[i] = num;
+        i++;
+        r++;
+        if (r == nn + 1)
+            break;
+    }
+    // print(pre);
+    vector<ll> real(nn, 0);
+    for (int i = 2; i < nn; i++)
+    {
+        real[i] = pre[i] - pre[i - 1];
     }
 
-    int low = 0;
-    int high = 1e9 + 1;
-    int ans = 0;
-    while (low <= high)
-    {
-        int mid = (1LL * low + high) >> 1;
-        if (check(v, mid))
-        {
-            cout << mid << endl;   
-            ans = mid;
-            high = mid - 1;
-        }
-        else
-            low = mid + 1;
-    }
+    ll sum = pre[nn - 1] - pre[1];
 
-    cout << ans << endl;
+    ll num = ask(2, nn);
+    real[1] = num - sum;
+    real[0] = pre[1] - real[1];
+    // print(real);
+    // print(pre);
+    cout << "! ";
+    for (auto i : real)
+        cout << i << " ";
+    cout << endl;
 }
 
 /*
@@ -150,11 +143,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // solve();
+    solve();
     // seiveAlgo();
-    int t;
-    cin >> t;
-    while (t--)
-        solve();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    //     solve();
     return 0;
 }

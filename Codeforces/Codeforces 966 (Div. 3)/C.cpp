@@ -80,60 +80,98 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
-bool check(vector<pair<int, int>> &v, int k)
+int uniq = 0; // number
+bool check_duplicates(map<int, vector<int>> &mp, string &s)
 {
-    pair<int, int> p = {0, 0};
-    for (int i = 0; i < (int)v.size(); i++)
+    vector<int> alp(26, 0); // characters
+    for (auto it : mp) // traversing numbers
     {
-        pair<int, int> reach = v[i];
-        if (p.second + k >= reach.first)
+        if (it.second.size() > 1)
         {
-            p.first = reach.first;
-            p.second = min(p.second + k, reach.second);
-        }
-        else if (p.first - k <= reach.second)
-        {
-            p.first = max(p.first - k, reach.first);
-            p.second = reach.second;
+            char prev = ' ';
+            bool c = 1;
+            for (auto i : it.second) // indexes of each number
+            {
+                if (prev != ' ' && s[i] != prev || (c && alp[s[i] - 'a'] == 1))
+                {
+                    // cout << "NO" << endl;
+                    return false;
+                    // break;
+                }
+                else if (prev == ' ')
+                {
+                    prev = s[i];
+                    alp[prev - 'a'] = 1;
+                    c = 0;
+                }
+                s[i] = '_';
+            }
         }
         else
-            return 0;
-
-        if (p.first > p.second)
-            return 0;
+        {
+            uniq++;
+        }
     }
-    return 1;
+    return true;
 }
 
 void solve()
 {
-    int n, k;
+    int n;
     cin >> n;
-    vector<pair<int, int>> v(n);
+    map<int, vector<int>> mp;
+    vector<int> v(n);
     for (int i = 0; i < n; i++)
     {
-        int t1, t2;
-        cin >> t1 >> t2;
-        v[i] = {t1, t2};
+        cin >> v[i];
+        mp[v[i]].push_back(i);
     }
-
-    int low = 0;
-    int high = 1e9 + 1;
-    int ans = 0;
-    while (low <= high)
+    int m;
+    cin >> m;
+    vector<string> ss(m);
+    for (int i = 0; i < m; i++)
     {
-        int mid = (1LL * low + high) >> 1;
-        if (check(v, mid))
-        {
-            cout << mid << endl;   
-            ans = mid;
-            high = mid - 1;
-        }
-        else
-            low = mid + 1;
+        cin >> ss[i];
     }
 
-    cout << ans << endl;
+    // match size
+    // match duplicates
+    // match unique
+    vector<int> alp(26, 0);
+    for (auto &s : ss)
+    {
+        uniq = 0;
+        // size
+        if (v.size() != s.size())
+        {
+            // cout << "size: ";
+            cout << "NO" << endl;
+            continue;
+        }
+
+        // duplicates
+        if (!check_duplicates(mp, s))
+        {
+            // cout << "duplicete: ";
+            cout << "NO" << endl;
+            continue;
+        }
+
+        // left elements
+        set<char> st;
+        for (auto it : s)
+        {
+            if (it != '_')
+                st.insert(it);
+        }
+        if (st.size() != uniq)
+        {
+            // cout << "uniq: ";
+            cout << "NO" << endl;
+            continue;
+        }
+        cout << "YES" << endl;
+    }
 }
 
 /*

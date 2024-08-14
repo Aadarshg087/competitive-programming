@@ -80,60 +80,54 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
-bool check(vector<pair<int, int>> &v, int k)
-{
-    pair<int, int> p = {0, 0};
-    for (int i = 0; i < (int)v.size(); i++)
-    {
-        pair<int, int> reach = v[i];
-        if (p.second + k >= reach.first)
-        {
-            p.first = reach.first;
-            p.second = min(p.second + k, reach.second);
-        }
-        else if (p.first - k <= reach.second)
-        {
-            p.first = max(p.first - k, reach.first);
-            p.second = reach.second;
-        }
-        else
-            return 0;
+// int ask(ll l, ll r)
+// {
 
-        if (p.first > p.second)
-            return 0;
-    }
-    return 1;
-}
+//     return num;
+// }
 
 void solve()
 {
-    int n, k;
+    ll n;
     cin >> n;
-    vector<pair<int, int>> v(n);
-    for (int i = 0; i < n; i++)
+    vector<ll> v(n + 1);
+    for (ll i = 0; i < n; i++)
     {
-        int t1, t2;
-        cin >> t1 >> t2;
-        v[i] = {t1, t2};
+        cin >> v[i + 1];
     }
-
-    int low = 0;
-    int high = 1e9 + 1;
-    int ans = 0;
+    cout.flush();
+    vector<ll> pre(n + 1, 0);
+    for (ll i = 1; i <= n; i++)
+    {
+        pre[i] = pre[i - 1] + v[i];
+    }
+    ll ans = -1;
+    ll low = 1;
+    ll high = n;
+    cout.flush();
     while (low <= high)
     {
-        int mid = (1LL * low + high) >> 1;
-        if (check(v, mid))
+        ll mid = (low + high) / 2;
+        cout << "? " << mid - low + 1 << " ";
+        cout.flush();
+        for (int i = low; i <= mid; i++)
+            cout << i << " ";
+        cout << endl;
+        cout.flush();
+        ll num;
+        cin >> num;
+        if (num == pre[mid] - pre[low - 1])
         {
-            cout << mid << endl;   
+            low = mid + 1;
+        }
+        else
+        {
             ans = mid;
             high = mid - 1;
         }
-        else
-            low = mid + 1;
     }
-
-    cout << ans << endl;
+    cout << "! " << ans << endl;
+    cout.flush();
 }
 
 /*

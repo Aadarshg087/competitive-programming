@@ -4,7 +4,7 @@ using namespace std;
 
 // ------------------------ Macros -------------------------
 #define ll long long int
-#define endl "\n"
+// #define endl "\n"
 
 #define all(v) begin(v), end(v)
 #define print(x)        \
@@ -26,16 +26,16 @@ void _print(vector<T> v)
 }
 
 // Seive Algo -------------------
-const int N = 1e6 + 7;
-vector<bool> isPrime(N, true);
+const int NN = 1e6 + 7;
+vector<bool> isPrime(NN, true);
 void seiveAlgo()
 {
     isPrime[0] = isPrime[1] = false;
-    for (int i = 2; i < N; i++)
+    for (int i = 2; i < NN; i++)
     {
         if (isPrime[i] == true)
         {
-            for (int j = 2 * i; j < N; j += i)
+            for (int j = 2 * i; j < NN; j += i)
             {
                 isPrime[j] = false;
             }
@@ -80,60 +80,26 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
-bool check(vector<pair<int, int>> &v, int k)
-{
-    pair<int, int> p = {0, 0};
-    for (int i = 0; i < (int)v.size(); i++)
-    {
-        pair<int, int> reach = v[i];
-        if (p.second + k >= reach.first)
-        {
-            p.first = reach.first;
-            p.second = min(p.second + k, reach.second);
-        }
-        else if (p.first - k <= reach.second)
-        {
-            p.first = max(p.first - k, reach.first);
-            p.second = reach.second;
-        }
-        else
-            return 0;
-
-        if (p.first > p.second)
-            return 0;
-    }
-    return 1;
-}
-
 void solve()
 {
-    int n, k;
-    cin >> n;
-    vector<pair<int, int>> v(n);
-    for (int i = 0; i < n; i++)
+    vector<int> temp = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 39, 41, 43, 9, 25, 47, 49, 4};
+    int count = 0;
+    for (auto i : temp)
     {
-        int t1, t2;
-        cin >> t1 >> t2;
-        v[i] = {t1, t2};
-    }
-
-    int low = 0;
-    int high = 1e9 + 1;
-    int ans = 0;
-    while (low <= high)
-    {
-        int mid = (1LL * low + high) >> 1;
-        if (check(v, mid))
+        cout << i << endl;
+        string res;
+        cin >> res;
+        if (res == "yes")
         {
-            cout << mid << endl;   
-            ans = mid;
-            high = mid - 1;
+            count++;
+            if (count > 1)
+            {
+                cout << "composite" << endl;
+                return;
+            }
         }
-        else
-            low = mid + 1;
     }
-
-    cout << ans << endl;
+    cout << "prime" << endl;
 }
 
 /*
@@ -150,11 +116,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // solve();
-    // seiveAlgo();
-    int t;
-    cin >> t;
-    while (t--)
-        solve();
+    solve();
+    seiveAlgo();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    //     solve();
     return 0;
 }
