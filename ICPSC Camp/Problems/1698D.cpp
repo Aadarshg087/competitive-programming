@@ -4,7 +4,7 @@ using namespace std;
 
 // ------------------------ Macros -------------------------
 #define ll long long int
-#define endl "\n"
+// #define endl "\n"
 
 #define all(v) begin(v), end(v)
 #define print(x)        \
@@ -80,62 +80,40 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
+bool check(int l, int r)
+{
+    cout << "? " << l << " " << r << endl;
+    vector<int> temp(r - l + 1);
+    int count = 0;
+    for (int &i : temp)
+    {
+        cin >> i;
+        if (i >= l && i <= r)
+            count++;
+    }
+
+    return (count & 1);
+}
+
 void solve()
 {
-    int n, q;
-    cin >> n >> q;
-    string a;
-    cin >> a;
-    string b;
-    cin >> b;
-    // prefix sum
-    vector<vector<int>> prefA(26, vector<int>(n + 1, 0));
-    for (int i = 0; i < n; i++)
+    int n;
+    cin >> n;
+    int low = 1;
+    int high = n;
+    int ans = 1;
+    while (low <= high)
     {
-        prefA[a[i] - 'a'][i + 1]++;
-    }
-    vector<vector<int>> prefB(26, vector<int>(n + 1, 0));
-    for (int i = 0; i < n; i++)
-    {
-        prefB[b[i] - 'a'][i + 1]++;
-    }
-    for (auto i : prefA)
-    {
-        for (int j : i)
+        int mid = (low + high) >> 1;
+        if (check(low, mid))
         {
-            cout << j << " ";
+            ans = mid;
+            high = mid - 1;
         }
-        cout << endl;
+        else
+            low = mid + 1;
     }
-    cout << " ---- " << endl;
-    for (auto i : prefB)
-    {
-        for (int j : i)
-        {
-            cout << j << " ";
-        }
-        cout << endl;
-    }
-    cout << " ----------- " << endl;
-    while (q--)
-    {
-        int l, r;
-        cin >> l >> r;
-        l--, r--;
-        int ans = 0;
-        for (int i = 0; i < 26; i++)
-        {
-            int temp1 = prefA[i][r] - prefA[i][l - 1]; // occ of each char b/w l & r in A
-            int temp2 = prefB[i][r] - prefB[i][l - 1]; // occ of each char b/w l & r in B
-            // cout << prefA[i][r] << " " << prefA[i][l - 1] << endl;
-            // cout << prefB[i][r] << " " << prefB[i][l - 1] << endl;
-
-            if (temp1 > temp2)
-                ans += temp1 - temp2;
-        }
-
-        cout << ans << endl;
-    }
+    cout << "! " << ans << endl;
 }
 
 /*

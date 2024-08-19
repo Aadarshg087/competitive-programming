@@ -80,62 +80,60 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
+bool check(ll mid, vector<ll> &v, ll x, ll y, ll a, ll b, ll k)
+{
+    ll countlcm = mid / __lcm(a, b);
+    ll countA = mid / a - countlcm;
+    ll countB = mid / b - countlcm;
+
+    ll i = 0;
+    ll money = 0;
+    while (countlcm--)
+        money += v[i++] / 100 * (x + y);
+
+    while (countA--)
+        money += v[i++] / 100 * (x);
+
+    while (countB--)
+        money += v[i++] / 100 * (y);
+
+    return money >= k;
+}
+
 void solve()
 {
-    int n, q;
-    cin >> n >> q;
-    string a;
-    cin >> a;
-    string b;
-    cin >> b;
-    // prefix sum
-    vector<vector<int>> prefA(26, vector<int>(n + 1, 0));
-    for (int i = 0; i < n; i++)
+    ll n;
+    cin >> n;
+    vector<ll> v(n);
+    for (ll i = 0; i < n; i++)
     {
-        prefA[a[i] - 'a'][i + 1]++;
+        cin >> v[i];
     }
-    vector<vector<int>> prefB(26, vector<int>(n + 1, 0));
-    for (int i = 0; i < n; i++)
+    ll x, y, a, b;
+    cin >> x >> a >> y >> b;
+    ll k;
+    cin >> k;
+    if (x < y)
     {
-        prefB[b[i] - 'a'][i + 1]++;
+        swap(x, y);
+        swap(a, b);
     }
-    for (auto i : prefA)
+    sort(all(v), greater<ll>());
+    ll low = 0;
+    ll high = n;
+    ll ans = -1;
+    while (low <= high)
     {
-        for (int j : i)
+        ll mid = (low + high) >> 1;
+        if (check(mid, v, x, y, a, b, k))
         {
-            cout << j << " ";
+            ans = mid;
+            high = mid - 1;
         }
-        cout << endl;
+        else
+            low = mid + 1;
     }
-    cout << " ---- " << endl;
-    for (auto i : prefB)
-    {
-        for (int j : i)
-        {
-            cout << j << " ";
-        }
-        cout << endl;
-    }
-    cout << " ----------- " << endl;
-    while (q--)
-    {
-        int l, r;
-        cin >> l >> r;
-        l--, r--;
-        int ans = 0;
-        for (int i = 0; i < 26; i++)
-        {
-            int temp1 = prefA[i][r] - prefA[i][l - 1]; // occ of each char b/w l & r in A
-            int temp2 = prefB[i][r] - prefB[i][l - 1]; // occ of each char b/w l & r in B
-            // cout << prefA[i][r] << " " << prefA[i][l - 1] << endl;
-            // cout << prefB[i][r] << " " << prefB[i][l - 1] << endl;
-
-            if (temp1 > temp2)
-                ans += temp1 - temp2;
-        }
-
-        cout << ans << endl;
-    }
+    cout << ans << endl;
 }
 
 /*

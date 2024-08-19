@@ -80,62 +80,46 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
+bool check(int mid, vector<int> &v, int hole)
+{
+    int cat = 0;
+    int saved = 0;
+    for (int i = v.size() - 1; i >= 0; i--)
+    {
+        if (cat >= v[i])
+            break;
+        int temp = hole - v[i];
+        cat += temp;
+        saved++;
+    }
+
+    return saved >= mid;
+}
+
 void solve()
 {
-    int n, q;
-    cin >> n >> q;
-    string a;
-    cin >> a;
-    string b;
-    cin >> b;
-    // prefix sum
-    vector<vector<int>> prefA(26, vector<int>(n + 1, 0));
-    for (int i = 0; i < n; i++)
-    {
-        prefA[a[i] - 'a'][i + 1]++;
-    }
-    vector<vector<int>> prefB(26, vector<int>(n + 1, 0));
-    for (int i = 0; i < n; i++)
-    {
-        prefB[b[i] - 'a'][i + 1]++;
-    }
-    for (auto i : prefA)
-    {
-        for (int j : i)
-        {
-            cout << j << " ";
-        }
-        cout << endl;
-    }
-    cout << " ---- " << endl;
-    for (auto i : prefB)
-    {
-        for (int j : i)
-        {
-            cout << j << " ";
-        }
-        cout << endl;
-    }
-    cout << " ----------- " << endl;
-    while (q--)
-    {
-        int l, r;
-        cin >> l >> r;
-        l--, r--;
-        int ans = 0;
-        for (int i = 0; i < 26; i++)
-        {
-            int temp1 = prefA[i][r] - prefA[i][l - 1]; // occ of each char b/w l & r in A
-            int temp2 = prefB[i][r] - prefB[i][l - 1]; // occ of each char b/w l & r in B
-            // cout << prefA[i][r] << " " << prefA[i][l - 1] << endl;
-            // cout << prefB[i][r] << " " << prefB[i][l - 1] << endl;
+    int n, k;
+    cin >> n >> k;
+    vector<int> v(k);
+    for (int i = 0; i < k; i++)
+        cin >> v[i];
 
-            if (temp1 > temp2)
-                ans += temp1 - temp2;
+    sort(all(v));
+    int low = 0;
+    int high = k;
+    int ans = 0;
+    while (low <= high)
+    {
+        int mid = (1LL * low + high) >> 1;
+        if (check(mid, v, n))
+        {
+            ans = mid;
+            low = mid + 1;
         }
-
-        cout << ans << endl;
+        else
+            high = mid - 1;
     }
+    cout << ans << endl;
 }
 
 /*

@@ -79,63 +79,29 @@ ll __lcm(ll a, ll b)
 {
     return (a * b) / __gcd(a, b);
 }
+vector<int> v;
+void pre()
+{
+    int m = 1e5 + 2;
+    v.push_back(0);
+    for (ll a = 3; a < m; a += 2)
+    {
+        ll A = a * a;
+        ll c = A / 2 + 1;
+        ll b = c - 1;
+        if ((b * b) + A == (c * c) && A == b + c)
+        {
+            v.push_back(c);
+        }
+    }
+}
 
 void solve()
 {
-    int n, q;
-    cin >> n >> q;
-    string a;
-    cin >> a;
-    string b;
-    cin >> b;
-    // prefix sum
-    vector<vector<int>> prefA(26, vector<int>(n + 1, 0));
-    for (int i = 0; i < n; i++)
-    {
-        prefA[a[i] - 'a'][i + 1]++;
-    }
-    vector<vector<int>> prefB(26, vector<int>(n + 1, 0));
-    for (int i = 0; i < n; i++)
-    {
-        prefB[b[i] - 'a'][i + 1]++;
-    }
-    for (auto i : prefA)
-    {
-        for (int j : i)
-        {
-            cout << j << " ";
-        }
-        cout << endl;
-    }
-    cout << " ---- " << endl;
-    for (auto i : prefB)
-    {
-        for (int j : i)
-        {
-            cout << j << " ";
-        }
-        cout << endl;
-    }
-    cout << " ----------- " << endl;
-    while (q--)
-    {
-        int l, r;
-        cin >> l >> r;
-        l--, r--;
-        int ans = 0;
-        for (int i = 0; i < 26; i++)
-        {
-            int temp1 = prefA[i][r] - prefA[i][l - 1]; // occ of each char b/w l & r in A
-            int temp2 = prefB[i][r] - prefB[i][l - 1]; // occ of each char b/w l & r in B
-            // cout << prefA[i][r] << " " << prefA[i][l - 1] << endl;
-            // cout << prefB[i][r] << " " << prefB[i][l - 1] << endl;
-
-            if (temp1 > temp2)
-                ans += temp1 - temp2;
-        }
-
-        cout << ans << endl;
-    }
+    int n;
+    cin >> n;
+    auto it = upper_bound(all(v), n) - v.begin();
+    cout << it - 1 << endl;
 }
 
 /*
@@ -152,6 +118,7 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
+    pre();
     // solve();
     // seiveAlgo();
     int t;

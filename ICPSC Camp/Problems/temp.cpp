@@ -4,12 +4,30 @@ using namespace std;
 
 int main()
 {
-    int a, b, c, d;
-    cin >> a >> b >> c >> d;
-    int temp1 = max(a, b);
-    int temp2 = max(temp1, c);
-    int temp3 = max(temp2, d);
-    cout << temp3 << endl;
+    vector<int> v{1, 0, 3, 3, 4, 1};
+    // print the min elements of window size k using deque optmization
+
+    deque<int> deq; // stores the indices
+    int k = 3;
+    for (int i = 0; i < k; i++)
+    {
+        while (!deq.empty() && v[deq.back()] >= v[i])
+            deq.pop_back();
+        deq.push_back(i);
+    }
+    cout << v[deq.front()] << " ";
+
+    int n = v.size();
+    for (int i = k; i < n; i++)
+    {
+        while (!deq.empty() && v[deq.back()] >= v[i])
+            deq.pop_back();
+
+        while (!deq.empty() && deq.front() <= i - k)
+            deq.pop_front();
+        deq.push_back(i);
+        cout << v[deq.front()] << " ";
+    }
 
     return 0;
 }

@@ -4,7 +4,7 @@ using namespace std;
 
 // ------------------------ Macros -------------------------
 #define ll long long int
-// #define endl '\n'
+// #define endl "\n"
 
 #define all(v) begin(v), end(v)
 #define print(x)        \
@@ -80,43 +80,73 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
-int ask(int l, int r)
-{
-    cout << "? " << l << " " << r << endl;
-    int smIndex;
-    cin >> smIndex;
-    return smIndex;
-}
-
 void solve()
 {
     int n;
     cin >> n;
-    int l = 1;
-    int r = n;
-    int nn = log(n) / log(2);
-    while (nn--)
+
+    if (n == 2)
     {
-        int mid = (l + r) / 2;
-        int sm = ask(l, r);
-        if (sm < mid)
+        cout << "? " << 1 << " " << 2 << endl;
+        int temp;
+        cin >> temp;
+        if (temp == 1)
         {
-            if (ask(l, mid - 1) == sm)
+            cout << "! " << 2 << endl;
+        }
+        else
+            cout << "! " << 1 << endl;
+        return;
+    }
+    int low = 1;
+    int high = n;
+    int ans = 0;
+    int nn = log(n) / log(2);
+    while (low < high)
+    {
+        cout << "? " << low << " " << high << endl;
+        int secondMax;
+        cin >> secondMax;
+        int mid = (low + high) >> 1;
+        if (low + 1 == high)
+            break;
+        if (secondMax <= mid)
+        {
+            cout << "? " << low << " " << mid << endl;
+            int sm;
+            cin >> sm;
+            if (sm == secondMax)
             {
-                r = mid;
+                ans = mid;
+                high = mid;
             }
             else
-                l = mid + 1;
+                low = mid;
         }
         else
         {
-            if (ask(mid, r) == sm)
-                l = mid;
+
+            cout << "? " << mid << " " << high << endl;
+            int sm;
+            cin >> sm;
+            if (sm == secondMax)
+            {
+                ans = mid;
+                low = mid;
+            }
             else
-                r = mid + 1;
+                high = mid;
         }
     }
-    cout << "! " << l << endl;
+    cout << "? " << low << " " << high << endl;
+    int temp;
+    cin >> temp;
+    if (temp == low)
+    {
+        cout << "! " << high << endl;
+    }
+    else
+        cout << "! " << low << endl;
 }
 
 /*
@@ -133,11 +163,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // solve();
+    solve();
     // seiveAlgo();
-    int t;
-    cin >> t;
-    while (t--)
-        solve();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    //     solve();
     return 0;
 }

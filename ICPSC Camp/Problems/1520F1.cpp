@@ -4,7 +4,7 @@ using namespace std;
 
 // ------------------------ Macros -------------------------
 #define ll long long int
-#define endl "\n"
+// #define endl "\n"
 
 #define all(v) begin(v), end(v)
 #define print(x)        \
@@ -79,63 +79,40 @@ ll __lcm(ll a, ll b)
 {
     return (a * b) / __gcd(a, b);
 }
+bool ask(int l, int r, int k)
+{
+    cout << "? " << l << " " << r << endl;
+    int count1;
+    cin >> count1;
+    int count0 = (r - l + 1) - count1;
+    return count0 >= k;
+}
 
 void solve()
 {
-    int n, q;
-    cin >> n >> q;
-    string a;
-    cin >> a;
-    string b;
-    cin >> b;
-    // prefix sum
-    vector<vector<int>> prefA(26, vector<int>(n + 1, 0));
-    for (int i = 0; i < n; i++)
+    int n, t;
+    cin >> n >> t;
+    int k;
+    cin >> k;
+    cout.flush();
+    int low = 1;
+    int high = n;
+    int ans = 1;
+    int nn = 19;
+    while (low <= high)
     {
-        prefA[a[i] - 'a'][i + 1]++;
-    }
-    vector<vector<int>> prefB(26, vector<int>(n + 1, 0));
-    for (int i = 0; i < n; i++)
-    {
-        prefB[b[i] - 'a'][i + 1]++;
-    }
-    for (auto i : prefA)
-    {
-        for (int j : i)
+        int mid = (low + high) >> 1;
+        if (ask(1, mid, k))
         {
-            cout << j << " ";
+            ans = mid;
+            high = mid - 1;
         }
-        cout << endl;
-    }
-    cout << " ---- " << endl;
-    for (auto i : prefB)
-    {
-        for (int j : i)
+        else
         {
-            cout << j << " ";
+            low = mid + 1;
         }
-        cout << endl;
     }
-    cout << " ----------- " << endl;
-    while (q--)
-    {
-        int l, r;
-        cin >> l >> r;
-        l--, r--;
-        int ans = 0;
-        for (int i = 0; i < 26; i++)
-        {
-            int temp1 = prefA[i][r] - prefA[i][l - 1]; // occ of each char b/w l & r in A
-            int temp2 = prefB[i][r] - prefB[i][l - 1]; // occ of each char b/w l & r in B
-            // cout << prefA[i][r] << " " << prefA[i][l - 1] << endl;
-            // cout << prefB[i][r] << " " << prefB[i][l - 1] << endl;
-
-            if (temp1 > temp2)
-                ans += temp1 - temp2;
-        }
-
-        cout << ans << endl;
-    }
+    cout << "! " << ans << endl;
 }
 
 /*
@@ -152,11 +129,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // solve();
+    solve();
     // seiveAlgo();
-    int t;
-    cin >> t;
-    while (t--)
-        solve();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    //     solve();
     return 0;
 }

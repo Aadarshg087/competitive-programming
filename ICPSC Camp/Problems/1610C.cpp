@@ -80,62 +80,56 @@ ll __lcm(ll a, ll b)
     return (a * b) / __gcd(a, b);
 }
 
+bool check(vector<int> &a, vector<int> &b, int k)
+{
+    // can he invite k people to the party
+    // a[i] should have at max a[i] people richer than i
+    // b[i] shoud have at max b[i] people poorer than i
+    int n = a.size();
+    int count = 0;
+    for (int i = 0; i < n; i++)
+    {
+        int maxPeopleRicher = a[i]; // should be richer
+        int maxPeoplePoorer = b[i]; // should be poorer
+        if (count <= maxPeoplePoorer && k - count - 1 <= maxPeopleRicher)
+            count++;
+
+        if (count >= k)
+            return true;
+    }
+    return false;
+}
+
 void solve()
 {
-    int n, q;
-    cin >> n >> q;
-    string a;
-    cin >> a;
-    string b;
-    cin >> b;
-    // prefix sum
-    vector<vector<int>> prefA(26, vector<int>(n + 1, 0));
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    vector<int> b(n);
     for (int i = 0; i < n; i++)
     {
-        prefA[a[i] - 'a'][i + 1]++;
+        cin >> a[i] >> b[i];
     }
-    vector<vector<int>> prefB(26, vector<int>(n + 1, 0));
-    for (int i = 0; i < n; i++)
-    {
-        prefB[b[i] - 'a'][i + 1]++;
-    }
-    for (auto i : prefA)
-    {
-        for (int j : i)
-        {
-            cout << j << " ";
-        }
-        cout << endl;
-    }
-    cout << " ---- " << endl;
-    for (auto i : prefB)
-    {
-        for (int j : i)
-        {
-            cout << j << " ";
-        }
-        cout << endl;
-    }
-    cout << " ----------- " << endl;
-    while (q--)
-    {
-        int l, r;
-        cin >> l >> r;
-        l--, r--;
-        int ans = 0;
-        for (int i = 0; i < 26; i++)
-        {
-            int temp1 = prefA[i][r] - prefA[i][l - 1]; // occ of each char b/w l & r in A
-            int temp2 = prefB[i][r] - prefB[i][l - 1]; // occ of each char b/w l & r in B
-            // cout << prefA[i][r] << " " << prefA[i][l - 1] << endl;
-            // cout << prefB[i][r] << " " << prefB[i][l - 1] << endl;
+    // sort(all(a));
+    // sort(all(b));
 
-            if (temp1 > temp2)
-                ans += temp1 - temp2;
+    int low = 0;
+    int high = 2e5 + 1;
+    int ans = 0;
+    while (low <= high)
+    {
+        int mid = (1LL * low + high) >> 1;
+        if (check(a, b, mid))
+        {
+            ans = mid;
+            low = mid + 1;
         }
-
-        cout << ans << endl;
+        else
+        {
+            high = mid - 1;
+        }
     }
+    cout << ans << endl;
 }
 
 /*

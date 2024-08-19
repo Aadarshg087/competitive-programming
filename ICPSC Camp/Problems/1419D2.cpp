@@ -82,60 +82,41 @@ ll __lcm(ll a, ll b)
 
 void solve()
 {
-    int n, q;
-    cin >> n >> q;
-    string a;
-    cin >> a;
-    string b;
-    cin >> b;
-    // prefix sum
-    vector<vector<int>> prefA(26, vector<int>(n + 1, 0));
+    int n;
+    cin >> n;
+    vector<int> v(n);
+    for (int i = 0; i < n; i++)
+        cin >> v[i];
+
+    sort(all(v));
+    int mid = n / 2 - 1;
+    vector<int> ans(n);
+    int j = 0;
+    for (int i = mid + 1; i < n; i++)
+    {
+        ans[j] = v[i];
+        j += 2;
+    }
+
+    j = 1;
+    for (int i = 0; i <= mid; i++)
+    {
+        ans[j] = v[i];
+        j += 2;
+    }
+    int count = 0;
     for (int i = 0; i < n; i++)
     {
-        prefA[a[i] - 'a'][i + 1]++;
-    }
-    vector<vector<int>> prefB(26, vector<int>(n + 1, 0));
-    for (int i = 0; i < n; i++)
-    {
-        prefB[b[i] - 'a'][i + 1]++;
-    }
-    for (auto i : prefA)
-    {
-        for (int j : i)
+        if (i != 0 && i != n - 1 && ans[i - 1] > ans[i] && ans[i + 1] > ans[i])
         {
-            cout << j << " ";
+            count++;
         }
-        cout << endl;
     }
-    cout << " ---- " << endl;
-    for (auto i : prefB)
-    {
-        for (int j : i)
-        {
-            cout << j << " ";
-        }
-        cout << endl;
-    }
-    cout << " ----------- " << endl;
-    while (q--)
-    {
-        int l, r;
-        cin >> l >> r;
-        l--, r--;
-        int ans = 0;
-        for (int i = 0; i < 26; i++)
-        {
-            int temp1 = prefA[i][r] - prefA[i][l - 1]; // occ of each char b/w l & r in A
-            int temp2 = prefB[i][r] - prefB[i][l - 1]; // occ of each char b/w l & r in B
-            // cout << prefA[i][r] << " " << prefA[i][l - 1] << endl;
-            // cout << prefB[i][r] << " " << prefB[i][l - 1] << endl;
+    cout << count << endl;
 
-            if (temp1 > temp2)
-                ans += temp1 - temp2;
-        }
-
-        cout << ans << endl;
-    }
+    for (int i : ans)
+        cout << i << " ";
+    cout << endl;
 }
 
 /*
@@ -152,11 +133,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // solve();
+    solve();
     // seiveAlgo();
-    int t;
-    cin >> t;
-    while (t--)
-        solve();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    //     solve();
     return 0;
 }
