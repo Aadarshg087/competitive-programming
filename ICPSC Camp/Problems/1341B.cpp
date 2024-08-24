@@ -79,77 +79,62 @@ ll __lcm(ll a, ll b)
 {
     return (a * b) / __gcd(a, b);
 }
-bool check(vector<ll> &v, vector<ll> &pre, ll moves, ll maxSum, ll sum)
-{
-    if (sum - moves <= maxSum)
-        return true;
-
-    ll n = v.size();
-    ll m = moves;
-    ll j = 1;
-    for (int i = n - 1; i >= 1; i--) // check i ending condition
-    {
-        ll tempSum = pre[n - 1 - j];
-        ll endCountEle = j;
-        j++;
-        m = moves - endCountEle; // updated the moves acc to end ele
-        // if (m < 0)
-        //     return 0;
-        ll firstElement = v[0] - m;            // update the first ele
-        tempSum -= v[0];                       // remove contribution of first element
-        tempSum += firstElement;               // add the update first ele
-        tempSum += firstElement * endCountEle; // update the sum for last ele
-        if (m < 0)              // no move on first element, all moves of type 2
-            return 0;
-        if (tempSum <= maxSum)
-            return 1;
-    }
-    return false;
-
-    // for (int i = n - 1; i >= max(1LL, 1LL * (n - moves)); i--)
-    // {
-    //     sum -= v[i];
-    //     ll movesLeft = moves - (n - i);
-    //     ll tempSum = sum - v[0] + (n - i + 1) * (v[0] - movesLeft);
-    //     if (tempSum <= maxSum)
-    //         return true;
-    // }
-    // return false;
-}
 
 void solve()
 {
-    ll n, k;
+    int n, k;
     cin >> n >> k;
-    vector<ll> v(n);
+    vector<int> v(n);
+    for (int i = 0; i < n; i++)
+        cin >> v[i];
+
+    vector<int> pre(n, 0);
     for (int i = 0; i < n; i++)
     {
-        cin >> v[i];
+        if (i != 0 && i != n - 1 && v[i - 1] < v[i] && v[i] > v[i + 1])
+        {
+            pre[i] = 1;
+        }
+    }
+    int p = 0;
+    int start = 0;
+    for (int i = 0; i < k; i++)
+    {
+        if (i + 1 < k && i > 0)
+        {
+            if (v[i - 1] < v[i] && v[i + 1] < v[i])
+            {
+                p++;
+                start = 0;
+            }
+        }
     }
 
-    sort(all(v));
-    vector<ll> pre(n, 0);
-    pre[0] = v[0];
-    for (int i = 1; i < n; i++)
+    int ans = p;
+    for (int i = k; i < n; i++)
     {
-        pre[i] = pre[i - 1] + v[i];
-    }
-    ll low = 0;
-    ll sum = accumulate(all(v), 0LL);
-    ll high = 1e10;
-    ll ans = 0;
-    while (low <= high)
-    {
-        ll mid = (low + high) >> 1;
-        if (check(v, pre, mid, k, sum))
+        // if (i - k != 0 && v[i - k - 1] < v[i - k] && v[i - k + 1] < v[i - k])
+        //     p--; // removing i - k element
+        if (v[i - k + 1] > v[i - k + 2] && v[i - k + 1] > v[i - k])
+            p--;
+
+        // if (pre[i - k])
+        //     p--;
+
+        // if (pre[i - k + 1])
+        //     p--;
+
+        if (v[i - 1] > v[i - 2] && v[i - 1] > v[i])
         {
-            ans = mid;
-            high = mid - 1;
+            p++; // checking whether the new v[i - 1] is peak ?
+            if (p > ans)
+            {
+                ans = max(ans, p);
+                start = i - k + 1; // updation
+            }
         }
-        else
-            low = mid + 1;
     }
-    cout << ans << endl;
+    cout << ans + 1 << " " << start + 1 << endl; // 1 based indexing
 }
 
 /*

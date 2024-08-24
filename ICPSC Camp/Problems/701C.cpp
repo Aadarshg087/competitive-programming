@@ -79,79 +79,42 @@ ll __lcm(ll a, ll b)
 {
     return (a * b) / __gcd(a, b);
 }
-bool check(vector<ll> &v, vector<ll> &pre, ll moves, ll maxSum, ll sum)
-{
-    if (sum - moves <= maxSum)
-        return true;
-
-    ll n = v.size();
-    ll m = moves;
-    ll j = 1;
-    for (int i = n - 1; i >= 1; i--) // check i ending condition
-    {
-        ll tempSum = pre[n - 1 - j];
-        ll endCountEle = j;
-        j++;
-        m = moves - endCountEle; // updated the moves acc to end ele
-        // if (m < 0)
-        //     return 0;
-        ll firstElement = v[0] - m;            // update the first ele
-        tempSum -= v[0];                       // remove contribution of first element
-        tempSum += firstElement;               // add the update first ele
-        tempSum += firstElement * endCountEle; // update the sum for last ele
-        if (m < 0)              // no move on first element, all moves of type 2
-            return 0;
-        if (tempSum <= maxSum)
-            return 1;
-    }
-    return false;
-
-    // for (int i = n - 1; i >= max(1LL, 1LL * (n - moves)); i--)
-    // {
-    //     sum -= v[i];
-    //     ll movesLeft = moves - (n - i);
-    //     ll tempSum = sum - v[0] + (n - i + 1) * (v[0] - movesLeft);
-    //     if (tempSum <= maxSum)
-    //         return true;
-    // }
-    // return false;
-}
 
 void solve()
 {
-    ll n, k;
-    cin >> n >> k;
-    vector<ll> v(n);
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+    // pick smallest substring which have all the characters
+    map<char, int> mp;
     for (int i = 0; i < n; i++)
     {
-        cin >> v[i];
+        mp[s[i]]++;
     }
-
-    sort(all(v));
-    vector<ll> pre(n, 0);
-    pre[0] = v[0];
-    for (int i = 1; i < n; i++)
+    int totalChar = mp.size();
+    int i = 0;
+    int j = 0;
+    mp.clear();
+    int count = 0;
+    int ans = INT_MAX;
+    while (j < n)
     {
-        pre[i] = pre[i - 1] + v[i];
-    }
-    ll low = 0;
-    ll sum = accumulate(all(v), 0LL);
-    ll high = 1e10;
-    ll ans = 0;
-    while (low <= high)
-    {
-        ll mid = (low + high) >> 1;
-        if (check(v, pre, mid, k, sum))
+        mp[s[j]]++;
+        if (mp[s[j]] == 1)
+            count++;
+        while (count == totalChar)
         {
-            ans = mid;
-            high = mid - 1;
+            ans = min(ans, j - i + 1);
+            mp[s[i]]--;
+            if (mp[s[i]] == 0)
+                count--;
+            i++;
         }
-        else
-            low = mid + 1;
+        j++;
     }
     cout << ans << endl;
 }
-
 /*
     - Read the problem twice
     - Check for overflow
@@ -166,11 +129,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // solve();
+    solve();
     // seiveAlgo();
-    int t;
-    cin >> t;
-    while (t--)
-        solve();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    //     solve();
     return 0;
 }

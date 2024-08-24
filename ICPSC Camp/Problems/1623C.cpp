@@ -79,78 +79,86 @@ ll __lcm(ll a, ll b)
 {
     return (a * b) / __gcd(a, b);
 }
-bool check(vector<ll> &v, vector<ll> &pre, ll moves, ll maxSum, ll sum)
+
+bool check(vector<ll> v, ll mid)
 {
-    if (sum - moves <= maxSum)
-        return true;
+    int n = v.size();
+    // can we make all the elemnt >= mid
 
-    ll n = v.size();
-    ll m = moves;
-    ll j = 1;
-    for (int i = n - 1; i >= 1; i--) // check i ending condition
+    // cout << mid << " ";
+    // print(v);
+    vector<ll> temp = v;
+    for (int i = n - 1; i >= 2; i--)
     {
-        ll tempSum = pre[n - 1 - j];
-        ll endCountEle = j;
-        j++;
-        m = moves - endCountEle; // updated the moves acc to end ele
-        // if (m < 0)
-        //     return 0;
-        ll firstElement = v[0] - m;            // update the first ele
-        tempSum -= v[0];                       // remove contribution of first element
-        tempSum += firstElement;               // add the update first ele
-        tempSum += firstElement * endCountEle; // update the sum for last ele
-        if (m < 0)              // no move on first element, all moves of type 2
-            return 0;
-        if (tempSum <= maxSum)
-            return 1;
+        if (v[i] - mid < 0)
+            return false;
+        ll d = min(v[i] - mid, temp[i]) / 3; // to keep atleast mid number
+        v[i - 1] += d;
+        v[i - 2] += 2 * d;
+        v[i] -= 3 * d;
     }
-    return false;
-
-    // for (int i = n - 1; i >= max(1LL, 1LL * (n - moves)); i--)
-    // {
-    //     sum -= v[i];
-    //     ll movesLeft = moves - (n - i);
-    //     ll tempSum = sum - v[0] + (n - i + 1) * (v[0] - movesLeft);
-    //     if (tempSum <= maxSum)
-    //         return true;
-    // }
-    // return false;
+    // print(v);
+    for (int i = 0; i < n; i++)
+    {
+        if (v[i] < mid)
+            return false;
+    }
+    return true;
 }
 
 void solve()
 {
-    ll n, k;
-    cin >> n >> k;
+    ll n;
+    cin >> n;
     vector<ll> v(n);
     for (int i = 0; i < n; i++)
     {
         cin >> v[i];
     }
 
-    sort(all(v));
-    vector<ll> pre(n, 0);
-    pre[0] = v[0];
-    for (int i = 1; i < n; i++)
-    {
-        pre[i] = pre[i - 1] + v[i];
-    }
-    ll low = 0;
-    ll sum = accumulate(all(v), 0LL);
-    ll high = 1e10;
+    ll low = 1;
+    ll high = 1e9 + 7;
     ll ans = 0;
     while (low <= high)
     {
         ll mid = (low + high) >> 1;
-        if (check(v, pre, mid, k, sum))
+        if (check(v, mid))
         {
             ans = mid;
-            high = mid - 1;
+            low = mid + 1;
         }
         else
-            low = mid + 1;
+            high = mid - 1;
     }
     cout << ans << endl;
 }
+// ll mini = *min_element(all(v));
+// vector<ll> temp(n, 0);
+// for (int i = 0; i < n; i++)
+// {
+//     if (v[i] == mini)
+//         temp[i]++;
+// }
+
+// for (int i = 2; i < n; i++)
+// {
+//     if (temp[i] != 1)
+//     {
+//         ll d = v[i] / 3;
+//         v[i - 1] += d;
+//         v[i - 2] += 2 * d;
+//         v[i] -= 3 * d;
+//     }
+// }
+
+// ll ans = 0;
+// for (int i = 0; i < n; i++)
+// {
+//     if (temp[i])
+//         ans = min(ans, v[i]);
+// }
+// cout << ans << endl;
+// }
 
 /*
     - Read the problem twice
