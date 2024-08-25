@@ -79,82 +79,75 @@ ll __lcm(ll a, ll b)
 {
     return (a * b) / __gcd(a, b);
 }
-bool check(vector<ll> &a, vector<ll> &h, ll k, ll size)
+
+ll f(vector<vector<int>> &v, int i)
 {
-    int n = a.size();
-    ll fruitCount = 0;
-    ll currSize = 0;
-    // print(size);
-    for (int i = 0; i < n - 1; i++)
+}
+
+ll mex(vector<ll> &v)
+{
+    int num = 0;
+    set<ll> st(all(v));
+    bool c = 0;
+    for (auto &i : st)
     {
-        if (a[i] > k)
-            continue;
-        if (h[i] % h[i + 1] == 0 && fruitCount + a[i] <= k)
+        if (i != num)
         {
-            // cout << h[i] << " " << h[i + 1] << endl;
-            fruitCount += a[i];
-            currSize++;
+            return num;
         }
-        else
-        {
-            if (currSize >= size)
-                return 1;
-            if (currSize + 1 >= size && fruitCount + a[i] <= k)
-                return true;
-
-            fruitCount = 0;
-            currSize = 0;
-            // if (a[i] <= k)
-            // {
-            //     fruitCount = a[i];
-            //     currSize = 1;
-            // }
-            // else
-            // {
-
-            // }
-        }
-        if (size == 1 && a[n - 1] <= k)
-            return 1;
-        if (currSize >= size)
-            return 1;
-        if (currSize + 1 >= size && fruitCount + a[n - 1] <= k)
-            return true;
+        num++;
     }
-    return false;
+    return num;
 }
 
 void solve()
 {
-    ll n, k;
-    cin >> n >> k;
-    vector<ll> a(n);
-    vector<ll> h(n);
+    ll n, m;
+    cin >> n >> m;
+    vector<vector<ll>> v(n);
+    cin.ignore();
     for (int i = 0; i < n; i++)
     {
-        cin >> a[i];
-    }
-    for (int i = 0; i < n; i++)
-    {
-        cin >> h[i];
-    }
-    // cout << check(a, h, k, 3) << endl;
-
-    ll low = 0;
-    ll high = a.size() + 1;
-    ll ans = 0;
-    while (low <= high)
-    {
-        ll mid = (low + high) >> 1;
-        if (check(a, h, k, mid))
+        string t;
+        getline(cin, t);
+        stringstream ss(t);
+        ll num;
+        while (ss >> num)
         {
-            ans = mid;
-            low = mid + 1;
+            v[i].push_back(num);
         }
-        else
-            high = mid - 1;
     }
-    cout << ans << endl;
+    // for (auto it : v)
+    // {
+    //     for (auto i : it)
+    //     {
+    //         cout << i << " ";
+    //     }
+    //     cout << endl;
+    // }
+    ll x = 0;
+    int maxInd = 0;
+    for (int i = 0; i < n; i++)
+    {
+        vector<ll> tt(v[i].begin() + 1, v[i].end());
+        tt.push_back(x);
+        ll m = mex(tt);
+        if (m > x)
+        {
+            maxInd = i;
+            x = m;
+        }
+    }
+    cout << x << endl;
+    ll maxi = *max_element(v[maxInd].begin() + 1, v[maxInd].end());
+    while (x != maxi + 1)
+    {
+        vector<ll> tt(v[maxInd].begin() + 1, v[maxInd].end());
+        tt.push_back(x);
+        x = mex(tt);
+        cout << x << endl;
+    }
+    cout << x << endl;
 }
 
 /*

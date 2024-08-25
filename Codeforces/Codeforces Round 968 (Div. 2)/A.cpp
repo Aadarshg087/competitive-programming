@@ -79,82 +79,22 @@ ll __lcm(ll a, ll b)
 {
     return (a * b) / __gcd(a, b);
 }
-bool check(vector<ll> &a, vector<ll> &h, ll k, ll size)
-{
-    int n = a.size();
-    ll fruitCount = 0;
-    ll currSize = 0;
-    // print(size);
-    for (int i = 0; i < n - 1; i++)
-    {
-        if (a[i] > k)
-            continue;
-        if (h[i] % h[i + 1] == 0 && fruitCount + a[i] <= k)
-        {
-            // cout << h[i] << " " << h[i + 1] << endl;
-            fruitCount += a[i];
-            currSize++;
-        }
-        else
-        {
-            if (currSize >= size)
-                return 1;
-            if (currSize + 1 >= size && fruitCount + a[i] <= k)
-                return true;
-
-            fruitCount = 0;
-            currSize = 0;
-            // if (a[i] <= k)
-            // {
-            //     fruitCount = a[i];
-            //     currSize = 1;
-            // }
-            // else
-            // {
-
-            // }
-        }
-        if (size == 1 && a[n - 1] <= k)
-            return 1;
-        if (currSize >= size)
-            return 1;
-        if (currSize + 1 >= size && fruitCount + a[n - 1] <= k)
-            return true;
-    }
-    return false;
-}
 
 void solve()
 {
-    ll n, k;
-    cin >> n >> k;
-    vector<ll> a(n);
-    vector<ll> h(n);
-    for (int i = 0; i < n; i++)
-    {
-        cin >> a[i];
-    }
-    for (int i = 0; i < n; i++)
-    {
-        cin >> h[i];
-    }
-    // cout << check(a, h, k, 3) << endl;
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
 
-    ll low = 0;
-    ll high = a.size() + 1;
-    ll ans = 0;
-    while (low <= high)
+    char f = s[0];
+    if (f == s[n - 1])
     {
-        ll mid = (low + high) >> 1;
-        if (check(a, h, k, mid))
-        {
-            ans = mid;
-            low = mid + 1;
-        }
-        else
-            high = mid - 1;
+        cout << "NO" << endl;
+        return;
     }
-    cout << ans << endl;
+
+    cout << "YES" << endl;
 }
 
 /*
