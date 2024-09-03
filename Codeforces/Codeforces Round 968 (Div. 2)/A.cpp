@@ -1,9 +1,8 @@
-#include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
 
 // ------------------------ Macros -------------------------
-#define ll long long int
+#define int long long int
 #define endl "\n"
 
 #define all(v) begin(v), end(v)
@@ -11,27 +10,27 @@ using namespace std;
     cout << #x << ": "; \
     _print(x);          \
     cout << endl;
-
-// ---------------------- Debug Functions -------------------------
-template <class T>
-void _print(T x)
-{
-    cout << x << " ";
-}
-template <class T>
-void _print(vector<T> v)
-{
-    for (T i : v)
-        _print(i);
+ 
+// ---------------------- Debug Functions ------------------------- 
+template <class T> 
+void _print(T x) 
+{ 
+    cout << x << " "; 
+} 
+template <class T> 
+void _print(vector<T> v) 
+{ 
+    for (T i : v) 
+        _print(i); 
 }
 
 // Seive Algo -------------------
-const int N = 1e6 + 7;
-vector<bool> isPrime(N, true);
+const int NN = 1e6 + 7;
+vector<bool> isPrime(NN, true);
 void seiveAlgo()
 {
     isPrime[0] = isPrime[1] = false;
-    for (int i = 2; i < N; i++)
+    for (int i = 2; i < NN; i++)
     {
         if (isPrime[i] == true)
         {
@@ -44,12 +43,12 @@ void seiveAlgo()
 }
 
 // Binary Exponentiation - (Check MOD Value) -------------------
-ll BinaryExpoRecur(ll a, ll p)
+int BinaryExpoRecur(int a, int p)
 {
     const int mod = 1e9 + 7;
     if (p == 1)
         return a;
-    ll ans = BinaryExpoRecur(a, p / 2);
+    int ans = BinaryExpoRecur(a, p / 2);
     if (p & 1)
     {
         return (((ans * ans) % mod) * a) % mod;
@@ -61,52 +60,42 @@ ll BinaryExpoRecur(ll a, ll p)
     return ans;
 }
 
-// One side divisors (1 included, sorted) -------------------
-set<ll> divisor(ll n)
-{
-    set<ll> st;
-    for (int i = 1; i * i <= n; i++)
-    {
-        if (n % i == 0)
-        {
-            st.insert(n / i);
-        }
-    }
-    return st;
-}
-
-ll __lcm(ll a, ll b)
+int __lcm(int a, int b)
 {
     return (a * b) / __gcd(a, b);
 }
 
+int mex(vector<int> &v)
+{
+    int num = 0;
+    set<int> st(all(v));
+    bool c = 0;
+    for (auto &i : st)
+    {
+        if (i != num)
+        {
+            return num;
+        }
+        num++;
+    }
+    return num;
+}
+
 void solve()
 {
-    int n;
-    cin >> n;
-    string s;
-    cin >> s;
-
-    char f = s[0];
-    if (f == s[n - 1])
-    {
-        cout << "NO" << endl;
-        return;
-    }
-
-    cout << "YES" << endl;
+    
 }
 
 /*
     - Read the problem twice
-    - Check for overflow
-    - Add brackets while using bitwise
+    - Try to prove yourself wrong
+    - int is mapped with long long int
+    - Check endl while doing interactive problems
     - Check corner cases (out of bounds for loops)
     - Revise the code
-    - Try to prove yourself wrong
 */
 
-int main()
+signed main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);

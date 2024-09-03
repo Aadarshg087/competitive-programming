@@ -6,6 +6,8 @@ using namespace std;
 #define endl '\n'
 #define all(x) (x).begin(), (x).end()
 #define INF 1e18
+#define ff first
+#define ss second
 
 // ---------------------- Debug Functions -------------------------
 #define p(x)            \
@@ -31,9 +33,9 @@ template <class T, class V>
 void _print(pair<T, V> p)
 {
     cout << "{";
-    _print(p.first);
+    _print(p.ff);
     cout << ",";
-    _print(p.second);
+    _print(p.ss);
     cout << "}";
 }
 template <class T>
@@ -140,34 +142,13 @@ int mex(vector<int> &v)
     }
     return num;
 }
-bool check(vector<int> &a, vector<int> &temp, int size, int k, vector<int> &pre, vector<pair<int, int>> &temp2)
-{
-    int count = 0;
-    int prev = -1;
-    int fruitCount = 0;
-
-    for (auto it : temp2)
-    {
-        int i = it.first;
-        int j = it.second;
-        while (i + size - 1 <= j)
-        {
-            int fruitCount = pre[i + size - 1] - (i == 0 ? 0 : pre[i - 1]);
-            if (fruitCount <= k)
-                return true;
-            else
-                i++;
-        }
-    }
-    return false;
-}
 
 void solvee()
 {
-    int n, k;
-    cin >> n >> k;
+    int n;
+    cin >> n;
     vector<int> a(n);
-    vector<int> h(n);
+    vector<int> b(n);
     for (int i = 0; i < n; i++)
     {
         cin >> a[i];
@@ -175,67 +156,50 @@ void solvee()
 
     for (int i = 0; i < n; i++)
     {
-        cin >> h[i];
+        cin >> b[i];
     }
-    vector<int> temp(n);
-    vector<pair<int, int>> temp2;
-    vector<int> pre(n);
-    pre[0] = a[0];
+    // find the biggest subarray of each ele
+    map<int, int> mp1;
+    map<int, int> mp2;
+    mp1[a[0]]++;
+    int count = 1;
     for (int i = 1; i < n; i++)
     {
-        pre[i] = pre[i - 1] + a[i];
+        if (a[i] == a[i - 1])
+        {
+            count++;
+            mp1[a[i]] = max(mp1[a[i]], count);
+        }
+        else
+        {
+            count = 1;
+            mp1[a[i]] = max(mp1[a[i]], 1LL);
+        }
     }
-    // p(pre);
-    int num = 1;
+
+    mp2[b[0]]++;
+    count = 1;
+    for (int i = 1; i < n; i++)
+    {
+        if (b[i] == b[i - 1])
+        {
+            count++;
+            mp2[b[i]] = max(mp2[b[i]], count);
+        }
+        else
+        {
+            count = 1;
+            mp2[b[i]] = max(mp2[b[i]], 1LL);
+        }
+    }
+
+    // p(mp1);
+    // p(mp2);
+    int ans = 0;
     for (int i = 0; i < n; i++)
     {
-
-        if (i == n - 1) // last element condition
-        {
-            temp[i] = num;
-        }
-        else
-        {
-            if (h[i] % h[i + 1] == 0)
-            {
-                temp[i] = num;
-            }
-            else
-            {
-                temp[i] = num;
-                num++;
-            }
-        }
-    }
-    int prev = 0;
-    for (int i = 0; i < n - 1; i++)
-    {
-        if (temp[i] == temp[i + 1])
-        {
-        }
-        else
-        {
-            temp2.push_back({prev, i});
-            prev = i + 1;
-        }
-    }
-    temp2.push_back({prev, n - 1});
-    // p(temp2);
-    // p(temp);
-
-    int low = 0;
-    int high = a.size() + 1;
-    int ans = 0;
-    while (low <= high)
-    {
-        int mid = (1LL * low + high) >> 1;
-        if (check(a, temp, mid, k, pre, temp2))
-        {
-            ans = mid;
-            low = mid + 1;
-        }
-        else
-            high = mid - 1;
+        ans = max(ans, mp1[a[i]] + mp2[a[i]]);
+        ans = max(ans, mp1[b[i]] + mp2[b[i]]);
     }
     cout << ans << endl;
 }
@@ -256,9 +220,9 @@ signed main()
     cout.tie(NULL);
     // solvee();
     // seiveAlgo();
-#ifndef ONLINE_JUDGE
-    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
-#endif
+    // #ifndef ONLINE_JUDGE
+    // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+    // #endif
     int t;
     cin >> t;
     while (t--)

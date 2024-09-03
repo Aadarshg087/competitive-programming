@@ -1,41 +1,102 @@
-#include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
 
 // ------------------------ Macros -------------------------
-#define ll long long int
-#define endl "\n"
+#define int long long int
+#define endl '\n'
+#define all(x) (x).begin(), (x).end()
+#define INF 1e18
+#define ff first
+#define ss second
 
-#define all(v) begin(v), end(v)
-#define print(x)        \
+// ---------------------- Debug Functions -------------------------
+#define p(x)            \
     cout << #x << ": "; \
     _print(x);          \
     cout << endl;
+void _print(int t) { cout << t; }
+void _print(string t) { cout << t; }
+void _print(char t) { cout << t; }
+void _print(double t) { cout << t; }
 
-// ---------------------- Debug Functions -------------------------
+template <class T, class V>
+void _print(pair<T, V> p);
 template <class T>
-void _print(T x)
+void _print(vector<T> v);
+template <class T>
+void _print(set<T> v);
+template <class T, class V>
+void _print(map<T, V> v);
+template <class T>
+void _print(multiset<T> v);
+template <class T, class V>
+void _print(pair<T, V> p)
 {
-    cout << x << " ";
+    cout << "{";
+    _print(p.ff);
+    cout << ",";
+    _print(p.ss);
+    cout << "}";
 }
 template <class T>
 void _print(vector<T> v)
 {
+    cout << "[ ";
     for (T i : v)
+    {
         _print(i);
+        cout << " ";
+    }
+    cout << "]";
+}
+template <class T>
+void _print(set<T> v)
+{
+    cout << "[ ";
+    for (T i : v)
+    {
+        _print(i);
+        cout << " ";
+    }
+    cout << "]";
+}
+template <class T>
+void _print(multiset<T> v)
+{
+    cout << "[ ";
+    for (T i : v)
+    {
+        _print(i);
+        cout << " ";
+    }
+    cout << "]";
+}
+template <class T, class V>
+void _print(map<T, V> v)
+{
+    cout << "[ ";
+    for (auto i : v)
+    {
+        _print(i);
+        cout << " ";
+    }
+    cout << "]";
 }
 
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+int getRandomNumber(int l, int r) { return uniform_int_distribution<int>(l, r)(rng); }
+
 // Seive Algo -------------------
-const int N = 1e6 + 7;
-vector<bool> isPrime(N, true);
+const int NN = 1e6 + 7;
+vector<bool> isPrime(NN, true);
 void seiveAlgo()
 {
     isPrime[0] = isPrime[1] = false;
-    for (int i = 2; i < N; i++)
+    for (int i = 2; i < NN; i++)
     {
         if (isPrime[i] == true)
         {
-            for (int j = 2 * i; j < N; j += i)
+            for (int j = 2 * i; j < NN; j += i)
             {
                 isPrime[j] = false;
             }
@@ -44,12 +105,12 @@ void seiveAlgo()
 }
 
 // Binary Exponentiation - (Check MOD Value) -------------------
-ll BinaryExpoRecur(ll a, ll p)
+int BinaryExpoRecur(int a, int p)
 {
     const int mod = 1e9 + 7;
     if (p == 1)
         return a;
-    ll ans = BinaryExpoRecur(a, p / 2);
+    int ans = BinaryExpoRecur(a, p / 2);
     if (p & 1)
     {
         return (((ans * ans) % mod) * a) % mod;
@@ -61,96 +122,139 @@ ll BinaryExpoRecur(ll a, ll p)
     return ans;
 }
 
-// One side divisors (1 included, sorted) -------------------
-set<ll> divisor(ll n)
-{
-    set<ll> st;
-    for (int i = 1; i * i <= n; i++)
-    {
-        if (n % i == 0)
-        {
-            st.insert(n / i);
-        }
-    }
-    return st;
-}
-
-ll __lcm(ll a, ll b)
+int __lcm(int a, int b)
 {
     return (a * b) / __gcd(a, b);
 }
 
+int mex(vector<int> &v)
+{
+    int num = 0;
+    set<int> st(all(v));
+    bool c = 0;
+    for (auto &i : st)
+    {
+        if (i != num)
+        {
+            return num;
+        }
+        num++;
+    }
+    return num;
+}
+
+double check(int mid, double &ans, double &h, double &c, double &t)
+{
+    return (mid * h + (mid - 1) * c) / (2 * mid - 1);
+}
 void solve()
 {
-    ll h, c, t;
+    double h, c, t;
     cin >> h >> c >> t;
-    vector<ll> temp;
-    int n = 20;
-    int prev = 0;
-    int ele = 1;
-    bool cc = 0; // cold turn
-    ll ans = INT_MAX;
-    int count = 0;
-    ll res = 0;
-    while (n--)
+    if (t <= (h + c) / 2)
     {
-
-        if (prev == 0)
-        {
-            temp.push_back((prev + h) / ele);
-            prev += h;
-            cc = 0;
-            count++;
-        }
-        else if (cc == 0)
-        {
-            int ans = (prev + c) / ele;
-            prev += c;
-            cc = 1;
-            temp.push_back(ans);
-            count++;
-        }
-        else if (cc == 1)
-        {
-            int ans = (prev + h) / ele;
-            prev += h;
-            cc = 0;
-            temp.push_back(ans);
-            count++;
-        }
-        if (abs((prev / ele) - t) < ans)
-        {
-            ans = min(ans, abs((prev / ele) - t));
-            res = count;
-            if (prev == 209)
-                cout << count << endl;
-        }
-
-        cout << ele << " ";
-        print(prev);
-        ele++;
+        cout << 2 << endl;
+        return;
     }
-    print(temp);
-    cout << ans << endl;
-    cout << res << endl;
+    // mid hot cups mid-1 cold cups
+    int low = 1;
+    int high = 1e9;
+    double ans = INT_MAX;
+    int res = 0;
+
+    while (low <= high)
+    {
+        int mid = (low + high) >> 1; // no of hot cups
+        if (check(mid, ans, h, c, t) > t)
+            low = mid + 1;
+        else
+            high = mid - 1;
+    }
+    for (int i = low - 1; i <= low + 1; i++)
+    {
+        double f = (i * h + (i - 1) * c) / (2 * i - 1);
+        if (abs(f - t) < ans)
+        {
+            ans = abs(f - t);
+            res = i;
+        }
+    }
+    cout << 2 * res - 1 << endl;
 }
+
+// void solvee()
+// {
+//     double h, c, t;
+//     cin >> h >> c >> t;
+//     vector<double> temp;
+//     double n = 1000; // for prdoubleing purpose
+//     double prev = 0; // prev value
+//     double ele = 1;
+//     bool cc = 0; // cold turn
+//     double ans = INT_MAX;
+//     double count = 0;
+//     double res = 0;
+//     while (n--)
+//     {
+//         if (prev == 0) // first one is must
+//         {
+//             temp.push_back((prev + h) / ele);
+//             prev += h;
+//             cc = 0;
+//             count++;
+//         }
+//         else if (cc == 0) // cold turn
+//         {
+//             double ans = (prev + c) / ele;
+//             prev += c;
+//             cc = 1;
+//             temp.push_back(ans);
+//             count++;
+//         }
+//         else if (cc == 1)
+//         {
+//             double ans = (prev + h) / ele;
+//             prev += h;
+//             cc = 0;
+//             temp.push_back(ans);
+//             count++;
+//         }
+//         if (abs(temp.back() - t) < ans) // find the min diff
+//         {
+//             ans = min(ans, abs((prev / ele) - t));
+//             res = count;
+//             // if (prev == 209)
+//             //     cout << count << endl;
+//         }
+
+//         // cout << ele << " ";
+//         // p(prev);
+//         ele++;
+//     }
+//     // p(temp);
+//     // cout << ans << endl; // min diff
+//     cout << res << endl; // no of cups
+// }
 
 /*
     - Read the problem twice
-    - Check for overflow
-    - Add brackets while using bitwise
+    - Try to prove yourself wrong
+    - double is mapped with long long int
+    - Check endl while doing interactive problems
     - Check corner cases (out of bounds for loops)
     - Revise the code
-    - Try to prove yourself wrong
 */
 
-int main()
+signed main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // solve();
+    // solvee();
     // seiveAlgo();
+    // #ifndef ONLINE_JUDGE
+    // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+    // #endif
     int t;
     cin >> t;
     while (t--)

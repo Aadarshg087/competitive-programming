@@ -31,9 +31,9 @@ template <class T, class V>
 void _print(pair<T, V> p)
 {
     cout << "{";
-    _print(p.first);
+    _print(p.ff);
     cout << ",";
-    _print(p.second);
+    _print(p.ss);
     cout << "}";
 }
 template <class T>
@@ -140,102 +140,48 @@ int mex(vector<int> &v)
     }
     return num;
 }
-bool check(vector<int> &a, vector<int> &temp, int size, int k, vector<int> &pre, vector<pair<int, int>> &temp2)
-{
-    int count = 0;
-    int prev = -1;
-    int fruitCount = 0;
-
-    for (auto it : temp2)
-    {
-        int i = it.first;
-        int j = it.second;
-        while (i + size - 1 <= j)
-        {
-            int fruitCount = pre[i + size - 1] - (i == 0 ? 0 : pre[i - 1]);
-            if (fruitCount <= k)
-                return true;
-            else
-                i++;
-        }
-    }
-    return false;
-}
 
 void solvee()
 {
-    int n, k;
-    cin >> n >> k;
-    vector<int> a(n);
-    vector<int> h(n);
-    for (int i = 0; i < n; i++)
+    string s;
+    cin >> s;
+    int n = s.size();
+    vector<char> even;
+    vector<char> odd;
+    for (auto &i : s)
     {
-        cin >> a[i];
-    }
-
-    for (int i = 0; i < n; i++)
-    {
-        cin >> h[i];
-    }
-    vector<int> temp(n);
-    vector<pair<int, int>> temp2;
-    vector<int> pre(n);
-    pre[0] = a[0];
-    for (int i = 1; i < n; i++)
-    {
-        pre[i] = pre[i - 1] + a[i];
-    }
-    // p(pre);
-    int num = 1;
-    for (int i = 0; i < n; i++)
-    {
-
-        if (i == n - 1) // last element condition
+        if ((i - '0') % 2 == 0)
         {
-            temp[i] = num;
+            even.push_back(i);
         }
         else
         {
-            if (h[i] % h[i + 1] == 0)
-            {
-                temp[i] = num;
-            }
-            else
-            {
-                temp[i] = num;
-                num++;
-            }
+            odd.push_back(i);
         }
     }
-    int prev = 0;
-    for (int i = 0; i < n - 1; i++)
-    {
-        if (temp[i] == temp[i + 1])
-        {
-        }
-        else
-        {
-            temp2.push_back({prev, i});
-            prev = i + 1;
-        }
-    }
-    temp2.push_back({prev, n - 1});
-    // p(temp2);
-    // p(temp);
 
-    int low = 0;
-    int high = a.size() + 1;
-    int ans = 0;
-    while (low <= high)
+    int i = 0; // even
+    int j = 0; // odd
+    string ans = "";
+    while (i < even.size() && j < odd.size())
     {
-        int mid = (1LL * low + high) >> 1;
-        if (check(a, temp, mid, k, pre, temp2))
+        if (even[i] < odd[j])
         {
-            ans = mid;
-            low = mid + 1;
+            ans.push_back(even[i++]);
         }
         else
-            high = mid - 1;
+        {
+            ans.push_back(odd[j++]);
+        }
+    }
+
+    while (j < odd.size())
+    {
+        ans.push_back(odd[j++]);
+    }
+    while (i < even.size())
+    {
+        ans.push_back(even[i++]);
     }
     cout << ans << endl;
 }

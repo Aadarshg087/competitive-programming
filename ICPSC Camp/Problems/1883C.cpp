@@ -85,26 +85,46 @@ void solve()
     int n, k;
     cin >> n >> k;
     vector<int> v(n);
-    ll p = 1;
-    bool c = 0;
+    for (int i = 0; i < n; i++)
+        cin >> v[i];
+
     int mini = INT_MAX;
+    int evenCount = 0;
     for (int i = 0; i < n; i++)
     {
-        cin >> v[i];
-        if (v[i] % k == 0)
+        int temp = v[i] % k;
+        if (temp == 0)
         {
-            c = 1;
+            cout << 0 << endl;
+            return;
         }
-        else
+        if (temp % 2 == 0)
         {
-            int temp = (k * (v[i] / k) + k) - v[i];
-            mini = min(mini, temp);
+            evenCount++;
+        }
+        int other = (k - temp);
+        mini = min(mini, other);
+    }
+    if (k != 4)
+    {
+        cout << mini << endl;
+        return;
+    }
+    if (evenCount >= 2)
+    {
+        cout << 0 << endl;
+    }
+    else
+    {
+        if (evenCount == 1)
+        {
+            cout << min(mini, 1) << endl;
+        }
+        else if (evenCount == 0)
+        {
+            cout << min(mini, 2) << endl;
         }
     }
-    if (c)
-        cout << 0 << endl;
-    else
-        cout << mini << endl;
 }
 
 /*

@@ -31,9 +31,9 @@ template <class T, class V>
 void _print(pair<T, V> p)
 {
     cout << "{";
-    _print(p.first);
+    _print(p.ff);
     cout << ",";
-    _print(p.second);
+    _print(p.ss);
     cout << "}";
 }
 template <class T>
@@ -140,104 +140,66 @@ int mex(vector<int> &v)
     }
     return num;
 }
-bool check(vector<int> &a, vector<int> &temp, int size, int k, vector<int> &pre, vector<pair<int, int>> &temp2)
-{
-    int count = 0;
-    int prev = -1;
-    int fruitCount = 0;
 
-    for (auto it : temp2)
+bool isValid(string s)
+{
+
+    int n = s.size();
+    stack<char> st;
+    for (int i = 0; i < n; i++)
     {
-        int i = it.first;
-        int j = it.second;
-        while (i + size - 1 <= j)
-        {
-            int fruitCount = pre[i + size - 1] - (i == 0 ? 0 : pre[i - 1]);
-            if (fruitCount <= k)
-                return true;
-            else
-                i++;
-        }
+        if (st.empty() && s[i] == ')')
+            return false;
+        else if (s[i] == '(')
+            st.push(s[i]);
+        else if (s[i] == ')')
+            st.pop();
     }
-    return false;
+    return st.empty();
 }
 
 void solvee()
 {
-    int n, k;
-    cin >> n >> k;
-    vector<int> a(n);
-    vector<int> h(n);
-    for (int i = 0; i < n; i++)
+    string s;
+    cin >> s;
+    int n = s.size();
+    if (n & 1)
     {
-        cin >> a[i];
+        cout << "NO" << endl;
+        return;
     }
+    int open = count(all(s), '(');
+    open = n / 2 - open;
+    if (open < 0)
+        open = 0;
 
+    int mid = n / 2 - 1;
+    // p(s);
     for (int i = 0; i < n; i++)
     {
-        cin >> h[i];
-    }
-    vector<int> temp(n);
-    vector<pair<int, int>> temp2;
-    vector<int> pre(n);
-    pre[0] = a[0];
-    for (int i = 1; i < n; i++)
-    {
-        pre[i] = pre[i - 1] + a[i];
-    }
-    // p(pre);
-    int num = 1;
-    for (int i = 0; i < n; i++)
-    {
-
-        if (i == n - 1) // last element condition
+        if (i <= mid)
         {
-            temp[i] = num;
-        }
-        else
-        {
-            if (h[i] % h[i + 1] == 0)
+            if (s[i] == '?' && open)
             {
-                temp[i] = num;
+                s[i] = '(';
+                open--;
             }
-            else
-            {
-                temp[i] = num;
-                num++;
-            }
-        }
-    }
-    int prev = 0;
-    for (int i = 0; i < n - 1; i++)
-    {
-        if (temp[i] == temp[i + 1])
-        {
+            else if (s[i] == '?')
+                s[i] = ')';
         }
         else
         {
-            temp2.push_back({prev, i});
-            prev = i + 1;
+            if (s[i] == '?')
+                s[i] = ')';
         }
     }
-    temp2.push_back({prev, n - 1});
-    // p(temp2);
-    // p(temp);
-
-    int low = 0;
-    int high = a.size() + 1;
-    int ans = 0;
-    while (low <= high)
-    {
-        int mid = (1LL * low + high) >> 1;
-        if (check(a, temp, mid, k, pre, temp2))
-        {
-            ans = mid;
-            low = mid + 1;
-        }
-        else
-            high = mid - 1;
-    }
-    cout << ans << endl;
+    // if (s[0] == ')' || s[n - 1] == '(')
+    // {
+    //     cout << "NO" << endl;
+    //     return;
+    // }
+    // p(s);
+    cout << (isValid(s) ? "YES" : "NO") << endl;
 }
 
 /*

@@ -31,9 +31,9 @@ template <class T, class V>
 void _print(pair<T, V> p)
 {
     cout << "{";
-    _print(p.first);
+    _print(p.ff);
     cout << ",";
-    _print(p.second);
+    _print(p.ss);
     cout << "}";
 }
 template <class T>
@@ -140,102 +140,76 @@ int mex(vector<int> &v)
     }
     return num;
 }
-bool check(vector<int> &a, vector<int> &temp, int size, int k, vector<int> &pre, vector<pair<int, int>> &temp2)
-{
-    int count = 0;
-    int prev = -1;
-    int fruitCount = 0;
 
-    for (auto it : temp2)
+void findExtra(map<int, int> mp, int s, int e, vector<int> &v, int &ans)
+{
+    // int ans = 0;
+    for (int i = s; i <= e; i++)
     {
-        int i = it.first;
-        int j = it.second;
-        while (i + size - 1 <= j)
-        {
-            int fruitCount = pre[i + size - 1] - (i == 0 ? 0 : pre[i - 1]);
-            if (fruitCount <= k)
-                return true;
-            else
-                i++;
-        }
+        ans += mp[v[i]] - 1;
     }
-    return false;
+}
+int modInverse(int A, int M)
+{
+    int m0 = M;
+    int y = 0, x = 1;
+    if (M == 1)
+        return 0;
+    while (A > 1)
+    {
+        int q = A / M, t = M;
+        M = A % M, A = t, t = y, y = x - q * y, x = t;
+    }
+    if (x < 0)
+        x += m0;
+    return x;
 }
 
 void solvee()
 {
     int n, k;
     cin >> n >> k;
-    vector<int> a(n);
-    vector<int> h(n);
+    map<int, int> mp;
+    set<int> st;
+    int MOD = 1e9 + 7;
     for (int i = 0; i < n; i++)
     {
-        cin >> a[i];
+        int temp;
+        cin >> temp;
+        st.insert(temp);
+        mp[temp]++;
     }
-
-    for (int i = 0; i < n; i++)
+    vector<int> v;
+    for (auto &it : st)
     {
-        cin >> h[i];
+        v.push_back(it);
     }
-    vector<int> temp(n);
-    vector<pair<int, int>> temp2;
-    vector<int> pre(n);
-    pre[0] = a[0];
-    for (int i = 1; i < n; i++)
-    {
-        pre[i] = pre[i - 1] + a[i];
-    }
-    // p(pre);
-    int num = 1;
-    for (int i = 0; i < n; i++)
-    {
-
-        if (i == n - 1) // last element condition
-        {
-            temp[i] = num;
-        }
-        else
-        {
-            if (h[i] % h[i + 1] == 0)
-            {
-                temp[i] = num;
-            }
-            else
-            {
-                temp[i] = num;
-                num++;
-            }
-        }
-    }
-    int prev = 0;
-    for (int i = 0; i < n - 1; i++)
-    {
-        if (temp[i] == temp[i + 1])
-        {
-        }
-        else
-        {
-            temp2.push_back({prev, i});
-            prev = i + 1;
-        }
-    }
-    temp2.push_back({prev, n - 1});
-    // p(temp2);
-    // p(temp);
-
-    int low = 0;
-    int high = a.size() + 1;
     int ans = 0;
-    while (low <= high)
+    int tempAns = 1;
+
+    if (k <= v.size())
     {
-        int mid = (1LL * low + high) >> 1;
-        if (check(a, temp, mid, k, pre, temp2))
+        for (int i = 0; i < k; i++)
         {
-            ans = mid;
-            low = mid + 1;
+            tempAns = (tempAns * (mp[v[i]])) % MOD;
         }
-        else
-            high = mid - 1;
+        if (v[k - 1] - v[0] < k)
+            ans = (ans + tempAns) % MOD;
+    }
+
+    for (int i = k; i < v.size(); i++)
+    {
+        // first minus : removing the contribution of last ele
+        // tempAns = tempAns / mp[v[i - k]];
+        int a = tempAns;
+        int b = mp[v[i - k]];
+        tempAns = (tempAns * modInverse(b, MOD)) % MOD;
+
+        // second add : adding the constribution of the next element
+        tempAns = (tempAns * mp[v[i]]) % MOD;
+        if (v[i] - v[i - k + 1] < k)
+
+            ans = (ans + tempAns) % MOD;
     }
     cout << ans << endl;
 }

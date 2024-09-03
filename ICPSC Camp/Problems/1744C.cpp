@@ -6,6 +6,8 @@ using namespace std;
 #define endl '\n'
 #define all(x) (x).begin(), (x).end()
 #define INF 1e18
+#define ff first
+#define ss second
 
 // ---------------------- Debug Functions -------------------------
 #define p(x)            \
@@ -31,9 +33,9 @@ template <class T, class V>
 void _print(pair<T, V> p)
 {
     cout << "{";
-    _print(p.first);
+    _print(p.ff);
     cout << ",";
-    _print(p.second);
+    _print(p.ss);
     cout << "}";
 }
 template <class T>
@@ -140,102 +142,49 @@ int mex(vector<int> &v)
     }
     return num;
 }
-bool check(vector<int> &a, vector<int> &temp, int size, int k, vector<int> &pre, vector<pair<int, int>> &temp2)
-{
-    int count = 0;
-    int prev = -1;
-    int fruitCount = 0;
-
-    for (auto it : temp2)
-    {
-        int i = it.first;
-        int j = it.second;
-        while (i + size - 1 <= j)
-        {
-            int fruitCount = pre[i + size - 1] - (i == 0 ? 0 : pre[i - 1]);
-            if (fruitCount <= k)
-                return true;
-            else
-                i++;
-        }
-    }
-    return false;
-}
 
 void solvee()
 {
-    int n, k;
-    cin >> n >> k;
-    vector<int> a(n);
-    vector<int> h(n);
-    for (int i = 0; i < n; i++)
+    int n;
+    char ch;
+    cin >> n >> ch;
+    string s;
+    cin >> s;
+    s = '#' + s;
+    if (ch == 'g')
     {
-        cin >> a[i];
+        cout << 0 << endl;
+        return;
     }
-
-    for (int i = 0; i < n; i++)
-    {
-        cin >> h[i];
-    }
-    vector<int> temp(n);
-    vector<pair<int, int>> temp2;
-    vector<int> pre(n);
-    pre[0] = a[0];
-    for (int i = 1; i < n; i++)
-    {
-        pre[i] = pre[i - 1] + a[i];
-    }
-    // p(pre);
-    int num = 1;
-    for (int i = 0; i < n; i++)
-    {
-
-        if (i == n - 1) // last element condition
-        {
-            temp[i] = num;
-        }
-        else
-        {
-            if (h[i] % h[i + 1] == 0)
-            {
-                temp[i] = num;
-            }
-            else
-            {
-                temp[i] = num;
-                num++;
-            }
-        }
-    }
-    int prev = 0;
-    for (int i = 0; i < n - 1; i++)
-    {
-        if (temp[i] == temp[i + 1])
-        {
-        }
-        else
-        {
-            temp2.push_back({prev, i});
-            prev = i + 1;
-        }
-    }
-    temp2.push_back({prev, n - 1});
-    // p(temp2);
-    // p(temp);
-
-    int low = 0;
-    int high = a.size() + 1;
+    char c = '_';
+    int recent = 0;
     int ans = 0;
-    while (low <= high)
+    n = s.size();
+    for (int i = 1; i < s.size(); ++i)
     {
-        int mid = (1LL * low + high) >> 1;
-        if (check(a, temp, mid, k, pre, temp2))
+        if (c == '_' && s[i] == ch)
         {
-            ans = mid;
-            low = mid + 1;
+            c = ch;
+            recent = i;
         }
-        else
-            high = mid - 1;
+        else if (c == ch && s[i] == 'g')
+        {
+            ans = max(ans, i - recent);
+            c = '_';
+            recent = -1;
+        }
+    }
+    // p(recent);
+    if (recent != -1)
+    {
+        for (int i = 1; i < s.size(); i++)
+        {
+            if (s[i] == 'g')
+            {
+                ans = max(ans, i + n - 1 - recent);
+                break;
+            }
+        }
     }
     cout << ans << endl;
 }
@@ -256,9 +205,9 @@ signed main()
     cout.tie(NULL);
     // solvee();
     // seiveAlgo();
-#ifndef ONLINE_JUDGE
-    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
-#endif
+    // #ifndef ONLINE_JUDGE
+    // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+    // #endif
     int t;
     cin >> t;
     while (t--)

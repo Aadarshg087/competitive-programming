@@ -140,102 +140,34 @@ int mex(vector<int> &v)
     }
     return num;
 }
-bool check(vector<int> &a, vector<int> &temp, int size, int k, vector<int> &pre, vector<pair<int, int>> &temp2)
-{
-    int count = 0;
-    int prev = -1;
-    int fruitCount = 0;
-
-    for (auto it : temp2)
-    {
-        int i = it.first;
-        int j = it.second;
-        while (i + size - 1 <= j)
-        {
-            int fruitCount = pre[i + size - 1] - (i == 0 ? 0 : pre[i - 1]);
-            if (fruitCount <= k)
-                return true;
-            else
-                i++;
-        }
-    }
-    return false;
-}
 
 void solvee()
 {
     int n, k;
     cin >> n >> k;
-    vector<int> a(n);
-    vector<int> h(n);
+    vector<int> v(n);
     for (int i = 0; i < n; i++)
     {
-        cin >> a[i];
+        cin >> v[i];
     }
-
-    for (int i = 0; i < n; i++)
-    {
-        cin >> h[i];
-    }
-    vector<int> temp(n);
-    vector<pair<int, int>> temp2;
-    vector<int> pre(n);
-    pre[0] = a[0];
-    for (int i = 1; i < n; i++)
-    {
-        pre[i] = pre[i - 1] + a[i];
-    }
-    // p(pre);
-    int num = 1;
-    for (int i = 0; i < n; i++)
-    {
-
-        if (i == n - 1) // last element condition
-        {
-            temp[i] = num;
-        }
-        else
-        {
-            if (h[i] % h[i + 1] == 0)
-            {
-                temp[i] = num;
-            }
-            else
-            {
-                temp[i] = num;
-                num++;
-            }
-        }
-    }
-    int prev = 0;
-    for (int i = 0; i < n - 1; i++)
-    {
-        if (temp[i] == temp[i + 1])
-        {
-        }
-        else
-        {
-            temp2.push_back({prev, i});
-            prev = i + 1;
-        }
-    }
-    temp2.push_back({prev, n - 1});
-    // p(temp2);
-    // p(temp);
-
-    int low = 0;
-    int high = a.size() + 1;
+    int j = 0;
+    int i = 0;
     int ans = 0;
-    while (low <= high)
+    map<int, int> mp;
+    while (j < n)
     {
-        int mid = (1LL * low + high) >> 1;
-        if (check(a, temp, mid, k, pre, temp2))
+        mp[v[j]]++;           // including the element
+        while (mp.size() > k) // fixing subarray if voilates condition
         {
-            ans = mid;
-            low = mid + 1;
+            mp[v[i]]--;
+            if (mp[v[i]] == 0)
+                mp.erase(v[i]);
+            i++;
         }
-        else
-            high = mid - 1;
+        // cout << i << " " << j << endl;
+        ans += j - i + 1; // total subarrays from j (right pointer)
+        // p(ans);
+        j++;
     }
     cout << ans << endl;
 }
@@ -256,12 +188,12 @@ signed main()
     cout.tie(NULL);
     // solvee();
     // seiveAlgo();
-#ifndef ONLINE_JUDGE
-    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
-#endif
-    int t;
-    cin >> t;
-    while (t--)
-        solvee();
+    // #ifndef ONLINE_JUDGE
+    //     freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+    // #endif
+    // int t;
+    // cin >> t;
+    // while (t--)
+    solvee();
     return 0;
 }
