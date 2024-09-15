@@ -190,72 +190,29 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     // return ans;
     return mp;
 }
-bool check(int r, int b, int size)
-{
-    while (b--)
-    {
-        int s = size;
-        while (s--)
-            r--;
-        if (r <= 0)
-            return 1;
-    }
-
-    if (r > size)
-        return 0;
-    return 1;
-}
 
 void solvee()
 {
-    int n, r, b;
-    cin >> n >> r >> b;
-    int low = 0;
-    int high = r;
-    int ans = 0;
-    while (low <= high)
+    string a;
+    string b;
+    cin >> a >> b;
+    int n = a.size();
+    int m = b.size();
+    int ans = m + n;
+    for (int i = 0; i < n; i++)
     {
-        int mid = (low + high) >> 1;
-        if (check(r, b, mid))
+        for (int j = i; j < n; j++)
         {
-            ans = mid;
-            high = mid - 1;
-        }
-        else
-            low = mid + 1;
-    }
-    // p(ans);
-
-    string s = "";
-    for (int bb = b; bb > 0; bb--)
-    {
-        int a = ans;
-        while (a--)
-        {
-
-            s.push_back('R');
-            r--;
-            if (bb == r)
+            auto it = b.find(a.substr(i, j - i + 1));
+            if (it != string ::npos)
             {
-                while (r--)
-                {
-                    s.push_back('B');
-                    s.push_back('R');
-                }
-                cout << s << endl;
-                // cout << count(all(s), 'R') << endl;
-                // cout << count(all(s), 'B') << endl;
-                return;
+                int removal1 = i + ((n - 1) - j);
+                int removal2 = it + (m - 1 - (it + j - i));
+                ans = min(removal1 + removal2, ans);
             }
         }
-        s.push_back('B');
     }
-
-    while (r--)
-        s.push_back('R');
-    cout << s << endl;
-    // cout << count(all(s), 'R') << endl;
-    // cout << count(all(s), 'B') << endl;
+    cout << ans << endl;
 }
 
 /*

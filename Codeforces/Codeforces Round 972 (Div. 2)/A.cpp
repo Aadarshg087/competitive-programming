@@ -190,72 +190,33 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     // return ans;
     return mp;
 }
-bool check(int r, int b, int size)
-{
-    while (b--)
-    {
-        int s = size;
-        while (s--)
-            r--;
-        if (r <= 0)
-            return 1;
-    }
-
-    if (r > size)
-        return 0;
-    return 1;
-}
 
 void solvee()
 {
-    int n, r, b;
-    cin >> n >> r >> b;
-    int low = 0;
-    int high = r;
-    int ans = 0;
-    while (low <= high)
+    int n;
+    cin >> n;
+    vector<char> a{'a', 'e', 'i', 'o', 'u'};
+    int j = 0;
+    string ans = "";
+    for (int i = 0; i < n; i++)
     {
-        int mid = (low + high) >> 1;
-        if (check(r, b, mid))
-        {
-            ans = mid;
-            high = mid - 1;
-        }
-        else
-            low = mid + 1;
+        ans.push_back(a[j++]);
+        if (j == a.size())
+            j = 0;
     }
-    // p(ans);
+    map<char, int> mp;
+    for (auto it : ans)
+        mp[it]++;
 
-    string s = "";
-    for (int bb = b; bb > 0; bb--)
+    ans = "";
+    for (auto it : mp)
     {
-        int a = ans;
-        while (a--)
+        for (int i = 0; i < it.second; i++)
         {
-
-            s.push_back('R');
-            r--;
-            if (bb == r)
-            {
-                while (r--)
-                {
-                    s.push_back('B');
-                    s.push_back('R');
-                }
-                cout << s << endl;
-                // cout << count(all(s), 'R') << endl;
-                // cout << count(all(s), 'B') << endl;
-                return;
-            }
+            ans += it.first;
         }
-        s.push_back('B');
     }
-
-    while (r--)
-        s.push_back('R');
-    cout << s << endl;
-    // cout << count(all(s), 'R') << endl;
-    // cout << count(all(s), 'B') << endl;
+    cout << ans << endl;
 }
 
 /*

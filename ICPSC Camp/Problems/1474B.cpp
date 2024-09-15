@@ -190,72 +190,30 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     // return ans;
     return mp;
 }
-bool check(int r, int b, int size)
-{
-    while (b--)
-    {
-        int s = size;
-        while (s--)
-            r--;
-        if (r <= 0)
-            return 1;
-    }
-
-    if (r > size)
-        return 0;
-    return 1;
-}
 
 void solvee()
 {
-    int n, r, b;
-    cin >> n >> r >> b;
-    int low = 0;
-    int high = r;
-    int ans = 0;
-    while (low <= high)
+    int d;
+    cin >> d;
+    int i = 1 + d;
+    vector<int> v;
+    int count = 0;
+
+    while (1)
     {
-        int mid = (low + high) >> 1;
-        if (check(r, b, mid))
+        if (isPrime[i])
         {
-            ans = mid;
-            high = mid - 1;
+            v.push_back(i);
+            count++;
+            i += d;
         }
         else
-            low = mid + 1;
+            i++;
+
+        if (count == 2)
+            break;
     }
-    // p(ans);
-
-    string s = "";
-    for (int bb = b; bb > 0; bb--)
-    {
-        int a = ans;
-        while (a--)
-        {
-
-            s.push_back('R');
-            r--;
-            if (bb == r)
-            {
-                while (r--)
-                {
-                    s.push_back('B');
-                    s.push_back('R');
-                }
-                cout << s << endl;
-                // cout << count(all(s), 'R') << endl;
-                // cout << count(all(s), 'B') << endl;
-                return;
-            }
-        }
-        s.push_back('B');
-    }
-
-    while (r--)
-        s.push_back('R');
-    cout << s << endl;
-    // cout << count(all(s), 'R') << endl;
-    // cout << count(all(s), 'B') << endl;
+    cout << __lcm(v[0], v[1]) << endl;
 }
 
 /*
@@ -276,7 +234,7 @@ signed main()
     // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
     // #endif
 
-    // seiveAlgo();
+    seiveAlgo();
     // BeforePrimeFactorisation()
 
     int t;

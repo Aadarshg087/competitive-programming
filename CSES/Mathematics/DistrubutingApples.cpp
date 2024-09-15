@@ -190,72 +190,76 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     // return ans;
     return mp;
 }
-bool check(int r, int b, int size)
-{
-    while (b--)
-    {
-        int s = size;
-        while (s--)
-            r--;
-        if (r <= 0)
-            return 1;
-    }
 
-    if (r > size)
-        return 0;
-    return 1;
+#define int long long
+
+const int MOD = 1e9 + 7;
+const int N = 1e6;
+
+int mod(int a, int m = MOD)
+{
+    return a % m;
 }
+
+template <class T>
+class Math
+{
+public:
+    vector<T> fact, invfact;
+    Math() {}
+    Math(int n)
+    {
+        fact.resize(n);
+        invfact.resize(n);
+        fact[0] = invfact[0] = 1;
+        for (int i = 1; i < n; i++)
+        {
+            fact[i] = mod(i * fact[i - 1]);
+            invfact[i] = modinv(fact[i]);
+        }
+    }
+    T modinv(T x, T m = MOD) { return expo(x, m - 2, m); }
+    T expo(T base, T exp, T m = MOD)
+    {
+        T res = 1;
+        while (exp)
+        {
+            if (exp & 1)
+                res = mod(res * base, m);
+            base = mod(base * base, m);
+            exp >>= 1;
+        }
+        return res;
+    }
+    T choose(T n, T k)
+    {
+        if (k < 0 || k > n)
+            return 0;
+        T ans = fact[n];
+        ans = mod(ans * invfact[n - k]);
+        ans = mod(ans * invfact[k]);
+        return ans;
+    }
+};
 
 void solvee()
 {
-    int n, r, b;
-    cin >> n >> r >> b;
-    int low = 0;
-    int high = r;
-    int ans = 0;
-    while (low <= high)
-    {
-        int mid = (low + high) >> 1;
-        if (check(r, b, mid))
-        {
-            ans = mid;
-            high = mid - 1;
-        }
-        else
-            low = mid + 1;
-    }
-    // p(ans);
+    /*
+    n chilren
+    m apples
+    m + (n - 1) C (n - 1)
+    m apples are the identical objects
+    n cildren are the containers
 
-    string s = "";
-    for (int bb = b; bb > 0; bb--)
-    {
-        int a = ans;
-        while (a--)
-        {
+    */
+    int n, m;
+    cin >> n >> m;
+    int mod = 1e9 + 7;
 
-            s.push_back('R');
-            r--;
-            if (bb == r)
-            {
-                while (r--)
-                {
-                    s.push_back('B');
-                    s.push_back('R');
-                }
-                cout << s << endl;
-                // cout << count(all(s), 'R') << endl;
-                // cout << count(all(s), 'B') << endl;
-                return;
-            }
-        }
-        s.push_back('B');
-    }
-
-    while (r--)
-        s.push_back('R');
-    cout << s << endl;
-    // cout << count(all(s), 'R') << endl;
-    // cout << count(all(s), 'B') << endl;
+    int firstTerm = m + (n - 1);
+    int secondTerm = (n - 1);
+    Math<int> m(max(m, n));
+    cout << m.choose(firstTerm, secondTerm) << endl;
 }
 
 /*

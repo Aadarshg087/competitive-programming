@@ -190,72 +190,38 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     // return ans;
     return mp;
 }
-bool check(int r, int b, int size)
-{
-    while (b--)
-    {
-        int s = size;
-        while (s--)
-            r--;
-        if (r <= 0)
-            return 1;
-    }
-
-    if (r > size)
-        return 0;
-    return 1;
-}
 
 void solvee()
 {
-    int n, r, b;
-    cin >> n >> r >> b;
-    int low = 0;
-    int high = r;
-    int ans = 0;
-    while (low <= high)
+    int n = 3;
+    int k;
+    cin >> k;
+    int temp1 = -1;
+    int temp2 = -1;
+    int temp3 = 0;
+    k--;
+    while (k >= 26)
     {
-        int mid = (low + high) >> 1;
-        if (check(r, b, mid))
-        {
-            ans = mid;
-            high = mid - 1;
-        }
-        else
-            low = mid + 1;
-    }
-    // p(ans);
+        if (temp1 == -1)
+            temp1 = k % 26;
 
-    string s = "";
-    for (int bb = b; bb > 0; bb--)
-    {
-        int a = ans;
-        while (a--)
-        {
+        if (temp2 == -1)
+            temp2 = k % 26;
 
-            s.push_back('R');
-            r--;
-            if (bb == r)
-            {
-                while (r--)
-                {
-                    s.push_back('B');
-                    s.push_back('R');
-                }
-                cout << s << endl;
-                // cout << count(all(s), 'R') << endl;
-                // cout << count(all(s), 'B') << endl;
-                return;
-            }
-        }
-        s.push_back('B');
+        k /= 26;
+        p(temp1);
+        p(temp2);
     }
 
-    while (r--)
-        s.push_back('R');
-    cout << s << endl;
-    // cout << count(all(s), 'R') << endl;
-    // cout << count(all(s), 'B') << endl;
+    string ans = "";
+    p("a" + temp1);
+    // ans += "a" + k;
+    ans.push_back('a' + k);
+    ans.push_back('a' + temp2);
+    ans.push_back('a' + temp1);
+    // ans += "a" + temp2;
+    // ans += "a" + temp1;
+    cout << ans << endl;
 }
 
 /*

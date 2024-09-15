@@ -190,72 +190,51 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     // return ans;
     return mp;
 }
-bool check(int r, int b, int size)
-{
-    while (b--)
-    {
-        int s = size;
-        while (s--)
-            r--;
-        if (r <= 0)
-            return 1;
-    }
-
-    if (r > size)
-        return 0;
-    return 1;
-}
 
 void solvee()
 {
-    int n, r, b;
-    cin >> n >> r >> b;
-    int low = 0;
-    int high = r;
-    int ans = 0;
-    while (low <= high)
+    int n, k, b, s;
+    cin >> n >> k >> b >> s;
+
+    // boundary condition
+    if ((b * k) > s || ((b * k) + (n * (k - 1))) < s)
     {
-        int mid = (low + high) >> 1;
-        if (check(r, b, mid))
+        cout << -1 << endl;
+        return;
+    }
+    /*
+        b * k + (k - 1)
+
+
+    */
+
+    // --------- s
+    // ----------------- S
+
+    int neededSum = s - (b * k);
+    int temp = min((b * k) + (k - 1), (b * k) + neededSum);
+    s -= temp;
+    // temp is first ele
+    // int ss = s;
+    int nn = n - 1;
+    cout << temp << " ";
+    while (nn--)
+    {
+
+        // s = max(s - k - 1, 0LL);
+        // cout << s << endl;
+        if (s - (k - 1) >= 0)
         {
-            ans = mid;
-            high = mid - 1;
+            cout << (k - 1) << " ";
+            s -= k - 1;
         }
         else
-            low = mid + 1;
-    }
-    // p(ans);
-
-    string s = "";
-    for (int bb = b; bb > 0; bb--)
-    {
-        int a = ans;
-        while (a--)
         {
-
-            s.push_back('R');
-            r--;
-            if (bb == r)
-            {
-                while (r--)
-                {
-                    s.push_back('B');
-                    s.push_back('R');
-                }
-                cout << s << endl;
-                // cout << count(all(s), 'R') << endl;
-                // cout << count(all(s), 'B') << endl;
-                return;
-            }
+            cout << s << " ";
+            s = 0;
         }
-        s.push_back('B');
     }
-
-    while (r--)
-        s.push_back('R');
-    cout << s << endl;
-    // cout << count(all(s), 'R') << endl;
-    // cout << count(all(s), 'B') << endl;
+    cout << endl;
 }
 
 /*

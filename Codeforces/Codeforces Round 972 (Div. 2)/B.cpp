@@ -190,72 +190,40 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     // return ans;
     return mp;
 }
-bool check(int r, int b, int size)
-{
-    while (b--)
-    {
-        int s = size;
-        while (s--)
-            r--;
-        if (r <= 0)
-            return 1;
-    }
-
-    if (r > size)
-        return 0;
-    return 1;
-}
 
 void solvee()
 {
-    int n, r, b;
-    cin >> n >> r >> b;
-    int low = 0;
-    int high = r;
-    int ans = 0;
-    while (low <= high)
+    int n, m, q;
+    cin >> n >> m >> q;
+    vector<int> t(m);
+    for (auto &it : t)
+        cin >> it;
+
+    vector<int> s(q);
+    for (auto &it : s)
+        cin >> it;
+
+    int mini = INT_MAX; // min distance
+    for (int i = 0; i < m; i++)
     {
-        int mid = (low + high) >> 1;
-        if (check(r, b, mid))
-        {
-            ans = mid;
-            high = mid - 1;
-        }
-        else
-            low = mid + 1;
+        mini = min(mini, abs(s[0] - t[i]));
     }
-    // p(ans);
+    sort(all(t));
 
-    string s = "";
-    for (int bb = b; bb > 0; bb--)
+    if (s[0] > t[0] && s[0] < t[1])
     {
-        int a = ans;
-        while (a--)
-        {
-
-            s.push_back('R');
-            r--;
-            if (bb == r)
-            {
-                while (r--)
-                {
-                    s.push_back('B');
-                    s.push_back('R');
-                }
-                cout << s << endl;
-                // cout << count(all(s), 'R') << endl;
-                // cout << count(all(s), 'B') << endl;
-                return;
-            }
-        }
-        s.push_back('B');
+        // int addition = min(abs(diff - t[0]), abs(diff - t[1]));
+        // cout << ans + addition << endl;0
+        int diff = (t[0] + t[1]) / 2;
+        int ans = abs(diff - s[0]);
+        t[0] += ans;
+        t[1] -= ans;
+        int close = min(abs(t[0] - diff), abs(t[1] - diff));
+        cout << ans + close << endl;
+        return;
     }
 
-    while (r--)
-        s.push_back('R');
-    cout << s << endl;
-    // cout << count(all(s), 'R') << endl;
-    // cout << count(all(s), 'B') << endl;
+    cout << mini + min(abs(1 - s[0]), abs(n - s[0])) << endl;
 }
 
 /*

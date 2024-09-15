@@ -190,72 +190,100 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     // return ans;
     return mp;
 }
-bool check(int r, int b, int size)
-{
-    while (b--)
-    {
-        int s = size;
-        while (s--)
-            r--;
-        if (r <= 0)
-            return 1;
-    }
-
-    if (r > size)
-        return 0;
-    return 1;
-}
 
 void solvee()
 {
-    int n, r, b;
-    cin >> n >> r >> b;
-    int low = 0;
-    int high = r;
-    int ans = 0;
-    while (low <= high)
+    int n, m;
+    cin >> n >> m;
+    bool c = 1;
+    vector<vector<int>> v(n);
+    vector<int> first;
+    vector<int> second;
+    bool isZeroFirst = 0;
+    bool isZeroSecond = 0;
+    int countFirst = 0;  // counting neg number in first
+    int countSecond = 0; // neg numbers in second
+    int sum = 0;
+    int minEleFirst = INT_MAX;
+    int minEleSecond = INT_MAX;
+    for (int i = 0; i < n; i++)
     {
-        int mid = (low + high) >> 1;
-        if (check(r, b, mid))
-        {
-            ans = mid;
-            high = mid - 1;
-        }
-        else
-            low = mid + 1;
-    }
-    // p(ans);
-
-    string s = "";
-    for (int bb = b; bb > 0; bb--)
-    {
-        int a = ans;
-        while (a--)
+        for (int j = 0; j < m; j++)
         {
 
-            s.push_back('R');
-            r--;
-            if (bb == r)
+            int temp;
+            cin >> temp;
+            sum += abs(temp);
+            v[i].push_back(temp);
+            if (c)
             {
-                while (r--)
-                {
-                    s.push_back('B');
-                    s.push_back('R');
-                }
-                cout << s << endl;
-                // cout << count(all(s), 'R') << endl;
-                // cout << count(all(s), 'B') << endl;
-                return;
+                minEleFirst = min(minEleFirst, abs(temp));
+                first.push_back(temp);
+                c = 0;
+                if (temp == 0)
+                    isZeroFirst = 1;
+
+                if (temp < 0)
+                    countFirst++;
+            }
+            else
+            {
+                minEleSecond = min(minEleSecond, abs(temp));
+                second.push_back(temp);
+                c = 1;
+                if (temp == 0)
+                    isZeroSecond = 1;
+
+                if (temp < 0)
+                    countSecond++;
             }
         }
-        s.push_back('B');
+        if (i & 1)
+        {
+            c = 1;
+        }
+        else
+            c = 0;
     }
+    // p(first);
+    // p(second);
 
-    while (r--)
-        s.push_back('R');
-    cout << s << endl;
-    // cout << count(all(s), 'R') << endl;
-    // cout << count(all(s), 'B') << endl;
+    // p(sum);
+    int ans1 = 0, ans2 = 0;
+
+    if ((countFirst & 1))
+    {
+        if (!isZeroFirst)
+        {
+
+            sum -= 2 * minEleFirst;
+
+            // sort(all(first));
+
+            // for (int i = 1; i < first.size(); i++)
+            // {
+            //     ans1 += abs(first[i]);
+            // }
+            // ans1 += first[0];
+        }
+    }
+    if ((countSecond & 1))
+    {
+        if (!isZeroSecond)
+        {
+            // p(minEleSecond);
+            // sum -= 2 * minEleSecond;
+
+            // sort(all(second));
+            // for (int i = 1; i < second.size(); i++)
+            // {
+            //     ans2 += abs(second[i]);
+            // }
+            // ans2 += second[0];
+        }
+    }
+    // cout << sum << endl;
+    cout << ans1 + ans2 << endl;
 }
 
 /*
@@ -272,9 +300,9 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // #ifndef ONLINE_JUDGE
-    // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
-    // #endif
+#ifndef ONLINE_JUDGE
+    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+#endif
 
     // seiveAlgo();
     // BeforePrimeFactorisation()
