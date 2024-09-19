@@ -121,6 +121,8 @@ void seiveAlgo()
 int BinaryExpoRecur(int a, int p)
 {
     const int mod = 1e9 + 7;
+    if (p == 0)
+        return 1;
     if (p == 1)
         return a;
     int ans = BinaryExpoRecur(a, p / 2);
@@ -193,40 +195,46 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n, m;
-    cin >> n >> m;
-    vector<vector<int>> v(n);
-    int count = 0;
-    bool isZero = 0;
-    int close0 = INT_MAX;
-    int sum = 0;
-    for (int i = 0; i < n; i++)
+    int n;
+    cin >> n;
+    vector<int> v(n);
+    for (int i = 0; i < n; ++i)
     {
-        for (int j = 0; j < m; j++)
-        {
-            int temp;
-            cin >> temp;
-            sum += abs(temp);
-            close0 = min(close0, abs(temp - 0));
-            v[i].push_back(temp);
-            if (temp == 0)
-                isZero = 1;
-            if (temp < 0)
-            {
-                count++;
-            }
-        }
+        cin >> v[i];
     }
 
-    if ((count & 1))
+    // not my code from below
+    vector<int> pre(n, v[0]); // kinda good optimization
+    for (int i = 1; i < n; ++i)
     {
-        if (!isZero)
+        pre[i] = v[i] + pre[i - 1];
+    }
+
+    vector<int> p;
+    for (int i = 1; i <= n; ++i)
+    {
+        if (!(n % i))
         {
-            sum -= close0;
-            sum -= close0;
+            p.push_back(i);
+            p.push_back(n / i);
         }
     }
-    cout << sum << endl;
+    int ans = 0;
+    for (int i = 0; i < p.size(); ++i)
+    {
+        int x = p[i];
+        vector<int> z;
+        for (int i = 0; i + x - 1 < n; i += x)
+        {
+            int pp = pre[i + x - 1];
+            if (i > 0)
+                pp -= pre[i - 1];
+            z.push_back(pp);
+        }
+        // look how he did not use max and min variables, cause you have to calc those values
+        ans = max(ans, *max_element(all(z)) - *min_element(all(z)));
+    }
+    cout << ans << endl;
 }
 
 /*
@@ -243,9 +251,9 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-#ifndef ONLINE_JUDGE
-    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
-#endif
+    // #ifndef ONLINE_JUDGE
+    // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+    // #endif
 
     // seiveAlgo();
     // BeforePrimeFactorisation()

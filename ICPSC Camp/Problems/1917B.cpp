@@ -193,40 +193,21 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n, m;
-    cin >> n >> m;
-    vector<vector<int>> v(n);
-    int count = 0;
-    bool isZero = 0;
-    int close0 = INT_MAX;
-    int sum = 0;
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+    set<char> st;
+    int ans = 0;
     for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < m; j++)
+        if (st.find(s[i]) == st.end())
         {
-            int temp;
-            cin >> temp;
-            sum += abs(temp);
-            close0 = min(close0, abs(temp - 0));
-            v[i].push_back(temp);
-            if (temp == 0)
-                isZero = 1;
-            if (temp < 0)
-            {
-                count++;
-            }
+            ans += n - i;
+            st.insert(s[i]);
         }
     }
-
-    if ((count & 1))
-    {
-        if (!isZero)
-        {
-            sum -= close0;
-            sum -= close0;
-        }
-    }
-    cout << sum << endl;
+    cout << ans << endl;
 }
 
 /*
@@ -243,9 +224,9 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-#ifndef ONLINE_JUDGE
-    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
-#endif
+    // #ifndef ONLINE_JUDGE
+    // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+    // #endif
 
     // seiveAlgo();
     // BeforePrimeFactorisation()

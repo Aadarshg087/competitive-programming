@@ -121,6 +121,8 @@ void seiveAlgo()
 int BinaryExpoRecur(int a, int p)
 {
     const int mod = 1e9 + 7;
+    if (p == 0)
+        return 1;
     if (p == 1)
         return a;
     int ans = BinaryExpoRecur(a, p / 2);
@@ -193,40 +195,75 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n, m;
-    cin >> n >> m;
-    vector<vector<int>> v(n);
-    int count = 0;
-    bool isZero = 0;
-    int close0 = INT_MAX;
-    int sum = 0;
-    for (int i = 0; i < n; i++)
+    int n;
+    cin >> n;
+    int half = ((n * 2) + 1) / 2;
+    int first = half;
+    int second = half;
+    for (int row = 0; row <= n; row++)
     {
-        for (int j = 0; j < m; j++)
+        int ele = 0;
+        int mid = (first + second) / 2;
+        for (int i = 0; i <= 2 * n + 1; i++)
         {
-            int temp;
-            cin >> temp;
-            sum += abs(temp);
-            close0 = min(close0, abs(temp - 0));
-            v[i].push_back(temp);
-            if (temp == 0)
-                isZero = 1;
-            if (temp < 0)
+            if (i >= first && i <= mid)
             {
-                count++;
+                if (second - first == 0)
+                    cout << ele;
+                else if (i == mid)
+                    cout << ele-- << " ";
+                else
+                    cout << ele++ << " ";
             }
+            else if (i > mid && i <= second)
+            {
+                if (i == second)
+                    cout << ele--;
+                else
+                    cout << ele-- << " ";
+            }
+            else if (i < first)
+                cout << " " << " ";
         }
+        cout << endl;
+
+        first -= 1;
+        second += 1;
     }
 
-    if ((count & 1))
+    first += 2;
+    second -= 2;
+
+    for (int row = 0; row <= n - 1; row++)
     {
-        if (!isZero)
+        int ele = 0;
+        int mid = (first + second) / 2;
+        for (int i = 0; i <= 2 * n + 1; i++)
         {
-            sum -= close0;
-            sum -= close0;
+            if (i >= first && i <= mid)
+            {
+                if (second - first == 0)
+                    cout << ele;
+                else if (i == mid)
+                    cout << ele-- << " ";
+                else
+                    cout << ele++ << " ";
+            }
+            else if (i > mid && i <= second)
+            {
+                if (ele == second)
+                    cout << ele--;
+                else
+                    cout << ele-- << " ";
+            }
+            else if (i < first)
+                cout << " " << " ";
         }
+        cout << endl;
+
+        first += 1;
+        second -= 1;
     }
-    cout << sum << endl;
 }
 
 /*
@@ -243,16 +280,16 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-#ifndef ONLINE_JUDGE
-    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
-#endif
+    // #ifndef ONLINE_JUDGE
+    // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+    // #endif
 
     // seiveAlgo();
     // BeforePrimeFactorisation()
 
-    int t;
-    cin >> t;
-    while (t--)
-        solvee();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    solvee();
     return 0;
 }

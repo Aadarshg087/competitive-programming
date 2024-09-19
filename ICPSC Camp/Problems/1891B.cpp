@@ -121,6 +121,8 @@ void seiveAlgo()
 int BinaryExpoRecur(int a, int p)
 {
     const int mod = 1e9 + 7;
+    if (p == 0)
+        return 1;
     if (p == 1)
         return a;
     int ans = BinaryExpoRecur(a, p / 2);
@@ -193,40 +195,36 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n, m;
-    cin >> n >> m;
-    vector<vector<int>> v(n);
-    int count = 0;
-    bool isZero = 0;
-    int close0 = INT_MAX;
-    int sum = 0;
+    int n, q;
+    cin >> n >> q;
+    vector<int> v(n);
     for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < m; j++)
-        {
-            int temp;
-            cin >> temp;
-            sum += abs(temp);
-            close0 = min(close0, abs(temp - 0));
-            v[i].push_back(temp);
-            if (temp == 0)
-                isZero = 1;
-            if (temp < 0)
-            {
-                count++;
-            }
-        }
+        cin >> v[i];
     }
 
-    if ((count & 1))
+    vector<int> pp(q);
+    for (int i = 0; i < q; i++)
     {
-        if (!isZero)
+        cin >> pp[i];
+    }
+    int mini = 31;
+    for (int i = 0; i < q; i++)
+    {
+        if (pp[i] < mini)
         {
-            sum -= close0;
-            sum -= close0;
+            for (int j = 0; j < n; j++)
+            {
+                int num = (1LL << (pp[i] - 1));
+                if ((v[j] % (1LL << pp[i])) == 0)
+                    v[j] += (num);
+            }
+            mini = pp[i];
         }
     }
-    cout << sum << endl;
+    for (int i : v)
+        cout << i << " ";
+    cout << endl;
 }
 
 /*
@@ -243,9 +241,9 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-#ifndef ONLINE_JUDGE
-    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
-#endif
+    // #ifndef ONLINE_JUDGE
+    // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+    // #endif
 
     // seiveAlgo();
     // BeforePrimeFactorisation()

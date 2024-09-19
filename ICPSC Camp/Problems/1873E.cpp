@@ -121,6 +121,8 @@ void seiveAlgo()
 int BinaryExpoRecur(int a, int p)
 {
     const int mod = 1e9 + 7;
+    if (p == 0)
+        return 1;
     if (p == 1)
         return a;
     int ans = BinaryExpoRecur(a, p / 2);
@@ -191,42 +193,43 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     return mp;
 }
 
-void solvee()
+bool check(int h, vector<int> &v, int x)
 {
-    int n, m;
-    cin >> n >> m;
-    vector<vector<int>> v(n);
-    int count = 0;
-    bool isZero = 0;
-    int close0 = INT_MAX;
-    int sum = 0;
+    // can arrange water with height h in <= x units of water
+    int water = 0;
+    int n = v.size();
+    // cout << h << " ";
     for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < m; j++)
-        {
-            int temp;
-            cin >> temp;
-            sum += abs(temp);
-            close0 = min(close0, abs(temp - 0));
-            v[i].push_back(temp);
-            if (temp == 0)
-                isZero = 1;
-            if (temp < 0)
-            {
-                count++;
-            }
-        }
+        water += (v[i] < h ? h - v[i] : 0LL);
     }
+    // p(water);
+    return water <= x;
+}
 
-    if ((count & 1))
+void solvee()
+{
+    int n, x;
+    cin >> n >> x;
+    vector<int> v(n);
+    for (int i = 0; i < n; i++)
+        cin >> v[i];
+
+    int low = 0;
+    int high = 3e9;
+    int ans = 0;
+    while (low <= high)
     {
-        if (!isZero)
+        int mid = (1LL * low + high) >> 1;
+        if (check(mid, v, x))
         {
-            sum -= close0;
-            sum -= close0;
+            ans = mid;
+            low = mid + 1;
         }
+        else
+            high = mid - 1;
     }
-    cout << sum << endl;
+    cout << ans << endl;
 }
 
 /*
@@ -243,9 +246,9 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-#ifndef ONLINE_JUDGE
-    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
-#endif
+    // #ifndef ONLINE_JUDGE
+    // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+    // #endif
 
     // seiveAlgo();
     // BeforePrimeFactorisation()

@@ -121,6 +121,8 @@ void seiveAlgo()
 int BinaryExpoRecur(int a, int p)
 {
     const int mod = 1e9 + 7;
+    if (p == 0)
+        return 1;
     if (p == 1)
         return a;
     int ans = BinaryExpoRecur(a, p / 2);
@@ -193,40 +195,45 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n, m;
-    cin >> n >> m;
-    vector<vector<int>> v(n);
-    int count = 0;
-    bool isZero = 0;
-    int close0 = INT_MAX;
-    int sum = 0;
+    int n;
+    cin >> n;
+    vector<int> v(n);
     for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < m; j++)
-        {
-            int temp;
-            cin >> temp;
-            sum += abs(temp);
-            close0 = min(close0, abs(temp - 0));
-            v[i].push_back(temp);
-            if (temp == 0)
-                isZero = 1;
-            if (temp < 0)
-            {
-                count++;
-            }
-        }
+        cin >> v[i];
     }
 
-    if ((count & 1))
+    int sum = 0;
+    int ans = INT_MIN;
+    int currParity = 1; // 1 means odd and 0 means even
+    for (int i = 0; i < n; i++)
     {
-        if (!isZero)
+        if (i == 0)
         {
-            sum -= close0;
-            sum -= close0;
+            currParity = (v[i] & 1);
+            sum += v[i];
+            ans = max(ans, sum);
+            if (sum < 0)
+                sum = 0;
+        }
+        else if ((v[i] & 1) != currParity)
+        {
+            sum += v[i];
+            currParity = (v[i] & 1);
+            ans = max(ans, sum);
+            if (sum < 0)
+                sum = 0;
+        }
+        else
+        {
+            currParity = (v[i] & 1);
+            sum = v[i];
+            ans = max(ans, sum);
+            if (sum < 0)
+                sum = 0;
         }
     }
-    cout << sum << endl;
+    cout << ans << endl;
 }
 
 /*
@@ -243,9 +250,9 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-#ifndef ONLINE_JUDGE
-    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
-#endif
+    // #ifndef ONLINE_JUDGE
+    // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+    // #endif
 
     // seiveAlgo();
     // BeforePrimeFactorisation()

@@ -191,42 +191,44 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     return mp;
 }
 
-void solvee()
+bool check(vector<int> ans)
 {
-    int n, m;
-    cin >> n >> m;
-    vector<vector<int>> v(n);
-    int count = 0;
-    bool isZero = 0;
-    int close0 = INT_MAX;
-    int sum = 0;
+
+    int n = ans.size();
     for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < m; j++)
+        for (int j = i + 1; j < n; j++)
         {
-            int temp;
-            cin >> temp;
-            sum += abs(temp);
-            close0 = min(close0, abs(temp - 0));
-            v[i].push_back(temp);
-            if (temp == 0)
-                isZero = 1;
-            if (temp < 0)
+            if (j - ans[j] == i - ans[i])
             {
-                count++;
+                return false;
             }
         }
     }
+    return true;
+}
 
-    if ((count & 1))
+void solvee()
+{
+    int n;
+    cin >> n;
+    vector<int> v(n);
+    vector<int> ans(n);
+    for (int i = 0; i < n; i++)
     {
-        if (!isZero)
-        {
-            sum -= close0;
-            sum -= close0;
-        }
+        cin >> v[i];
     }
-    cout << sum << endl;
+
+    sort(all(v));
+    ans = v;
+    reverse(all(ans));
+    for (auto it : ans)
+        cout << it << " ";
+    cout << endl;
+    // if (check(ans))
+    //     cout << "Fine" << endl;
+    // else
+    //     cout << "Not Fine" << endl;
 }
 
 /*
@@ -243,9 +245,9 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-#ifndef ONLINE_JUDGE
-    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
-#endif
+    // #ifndef ONLINE_JUDGE
+    // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+    // #endif
 
     // seiveAlgo();
     // BeforePrimeFactorisation()

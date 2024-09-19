@@ -121,6 +121,8 @@ void seiveAlgo()
 int BinaryExpoRecur(int a, int p)
 {
     const int mod = 1e9 + 7;
+    if (p == 0)
+        return 1;
     if (p == 1)
         return a;
     int ans = BinaryExpoRecur(a, p / 2);
@@ -191,42 +193,55 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     return mp;
 }
 
+long fact(int n)
+{
+    if (n == 0)
+        return 1;
+    long res = 1;
+    for (int i = 2; i <= n; i++)
+        res = res * i;
+    return res;
+}
+
+long nCr(int n, int r)
+{
+    return fact(n) / (fact(r) * fact(n - r));
+}
+
 void solvee()
 {
-    int n, m;
-    cin >> n >> m;
-    vector<vector<int>> v(n);
-    int count = 0;
-    bool isZero = 0;
-    int close0 = INT_MAX;
-    int sum = 0;
+    int n;
+    cin >> n;
+    vector<pair<int, int>> v(n);
     for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < m; j++)
-        {
-            int temp;
-            cin >> temp;
-            sum += abs(temp);
-            close0 = min(close0, abs(temp - 0));
-            v[i].push_back(temp);
-            if (temp == 0)
-                isZero = 1;
-            if (temp < 0)
-            {
-                count++;
-            }
-        }
+        int temp;
+        cin >> temp;
+        v[i] = {temp, i};
     }
-
-    if ((count & 1))
+    // vector<int> vv = v;
+    sort(all(v));
+    vector<int> pre(n, v[0].first); // building this to get sum in O(1)
+    for (int i = 1; i < n; i++)
     {
-        if (!isZero)
-        {
-            sum -= close0;
-            sum -= close0;
-        }
+        pre[i] = pre[i - 1] + v[i].first;
     }
-    cout << sum << endl;
+    vector<int> ans(n, 0);
+    // p(v);
+    // p(pre);
+    ans[v[n - 1].second] = n - 1;
+    for (int i = n - 2; i >= 0; i--)
+    {
+        if (pre[i] >= v[i + 1].first)
+        {
+            ans[v[i].second] = ans[v[i + 1].second];
+        }
+        else
+            ans[v[i].second] = i;
+    }
+    for (int i : ans)
+        cout << i << " ";
+    cout << endl;
 }
 
 /*
@@ -243,9 +258,9 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-#ifndef ONLINE_JUDGE
-    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
-#endif
+    // #ifndef ONLINE_JUDGE
+    // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+    // #endif
 
     // seiveAlgo();
     // BeforePrimeFactorisation()

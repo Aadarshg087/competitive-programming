@@ -6,6 +6,8 @@ using namespace std;
 #define endl '\n'
 #define all(x) (x).begin(), (x).end()
 #define INF 1e18
+#define ff first
+#define ss second
 
 // ---------------------- Debug Functions -------------------------
 #define p(x)            \
@@ -25,6 +27,8 @@ template <class T>
 void _print(set<T> v);
 template <class T, class V>
 void _print(map<T, V> v);
+template <class T, class V>
+void _print(multimap<T, V> v);
 template <class T>
 void _print(multiset<T> v);
 template <class T, class V>
@@ -80,6 +84,17 @@ void _print(map<T, V> v)
     }
     cout << "]";
 }
+template <class T, class V>
+void _print(multimap<T, V> v)
+{
+    cout << "[ ";
+    for (auto i : v)
+    {
+        _print(i);
+        cout << " ";
+    }
+    cout << "]";
+}
 
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 int getRandomNumber(int l, int r) { return uniform_int_distribution<int>(l, r)(rng); }
@@ -106,6 +121,8 @@ void seiveAlgo()
 int BinaryExpoRecur(int a, int p)
 {
     const int mod = 1e9 + 7;
+    if (p == 0)
+        return 1;
     if (p == 1)
         return a;
     int ans = BinaryExpoRecur(a, p / 2);
@@ -141,21 +158,39 @@ int mex(vector<int> &v)
     return num;
 }
 
-bool isValid(string s)
+vector<int> spf(100100 + 7);
+void BeforePrimeFactorisation()
 {
+    int N = 100100 + 7;
+    for (int i = 0; i < N; i++)
+        spf[i] = i;
 
-    int n = s.size();
-    stack<char> st;
-    for (int i = 0; i < n; i++)
+    for (int i = 2; i < N; i++)
     {
-        if (st.empty() && s[i] == ')')
-            return false;
-        else if (s[i] == '(')
-            st.push(s[i]);
-        else if (s[i] == ')')
-            st.pop();
+        for (int j = 2 * i; j < N; j += i)
+        {
+            if (spf[j] == j)
+                spf[j] = i;
+        }
     }
-    return st.empty();
+}
+map<int, int> primeFactorisation(int n) // run Pre-requisite function
+{
+    // vector<int> ans; // for unique prime factors
+    map<int, int> mp;
+
+    while (n > 1)
+    {
+        int x = spf[n];
+        while (n % x == 0)
+        {
+            mp[x]++;
+            n /= x;
+        }
+        // ans.push_back(x);
+    }
+    // return ans;
+    return mp;
 }
 
 void solvee()
@@ -163,43 +198,26 @@ void solvee()
     string s;
     cin >> s;
     int n = s.size();
-    if (n & 1)
+    if ((n & 1) || s[0] == ')')
     {
         cout << "NO" << endl;
         return;
     }
-    int open = count(all(s), '(');
-    open = n / 2 - open;
-    if (open < 0)
-        open = 0;
+    /*
+    // first filter the string using set
+    // check for the possible outpcomdes
+     */
 
-    int mid = n / 2 - 1;
-    // p(s);
+    set<int> st;
+    string temp = "";
+    bool lastOpen = 0;
     for (int i = 0; i < n; i++)
     {
-        if (i <= mid)
+        if (s[i] == '(')
         {
-            if (s[i] == '?' && open)
-            {
-                s[i] = '(';
-                open--;
-            }
-            else if (s[i] == '?')
-                s[i] = ')';
-        }
-        else
-        {
-            if (s[i] == '?')
-                s[i] = ')';
+            lastOpen = 1;
         }
     }
-    // if (s[0] == ')' || s[n - 1] == '(')
-    // {
-    //     cout << "NO" << endl;
-    //     return;
-    // }
-    // p(s);
-    cout << (isValid(s) ? "YES" : "NO") << endl;
 }
 
 /*
@@ -216,11 +234,13 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // solvee();
-    // seiveAlgo();
 #ifndef ONLINE_JUDGE
     freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
 #endif
+
+    // seiveAlgo();
+    // BeforePrimeFactorisation()
+
     int t;
     cin >> t;
     while (t--)

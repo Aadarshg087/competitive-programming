@@ -121,6 +121,8 @@ void seiveAlgo()
 int BinaryExpoRecur(int a, int p)
 {
     const int mod = 1e9 + 7;
+    if (p == 0)
+        return 1;
     if (p == 1)
         return a;
     int ans = BinaryExpoRecur(a, p / 2);
@@ -190,43 +192,42 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     // return ans;
     return mp;
 }
+int count(int ind, int ii, vector<string> &v)
+{
+    string s1 = v[ii];
+    string s2 = v[ind];
+    int count = 0;
+    for (int i = 0; i < s1.size(); i++)
+    {
+        if (s1[i] != s2[i])
+            count++;
+    }
+
+    return count;
+}
 
 void solvee()
 {
     int n, m;
     cin >> n >> m;
-    vector<vector<int>> v(n);
-    int count = 0;
-    bool isZero = 0;
-    int close0 = INT_MAX;
-    int sum = 0;
-    for (int i = 0; i < n; i++)
+
+    int mod = 1e9 + 1;
+    vector<string> v(n);
+    for (auto &it : v)
+        cin >> it;
+
+    int ans = 1;
+    for (int i = 0; i < m; i++)
     {
-        for (int j = 0; j < m; j++)
+        set<char> st;
+        for (int j = 0; j < n; j++)
         {
-            int temp;
-            cin >> temp;
-            sum += abs(temp);
-            close0 = min(close0, abs(temp - 0));
-            v[i].push_back(temp);
-            if (temp == 0)
-                isZero = 1;
-            if (temp < 0)
-            {
-                count++;
-            }
+            st.insert(v[j][i]);
         }
+        ans = (ans * (int)st.size()) % mod;
     }
 
-    if ((count & 1))
-    {
-        if (!isZero)
-        {
-            sum -= close0;
-            sum -= close0;
-        }
-    }
-    cout << sum << endl;
+    cout << ans << endl;
 }
 
 /*
@@ -243,16 +244,16 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-#ifndef ONLINE_JUDGE
-    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
-#endif
+    // #ifndef ONLINE_JUDGE
+    // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+    // #endif
 
     // seiveAlgo();
     // BeforePrimeFactorisation()
 
-    int t;
-    cin >> t;
-    while (t--)
-        solvee();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    solvee();
     return 0;
 }

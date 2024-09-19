@@ -193,40 +193,31 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n, m;
-    cin >> n >> m;
-    vector<vector<int>> v(n);
-    int count = 0;
-    bool isZero = 0;
-    int close0 = INT_MAX;
-    int sum = 0;
-    for (int i = 0; i < n; i++)
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+
+    int b = 0;
+    int ans = 0;
+    for (int i = 0; i < s.size(); i++)
     {
-        for (int j = 0; j < m; j++)
+        if (s[i] == '(')
         {
-            int temp;
-            cin >> temp;
-            sum += abs(temp);
-            close0 = min(close0, abs(temp - 0));
-            v[i].push_back(temp);
-            if (temp == 0)
-                isZero = 1;
-            if (temp < 0)
+            b++;
+        }
+        else if (s[i] == ')')
+        {
+            if (b > 0)
+                b--;
+            else
             {
-                count++;
+                // we have to fix these brackets
+                ans++;
             }
         }
     }
-
-    if ((count & 1))
-    {
-        if (!isZero)
-        {
-            sum -= close0;
-            sum -= close0;
-        }
-    }
-    cout << sum << endl;
+    cout << ans << endl;
 }
 
 /*

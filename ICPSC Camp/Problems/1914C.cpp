@@ -193,37 +193,75 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n, m;
-    cin >> n >> m;
-    vector<vector<int>> v(n);
-    int count = 0;
-    bool isZero = 0;
-    int close0 = INT_MAX;
-    int sum = 0;
+    int n, k;
+    cin >> n >> k;
+    vector<int> a(n); // first time experirnce points
     for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < m; j++)
+        cin >> a[i];
+    }
+    vector<int> b(n);
+    int maxi = *max_element(all(a));
+    int maxInd = 0;
+    bool c = 0;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> b[i];
+        if (b[i] > maxi)
         {
-            int temp;
-            cin >> temp;
-            sum += abs(temp);
-            close0 = min(close0, abs(temp - 0));
-            v[i].push_back(temp);
-            if (temp == 0)
-                isZero = 1;
-            if (temp < 0)
-            {
-                count++;
-            }
+            maxi = b[i];
+            maxInd = i;
+            c = 1;
         }
     }
+    sort(all(b));
+    reverse(all(b));
 
-    if ((count & 1))
+    int sum = 0;
+    if (!c)
     {
-        if (!isZero)
+        int i = 0;
+        while (k && i < n)
         {
-            sum -= close0;
-            sum -= close0;
+            sum += a[i++];
+            k--;
+        }
+        i = 0;
+        while (k--)
+        {
+            sum += b[i];
+        }
+        cout << sum << endl;
+        return;
+    }
+    else // there is some better in second exp
+    {
+        int i = 0;
+        bool c = 1;
+        while (k && i < n)
+        {
+            if (i == maxInd)
+            {
+                if (c == 1)
+                {
+                    sum += a[i];
+                    c = 0;
+                    k--;
+                }
+                else
+                {
+                    sum += b[i];
+                    k--;
+                }
+                continue;
+            }
+            sum += a[i++];
+            k--;
+        }
+        i = 0;
+        while (k--)
+        {
+            sum += b[i];
         }
     }
     cout << sum << endl;
@@ -243,9 +281,9 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-#ifndef ONLINE_JUDGE
-    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
-#endif
+    // #ifndef ONLINE_JUDGE
+    // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+    // #endif
 
     // seiveAlgo();
     // BeforePrimeFactorisation()

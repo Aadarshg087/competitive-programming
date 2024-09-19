@@ -193,40 +193,53 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n, m;
-    cin >> n >> m;
-    vector<vector<int>> v(n);
-    int count = 0;
-    bool isZero = 0;
-    int close0 = INT_MAX;
-    int sum = 0;
+    int n;
+    cin >> n;
+    vector<int> v(n);
+    multimap<int, int, greater<int>> mp;
     for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < m; j++)
+        cin >> v[i];
+        mp.insert({v[i], i + 1});
+    }
+    int mini = 0;
+    int maxi = 0;
+    vector<int> ans;
+    ans.push_back(0);
+    for (int i = 0; i < n; i++)
+    {
+        ans.push_back(v[i]);
+    }
+    vector<int> vv = v;
+    sort(all(v));
+    reverse(all(v));
+    bool c = 1;
+    for (auto it : mp)
+    {
+        if (c)
         {
-            int temp;
-            cin >> temp;
-            sum += abs(temp);
-            close0 = min(close0, abs(temp - 0));
-            v[i].push_back(temp);
-            if (temp == 0)
-                isZero = 1;
-            if (temp < 0)
-            {
-                count++;
-            }
+            ans[it.second] = maxi + 1;
+            maxi = maxi + 1;
+            c = 0;
+        }
+        else
+        {
+            ans[it.second] = mini - 1;
+            mini = mini - 1;
+            c = 1;
         }
     }
-
-    if ((count & 1))
+    int sum = 0;
+    for (int i = 1; i < ans.size(); i++)
     {
-        if (!isZero)
-        {
-            sum -= close0;
-            sum -= close0;
-        }
+        sum += 2 * abs(ans[i]) * vv[i - 1]; // 4 + 4 + 6
+        // cout << abs(ans[i]) << " " << vv[i - 1] << endl;
     }
     cout << sum << endl;
+
+    for (int i = 0; i < ans.size(); i++)
+        cout << ans[i] << " ";
+    cout << endl;
 }
 
 /*
@@ -243,9 +256,9 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-#ifndef ONLINE_JUDGE
-    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
-#endif
+    // #ifndef ONLINE_JUDGE
+    // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+    // #endif
 
     // seiveAlgo();
     // BeforePrimeFactorisation()

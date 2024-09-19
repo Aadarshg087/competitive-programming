@@ -121,6 +121,8 @@ void seiveAlgo()
 int BinaryExpoRecur(int a, int p)
 {
     const int mod = 1e9 + 7;
+    if (p == 0)
+        return 1;
     if (p == 1)
         return a;
     int ans = BinaryExpoRecur(a, p / 2);
@@ -193,40 +195,60 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n, m;
-    cin >> n >> m;
-    vector<vector<int>> v(n);
-    int count = 0;
-    bool isZero = 0;
-    int close0 = INT_MAX;
-    int sum = 0;
+    int n, k, a, b;
+    cin >> n >> k >> a >> b;
+    vector<pair<int, int>> v(n);
     for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < m; j++)
+        int temp1, temp2;
+        cin >> temp1 >> temp2;
+        v[i] = {temp1, temp2};
+    }
+    --a, --b;
+
+    int mini = 5e9;
+    pair<int, int> dest = v[b];
+    pair<int, int> bestPointDest = v[0]; // contains best point in first k cities for b
+
+    // best for to get to a
+    int mini2 = 5e9;
+    pair<int, int> source = v[a];
+    pair<int, int> bestPointSource = v[0]; // contain bestpoint in first k cities for a
+    for (int i = 0; i < k; i++)
+    {
+        int m = abs(v[i].first - dest.first) + abs(v[i].second - dest.second);
+        if (m < mini) // finding the best point to get to b (from k cities)
         {
-            int temp;
-            cin >> temp;
-            sum += abs(temp);
-            close0 = min(close0, abs(temp - 0));
-            v[i].push_back(temp);
-            if (temp == 0)
-                isZero = 1;
-            if (temp < 0)
-            {
-                count++;
-            }
+            bestPointDest = v[i];
+            mini = m;
+        }
+
+        int mm = abs(v[i].first - source.first) + abs(v[i].second - source.second);
+        if (mm < mini2) // finding the best point to get to a (from k cities)
+        {
+            bestPointSource = v[i];
+            mini2 = mm;
         }
     }
 
-    if ((count & 1))
+    if (a < k && b < k)
     {
-        if (!isZero)
-        {
-            sum -= close0;
-            sum -= close0;
-        }
+        cout << 0 << endl;
     }
-    cout << sum << endl;
+    else if (a < k && b >= k)
+    {
+        cout << mini << endl;
+    }
+    else if (b < k && a >= k)
+    {
+        cout << mini2 << endl;
+    }
+    else if (a >= k && b >= k)
+    {
+        int direct = abs(source.first - dest.first) + abs(source.second - dest.second);
+        int ans = min(mini + mini2, direct);
+        cout << ans << endl;
+    }
 }
 
 /*
@@ -243,9 +265,9 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-#ifndef ONLINE_JUDGE
-    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
-#endif
+    // #ifndef ONLINE_JUDGE
+    // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+    // #endif
 
     // seiveAlgo();
     // BeforePrimeFactorisation()
