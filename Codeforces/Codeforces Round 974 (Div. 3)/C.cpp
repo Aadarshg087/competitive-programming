@@ -193,47 +193,56 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     return mp;
 }
 
-void solvee()
+bool check(int x, vector<int> &v)
 {
-    int n, k;
-    cin >> n >> k;
-    vector<int> a(n);
-    vector<int> b(n);
+    int n = v.size();
+    v[n - 1] += x;
+    int sum = accumulate(all(v), 0LL);
+    double avg = (double)sum / n;
+    // p(avg);
+    // p(v);
+    int unhappy = 0;
     for (int i = 0; i < n; i++)
     {
-        cin >> a[i];
-    }
-
-    for (int i = 0; i < n; i++)
-    {
-        cin >> b[i];
-    }
-    vector<int> pre(n, a[0]);
-    for (int i = 1; i < n; i++)
-        pre[i] = pre[i - 1] + a[i];
-
-    int currMax = 0;
-    int i = 0;
-    int kk = k;
-    int ans = 0;
-    while (kk--)
-    {
-        if (i == n - 1)
+        if (v[i] < avg / 2)
         {
-            int curr = pre[n - 1];
-            int rem = k - (i + 1);
-            currMax = max(currMax, b[i]);
-            int other = (rem * currMax);
-            ans = max(ans, curr + other);
-            break;
+            unhappy++;
         }
 
-        int curr = pre[i];
-        int rem = k - (i + 1);
-        currMax = max(currMax, b[i]);
-        int other = rem * currMax;
-        ans = max(ans, curr + other);
-        i++;
+        // if (unhappy > n / 2)
+        // {
+        //     v[n - 1] -= x;
+        //     return 1;
+        // }
+    }
+    v[n - 1] -= x;
+    return unhappy > n / 2;
+}
+
+void solvee()
+{
+    int n;
+    cin >> n;
+    vector<int> v(n);
+    for (int i = 0; i < n; i++)
+    {
+        cin >> v[i];
+    }
+    sort(all(v));
+    int low = 0;
+    int high = 1e18; // gold we need to add
+    int ans = -1;
+    while (low <= high)
+    {
+        int mid = (1LL * low + high) >> 1;
+        // p(mid);
+        if (check(mid, v))
+        {
+            ans = mid;
+            high = mid - 1;
+        }
+        else
+            low = mid + 1;
     }
     cout << ans << endl;
 }

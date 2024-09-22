@@ -193,47 +193,43 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     return mp;
 }
 
+bool check(int w, vector<int> &v, int c)
+{
+    int n = v.size();
+    int ans = 0;
+    for (int i = 0; i < n; i++)
+    {
+        int temp = v[i] + (2 * w);
+        ans += temp * temp;
+        if (ans >= c)
+            return 1;
+    }
+    return ans >= c;
+}
+
 void solvee()
 {
-    int n, k;
-    cin >> n >> k;
-    vector<int> a(n);
-    vector<int> b(n);
+    int n, c;
+    cin >> n >> c;
+    vector<int> v(n);
     for (int i = 0; i < n; i++)
     {
-        cin >> a[i];
+        cin >> v[i];
     }
 
-    for (int i = 0; i < n; i++)
-    {
-        cin >> b[i];
-    }
-    vector<int> pre(n, a[0]);
-    for (int i = 1; i < n; i++)
-        pre[i] = pre[i - 1] + a[i];
-
-    int currMax = 0;
-    int i = 0;
-    int kk = k;
+    int low = 0;
+    int high = sqrt(c);
     int ans = 0;
-    while (kk--)
+    while (low <= high)
     {
-        if (i == n - 1)
+        int mid = (1LL * low + high) >> 1;
+        if (check(mid, v, c))
         {
-            int curr = pre[n - 1];
-            int rem = k - (i + 1);
-            currMax = max(currMax, b[i]);
-            int other = (rem * currMax);
-            ans = max(ans, curr + other);
-            break;
+            ans = mid;
+            high = mid - 1;
         }
-
-        int curr = pre[i];
-        int rem = k - (i + 1);
-        currMax = max(currMax, b[i]);
-        int other = rem * currMax;
-        ans = max(ans, curr + other);
-        i++;
+        else
+            low = mid + 1;
     }
     cout << ans << endl;
 }

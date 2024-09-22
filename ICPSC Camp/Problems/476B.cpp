@@ -193,49 +193,64 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     return mp;
 }
 
+long double nCr(int n, int r)
+{
+
+    if (r > n)
+        return 0.0;
+    if (r == 0)
+        return 1.0;
+    long double ans = 1.0;
+    for (int i = 0; i < r; i++)
+    {
+        long double p = n - i;
+        long double q = i + 1;
+        ans *= (p / q);
+    }
+    return ans;
+}
+
 void solvee()
 {
-    int n, k;
-    cin >> n >> k;
-    vector<int> a(n);
-    vector<int> b(n);
-    for (int i = 0; i < n; i++)
-    {
-        cin >> a[i];
-    }
-
-    for (int i = 0; i < n; i++)
-    {
-        cin >> b[i];
-    }
-    vector<int> pre(n, a[0]);
-    for (int i = 1; i < n; i++)
-        pre[i] = pre[i - 1] + a[i];
-
-    int currMax = 0;
-    int i = 0;
-    int kk = k;
+    string s1;
+    string s2;
+    cin >> s1 >> s2;
     int ans = 0;
-    while (kk--)
+    for (char it : s1)
     {
-        if (i == n - 1)
-        {
-            int curr = pre[n - 1];
-            int rem = k - (i + 1);
-            currMax = max(currMax, b[i]);
-            int other = (rem * currMax);
-            ans = max(ans, curr + other);
-            break;
-        }
-
-        int curr = pre[i];
-        int rem = k - (i + 1);
-        currMax = max(currMax, b[i]);
-        int other = rem * currMax;
-        ans = max(ans, curr + other);
-        i++;
+        if (it == '+')
+            ans++;
+        else
+            ans--;
     }
-    cout << ans << endl;
+    int req = 0;
+    int spaces = 0;
+    for (char ch : s2)
+    {
+        if (ch == '+')
+            req++;
+        else if (ch == '-')
+            req--;
+        else
+            spaces++;
+    }
+
+    int extra = abs(ans - req);
+    if (spaces < extra)
+    {
+        cout << fixed << setprecision(10) << 0.0 << endl;
+        return;
+    }
+
+    int left = spaces - extra;
+    if (left & 1)
+    {
+        cout << fixed << setprecision(10) << 0.0 << endl;
+        return;
+    }
+
+    long double a = nCr(spaces, extra + (left / 2)) * 1 * pow(0.5, spaces);
+    cout << fixed << setprecision(10) << a << endl;
 }
 
 /*
@@ -259,9 +274,9 @@ signed main()
     // seiveAlgo();
     // BeforePrimeFactorisation()
 
-    int t;
-    cin >> t;
-    while (t--)
-        solvee();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    solvee();
     return 0;
 }

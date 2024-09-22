@@ -195,45 +195,27 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n, k;
-    cin >> n >> k;
-    vector<int> a(n);
-    vector<int> b(n);
+    int n;
+    cin >> n;
+    vector<int> v(n);
+    vector<int> maxIndex(1001, -1);
     for (int i = 0; i < n; i++)
     {
-        cin >> a[i];
+        cin >> v[i];
+        maxIndex[v[i]] = i;
     }
+    // p(maxIndex);
+    int ans = -1;
 
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < 1001; i++)
     {
-        cin >> b[i];
-    }
-    vector<int> pre(n, a[0]);
-    for (int i = 1; i < n; i++)
-        pre[i] = pre[i - 1] + a[i];
-
-    int currMax = 0;
-    int i = 0;
-    int kk = k;
-    int ans = 0;
-    while (kk--)
-    {
-        if (i == n - 1)
+        for (int j = 0; j < 1001; j++)
         {
-            int curr = pre[n - 1];
-            int rem = k - (i + 1);
-            currMax = max(currMax, b[i]);
-            int other = (rem * currMax);
-            ans = max(ans, curr + other);
-            break;
+            if (maxIndex[i] != -1 && maxIndex[j] != -1 && __gcd(i, j) == 1)
+            {
+                ans = max(ans, maxIndex[i] + 1 + maxIndex[j] + 1);
+            }
         }
-
-        int curr = pre[i];
-        int rem = k - (i + 1);
-        currMax = max(currMax, b[i]);
-        int other = rem * currMax;
-        ans = max(ans, curr + other);
-        i++;
     }
     cout << ans << endl;
 }

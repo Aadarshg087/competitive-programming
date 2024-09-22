@@ -195,44 +195,59 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n, k;
-    cin >> n >> k;
-    vector<int> a(n);
-    vector<int> b(n);
+    string s;
+    cin >> s;
+    int start = 0;
+    int n = s.size();
     for (int i = 0; i < n; i++)
     {
-        cin >> a[i];
-    }
-
-    for (int i = 0; i < n; i++)
-    {
-        cin >> b[i];
-    }
-    vector<int> pre(n, a[0]);
-    for (int i = 1; i < n; i++)
-        pre[i] = pre[i - 1] + a[i];
-
-    int currMax = 0;
-    int i = 0;
-    int kk = k;
-    int ans = 0;
-    while (kk--)
-    {
-        if (i == n - 1)
+        if (s[i] == '0')
         {
-            int curr = pre[n - 1];
-            int rem = k - (i + 1);
-            currMax = max(currMax, b[i]);
-            int other = (rem * currMax);
-            ans = max(ans, curr + other);
+            start = i;
             break;
         }
+    }
+    int c = count(all(s), '0');
+    if (c == n)
+    {
+        cout << 0 << endl;
+        return;
+    }
+    if (count(all(s), '1') == n)
+    {
+        cout << n * n << endl;
+        return;
+    }
 
-        int curr = pre[i];
-        int rem = k - (i + 1);
-        currMax = max(currMax, b[i]);
-        int other = rem * currMax;
-        ans = max(ans, curr + other);
+    int ones = 0;
+    int count = 0;
+    int nn = n;
+    int i = start;
+    while (nn--)
+    {
+        if (i == n)
+        {
+            i = 0;
+        }
+
+        if (s[i] == '1')
+        {
+            count++;
+        }
+        else
+            count = 0;
+        ones = max(ones, count);
+        i++;
+    }
+    // p(ones);
+    int temp = ones - 1;
+    nn = n;
+    i = 1;
+    int ans = 0;
+    while (nn--)
+    {
+        ans = max(ans, ones * i);
+        ones--;
         i++;
     }
     cout << ans << endl;

@@ -195,47 +195,31 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n, k;
-    cin >> n >> k;
-    vector<int> a(n);
-    vector<int> b(n);
-    for (int i = 0; i < n; i++)
+    int n, d, k;
+    cin >> n >> d >> k;
+    vector<pair<int, int>> v(k);
+    for (int i = 0; i < k; i++)
     {
-        cin >> a[i];
+        int temp1, temp2;
+        cin >> temp1 >> temp2;
+        v[i] = {temp1, temp2};
+    }
+    sort(all(v));
+
+    vector<int> jobs(n + 1, 0); // contains jobs on ith day
+    int o = 1;
+    for (int i = 0; i < k; i++)
+    {
+        jobs[v[i].first] = o;
+        jobs[v[i].second] = o;
+        o++;
     }
 
-    for (int i = 0; i < n; i++)
-    {
-        cin >> b[i];
-    }
-    vector<int> pre(n, a[0]);
-    for (int i = 1; i < n; i++)
-        pre[i] = pre[i - 1] + a[i];
-
-    int currMax = 0;
-    int i = 0;
-    int kk = k;
-    int ans = 0;
-    while (kk--)
-    {
-        if (i == n - 1)
-        {
-            int curr = pre[n - 1];
-            int rem = k - (i + 1);
-            currMax = max(currMax, b[i]);
-            int other = (rem * currMax);
-            ans = max(ans, curr + other);
-            break;
-        }
-
-        int curr = pre[i];
-        int rem = k - (i + 1);
-        currMax = max(currMax, b[i]);
-        int other = rem * currMax;
-        ans = max(ans, curr + other);
-        i++;
-    }
-    cout << ans << endl;
+    // for (int i = 1; i < n + 1; i++)
+    // {
+    //     jobs[i] += jobs[i - 1];
+    // }
+    p(jobs);
 }
 
 /*

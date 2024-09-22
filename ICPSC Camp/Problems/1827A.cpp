@@ -195,44 +195,34 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n, k;
-    cin >> n >> k;
+    int n;
+    cin >> n;
     vector<int> a(n);
     vector<int> b(n);
+
     for (int i = 0; i < n; i++)
-    {
         cin >> a[i];
-    }
-
     for (int i = 0; i < n; i++)
-    {
         cin >> b[i];
-    }
-    vector<int> pre(n, a[0]);
-    for (int i = 1; i < n; i++)
-        pre[i] = pre[i - 1] + a[i];
-
-    int currMax = 0;
+    sort(all(a));
+    sort(all(b));
+    multimap<int, int, greater<int>> mp;
+    int ind = 0;
     int i = 0;
-    int kk = k;
-    int ans = 0;
-    while (kk--)
+    while (ind < n)
     {
-        if (i == n - 1)
-        {
-            int curr = pre[n - 1];
-            int rem = k - (i + 1);
-            currMax = max(currMax, b[i]);
-            int other = (rem * currMax);
-            ans = max(ans, curr + other);
-            break;
-        }
-
-        int curr = pre[i];
-        int rem = k - (i + 1);
-        currMax = max(currMax, b[i]);
-        int other = rem * currMax;
-        ans = max(ans, curr + other);
+        while (i < n && a[i] <= b[ind])
+            i++;
+        mp.insert({b[ind], n - i});
+        ind++;
+    }
+    i = 0;
+    int ans = 1;
+    int mod = 1e9 + 7;
+    for (auto it : mp)
+    {
+        int temp = it.second - i;
+        ans = (ans * temp) % mod;
         i++;
     }
     cout << ans << endl;

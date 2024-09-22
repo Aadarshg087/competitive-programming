@@ -195,45 +195,96 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n, k;
-    cin >> n >> k;
-    vector<int> a(n);
-    vector<int> b(n);
+    int n;
+    cin >> n;
+    vector<int> v(n);
+    vector<int> temp(n);
+    int count0 = 0, count1 = 0, count2 = 0;
     for (int i = 0; i < n; i++)
     {
-        cin >> a[i];
+        cin >> v[i];
+        temp[i] = v[i] % 3;
+        count0 += (v[i] % 3 == 0 ? 1 : 0);
+        count1 += (v[i] % 3 == 1 ? 1 : 0);
+        count2 += (v[i] % 3 == 2 ? 1 : 0);
     }
 
-    for (int i = 0; i < n; i++)
+    if (count0 == count1 && count0 == count2)
     {
-        cin >> b[i];
+        cout << 0 << endl;
+        return;
     }
-    vector<int> pre(n, a[0]);
-    for (int i = 1; i < n; i++)
-        pre[i] = pre[i - 1] + a[i];
+    // p(temp);
+    // cout << count0 << " " << count1 << " " << count2 << endl;
+    int bar = n / 3;
+    int extra0 = 0, extra1 = 0, extra2 = 0;
+    int need0 = 0, need1 = 0, need2 = 0;
+    // p(bar);
+    if (count0 >= bar)
+        extra0 = abs(bar - count0);
+    else
+        need0 = bar - count0;
+    if (count1 >= bar)
+        extra1 = abs(bar - count1);
+    else
+        need1 = bar - count1;
+    if (count2 >= bar)
+        extra2 = abs(bar - count2);
+    else
+        need2 = bar - count2;
 
-    int currMax = 0;
-    int i = 0;
-    int kk = k;
+    // cout << extra0 << " " << extra1 << " " << extra2 << endl;
+    // cout << need0 << " " << need1 << " " << need2 << endl;
+
     int ans = 0;
-    while (kk--)
+    for (int i = 0; i < n; i++)
     {
-        if (i == n - 1)
+        int rem = v[i] % 3;
+        if (rem == 0 && extra0)
         {
-            int curr = pre[n - 1];
-            int rem = k - (i + 1);
-            currMax = max(currMax, b[i]);
-            int other = (rem * currMax);
-            ans = max(ans, curr + other);
-            break;
+            if (need1)
+            {
+                ans += 1;
+                need1--;
+                extra0--;
+            }
+            else if (need2)
+            {
+                ans += 2;
+                need2--;
+                extra0--;
+            }
         }
-
-        int curr = pre[i];
-        int rem = k - (i + 1);
-        currMax = max(currMax, b[i]);
-        int other = rem * currMax;
-        ans = max(ans, curr + other);
-        i++;
+        else if (rem == 1 && extra1)
+        {
+            if (need2)
+            {
+                ans += 1;
+                need2--;
+                extra1--;
+            }
+            else if (need0)
+            {
+                ans += 2;
+                need0--;
+                extra1--;
+            }
+        }
+        else if (rem == 2 && extra2)
+        {
+            if (need0)
+            {
+                ans += 1;
+                need0--;
+                extra2--;
+            }
+            else if (need1)
+            {
+                ans += 2;
+                need1--;
+                extra2--;
+            }
+        }
     }
     cout << ans << endl;
 }
@@ -252,9 +303,9 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // #ifndef ONLINE_JUDGE
-    // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
-    // #endif
+#ifndef ONLINE_JUDGE
+    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+#endif
 
     // seiveAlgo();
     // BeforePrimeFactorisation()

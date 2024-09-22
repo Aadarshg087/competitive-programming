@@ -195,47 +195,58 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n, k;
-    cin >> n >> k;
-    vector<int> a(n);
-    vector<int> b(n);
-    for (int i = 0; i < n; i++)
-    {
-        cin >> a[i];
-    }
+    int n, x;
+    cin >> n >> x;
+    vector<int> first(n);
+    vector<int> second(n);
+    vector<int> third(n);
+    for (int i = n - 1; i >= 0; i--)
+        cin >> first[i];
 
-    for (int i = 0; i < n; i++)
-    {
-        cin >> b[i];
-    }
-    vector<int> pre(n, a[0]);
-    for (int i = 1; i < n; i++)
-        pre[i] = pre[i - 1] + a[i];
+    for (int i = n - 1; i >= 0; i--)
+        cin >> second[i];
 
-    int currMax = 0;
-    int i = 0;
-    int kk = k;
-    int ans = 0;
-    while (kk--)
+    for (int i = n - 1; i >= 0; i--)
+        cin >> third[i];
+
+    bool f = 0;
+    int temp = 0;
+    while (1)
     {
-        if (i == n - 1)
+        int count = 0;
+        if (temp == x)
         {
-            int curr = pre[n - 1];
-            int rem = k - (i + 1);
-            currMax = max(currMax, b[i]);
-            int other = (rem * currMax);
-            ans = max(ans, curr + other);
-            break;
+            cout << "Yes" << endl;
+            return;
+        }
+        if (first.size() && (x | first.back()) == x)
+        {
+            temp |= first.back();
+            first.pop_back();
+            count++;
         }
 
-        int curr = pre[i];
-        int rem = k - (i + 1);
-        currMax = max(currMax, b[i]);
-        int other = rem * currMax;
-        ans = max(ans, curr + other);
-        i++;
+        if (second.size() && (x | second.back()) == x)
+        {
+            temp |= second.back();
+            second.pop_back();
+
+            count++;
+        }
+        if (third.size() && (x | third.back()) == x)
+        {
+            temp |= third.back();
+            third.pop_back();
+
+            count++;
+        }
+
+        if (count == 0)
+        {
+            cout << "No" << endl;
+            return;
+        }
     }
-    cout << ans << endl;
 }
 
 /*

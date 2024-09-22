@@ -120,7 +120,7 @@ void seiveAlgo()
 // Binary Exponentiation - (Check MOD Value) -------------------
 int BinaryExpoRecur(int a, int p)
 {
-    const int mod = 1e9 + 7;
+    const int mod = 1e18;
     if (p == 0)
         return 1;
     if (p == 1)
@@ -197,45 +197,38 @@ void solvee()
 {
     int n, k;
     cin >> n >> k;
-    vector<int> a(n);
-    vector<int> b(n);
-    for (int i = 0; i < n; i++)
-    {
-        cin >> a[i];
-    }
-
-    for (int i = 0; i < n; i++)
-    {
-        cin >> b[i];
-    }
-    vector<int> pre(n, a[0]);
-    for (int i = 1; i < n; i++)
-        pre[i] = pre[i - 1] + a[i];
-
-    int currMax = 0;
-    int i = 0;
-    int kk = k;
-    int ans = 0;
-    while (kk--)
-    {
-        if (i == n - 1)
-        {
-            int curr = pre[n - 1];
-            int rem = k - (i + 1);
-            currMax = max(currMax, b[i]);
-            int other = (rem * currMax);
-            ans = max(ans, curr + other);
-            break;
-        }
-
-        int curr = pre[i];
-        int rem = k - (i + 1);
-        currMax = max(currMax, b[i]);
-        int other = rem * currMax;
-        ans = max(ans, curr + other);
-        i++;
-    }
-    cout << ans << endl;
+    int i = n;
+    int first = n - k + 1;
+    int second = n;
+    int remove = first - 1;
+    int ans = ((second + 1) / 2) - ((remove + 1) / 2);
+    cout << ((ans & 1) ? "NO" : "YES") << endl;
+    // int ans = 0;
+    // if (k == 1 || k == 2)
+    // {
+    //     cout << ((n & 1) ? "NO" : "YES") << endl;
+    //     return;
+    // }
+    // if (n & 1)
+    // {
+    //     if (k & 1)
+    //     {
+    //         cout << "YES" << endl;
+    //     }
+    //     else
+    //     {
+    //         cout << "NO" << endl;
+    //     }
+    // }
+    // else
+    // {
+    //     if (k & 1)
+    //     {
+    //         cout << "NO" << endl;
+    //     }
+    //     else
+    //         cout << "YES" << endl;
+    // }
 }
 
 /*

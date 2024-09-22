@@ -192,50 +192,27 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     // return ans;
     return mp;
 }
+vector<int> pre;
 
 void solvee()
 {
-    int n, k;
-    cin >> n >> k;
-    vector<int> a(n);
-    vector<int> b(n);
+    int n;
+    cin >> n;
+    vector<int> v(n);
     for (int i = 0; i < n; i++)
-    {
-        cin >> a[i];
-    }
+        cin >> v[i];
 
-    for (int i = 0; i < n; i++)
-    {
-        cin >> b[i];
-    }
-    vector<int> pre(n, a[0]);
-    for (int i = 1; i < n; i++)
-        pre[i] = pre[i - 1] + a[i];
+    sort(all(v));
 
-    int currMax = 0;
-    int i = 0;
-    int kk = k;
-    int ans = 0;
-    while (kk--)
+    for (int i = 0; i < pre.size(); i++)
     {
-        if (i == n - 1)
+        if (v[i] > pre[i])
         {
-            int curr = pre[n - 1];
-            int rem = k - (i + 1);
-            currMax = max(currMax, b[i]);
-            int other = (rem * currMax);
-            ans = max(ans, curr + other);
-            break;
+            cout << "NO" << endl;
+            return;
         }
-
-        int curr = pre[i];
-        int rem = k - (i + 1);
-        currMax = max(currMax, b[i]);
-        int other = rem * currMax;
-        ans = max(ans, curr + other);
-        i++;
     }
-    cout << ans << endl;
+    cout << "YES" << endl;
 }
 
 /*
@@ -258,6 +235,19 @@ signed main()
 
     // seiveAlgo();
     // BeforePrimeFactorisation()
+    pre.push_back(1);
+    pre.push_back(1);
+    int N = 2e7;
+    int currSum = 2;
+    for (int i = 3; i < N; i++)
+    {
+        if (currSum < 0)
+            break;
+        else
+            pre.push_back(currSum);
+        currSum += currSum;
+    }
+    // p(pre);
 
     int t;
     cin >> t;

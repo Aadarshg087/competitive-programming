@@ -197,14 +197,32 @@ void solvee()
 {
     int n, k;
     cin >> n >> k;
-    int need = n - k;
-    // where pi = i;
-    /*
-    (n) C (n - need)
-    n!/(n - need)! * (n - n - need)!
+    int ans = 1;
+    vector<int> fact(5, 1);
+    for (int i = 2; i < 5; i++)
+    {
+        fact[i] = fact[i - 1] * i;
+    }
 
+    for (int i = 2; i <= k; i++)
+    {
+        int result = fact[i];
+        int deno = 1;
+        int parity = -1;
+        for (int j = 1; j <= i; j++)
+        {
+            deno *= j;
+            result += parity * (fact[i] / deno);
+            parity *= -1;
+        }
+        int num = 1;
+        for (int j = n; j > n - i; j--)
+            num *= j;
 
-    */
+        int nCr = num / fact[i];
+        ans += nCr * result;
+    }
+    cout << ans << endl;
 }
 
 /*
@@ -228,9 +246,9 @@ signed main()
     // seiveAlgo();
     // BeforePrimeFactorisation()
 
-    int t;
-    cin >> t;
-    while (t--)
-        solvee();
+    // in;
+    // cin >> t;
+    // while (t--t t)
+    solvee();
     return 0;
 }

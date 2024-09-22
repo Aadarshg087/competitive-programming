@@ -197,45 +197,49 @@ void solvee()
 {
     int n, k;
     cin >> n >> k;
-    vector<int> a(n);
-    vector<int> b(n);
+    vector<vector<int>> v(n, vector<int>(n));
     for (int i = 0; i < n; i++)
     {
-        cin >> a[i];
-    }
-
-    for (int i = 0; i < n; i++)
-    {
-        cin >> b[i];
-    }
-    vector<int> pre(n, a[0]);
-    for (int i = 1; i < n; i++)
-        pre[i] = pre[i - 1] + a[i];
-
-    int currMax = 0;
-    int i = 0;
-    int kk = k;
-    int ans = 0;
-    while (kk--)
-    {
-        if (i == n - 1)
+        for (int j = 0; j < n; j++)
         {
-            int curr = pre[n - 1];
-            int rem = k - (i + 1);
-            currMax = max(currMax, b[i]);
-            int other = (rem * currMax);
-            ans = max(ans, curr + other);
-            break;
+            cin >> v[i][j];
         }
-
-        int curr = pre[i];
-        int rem = k - (i + 1);
-        currMax = max(currMax, b[i]);
-        int other = rem * currMax;
-        ans = max(ans, curr + other);
-        i++;
     }
-    cout << ans << endl;
+
+    vector<vector<int>> other;
+    for (int i = n - 1; i >= 0; i--)
+    {
+        vector<int> temp;
+        for (int j = n - 1; j >= 0; j--)
+        {
+            temp.push_back(v[i][j]);
+        }
+        other.push_back(temp);
+    }
+    // p(other);
+
+    int count = 0;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            if (other[i][j] != v[i][j])
+            {
+                count++;
+            }
+        }
+    }
+    count /= 2;
+    if (count > k)
+    {
+        cout << "NO" << endl;
+        return;
+    }
+    int left = k - count;
+    if ((left & 1) && (n % 2 == 0))
+        cout << "NO" << endl;
+    else
+        cout << "YES" << endl;
 }
 
 /*

@@ -195,47 +195,32 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n, k;
-    cin >> n >> k;
-    vector<int> a(n);
-    vector<int> b(n);
+    int n, m;
+    cin >> n >> m;
+    int total = n * m;
+    int black = ((total & 1) ? (total + 1) / 2 : (total / 2) + 1);
+    int white = total - black;
+    // p(white);
+    // p(black);
+    black = 2;
+    white = 1;
+    int f = 1;
+    vector<vector<char>> v(n, vector<char>(m, '.'));
+    v[0][0] = 'W';
+    v[0][1] = 'B';
+    v[1][0] = 'B';
     for (int i = 0; i < n; i++)
     {
-        cin >> a[i];
-    }
-
-    for (int i = 0; i < n; i++)
-    {
-        cin >> b[i];
-    }
-    vector<int> pre(n, a[0]);
-    for (int i = 1; i < n; i++)
-        pre[i] = pre[i - 1] + a[i];
-
-    int currMax = 0;
-    int i = 0;
-    int kk = k;
-    int ans = 0;
-    while (kk--)
-    {
-        if (i == n - 1)
+        for (int j = 0; j < m; j++)
         {
-            int curr = pre[n - 1];
-            int rem = k - (i + 1);
-            currMax = max(currMax, b[i]);
-            int other = (rem * currMax);
-            ans = max(ans, curr + other);
-            break;
-        }
+            if (v[i][j] != '.')
+                cout << v[i][j];
 
-        int curr = pre[i];
-        int rem = k - (i + 1);
-        currMax = max(currMax, b[i]);
-        int other = rem * currMax;
-        ans = max(ans, curr + other);
-        i++;
+            else
+                cout << 'B';
+        }
+        cout << endl;
     }
-    cout << ans << endl;
 }
 
 /*

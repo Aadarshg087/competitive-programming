@@ -197,43 +197,24 @@ void solvee()
 {
     int n, k;
     cin >> n >> k;
-    vector<int> a(n);
-    vector<int> b(n);
+    vector<int> v(n);
     for (int i = 0; i < n; i++)
     {
-        cin >> a[i];
+        cin >> v[i];
     }
-
-    for (int i = 0; i < n; i++)
-    {
-        cin >> b[i];
-    }
-    vector<int> pre(n, a[0]);
-    for (int i = 1; i < n; i++)
-        pre[i] = pre[i - 1] + a[i];
-
-    int currMax = 0;
-    int i = 0;
-    int kk = k;
+    int curr = 0;
     int ans = 0;
-    while (kk--)
+    for (int i = 0; i < n; i++)
     {
-        if (i == n - 1)
+        if (v[i] >= k)
         {
-            int curr = pre[n - 1];
-            int rem = k - (i + 1);
-            currMax = max(currMax, b[i]);
-            int other = (rem * currMax);
-            ans = max(ans, curr + other);
-            break;
+            curr += v[i];
         }
-
-        int curr = pre[i];
-        int rem = k - (i + 1);
-        currMax = max(currMax, b[i]);
-        int other = rem * currMax;
-        ans = max(ans, curr + other);
-        i++;
+        else if (v[i] == 0 && curr != 0)
+        {
+            curr--;
+            ans++;
+        }
     }
     cout << ans << endl;
 }
