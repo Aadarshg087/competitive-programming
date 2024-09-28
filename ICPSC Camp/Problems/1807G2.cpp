@@ -203,16 +203,34 @@ void solvee()
         cin >> v[i];
 
     sort(all(v));
-
-    for (int i = 0; i < pre.size(); i++)
+    if (v[0] != 1)
     {
-        if (v[i] > pre[i])
+        cout << "NO" << endl;
+        return;
+    }
+    // cout << 1 << " ";
+    // p(v);
+    int currSum = 1;
+    for (int i = 1; i < n; i++)
+    {
+        if (v[i] > currSum)
         {
             cout << "NO" << endl;
             return;
         }
+        currSum += v[i];
     }
     cout << "YES" << endl;
+
+    // for (int i = 0; i < pre.size(); i++)
+    // {
+    //     if (v[i] > pre[i])
+    //     {
+    //         cout << "NO" << endl;
+    //         return;
+    //     }
+    // }
+    // cout << "YES" << endl;
 }
 
 /*
@@ -235,18 +253,18 @@ signed main()
 
     // seiveAlgo();
     // BeforePrimeFactorisation()
-    pre.push_back(1);
-    pre.push_back(1);
-    int N = 2e7;
-    int currSum = 2;
-    for (int i = 3; i < N; i++)
-    {
-        if (currSum < 0)
-            break;
-        else
-            pre.push_back(currSum);
-        currSum += currSum;
-    }
+    // pre.push_back(1);
+    // pre.push_back(1);
+    // int N = 2e7;
+    // int currSum = 2;
+    // for (int i = 3; i < N; i++)
+    // {
+    //     if (currSum < 0)
+    //         break;
+    //     else
+    //         pre.push_back(currSum);
+    //     currSum += currSum;
+    // }
     // p(pre);
 
     int t;

@@ -120,7 +120,7 @@ void seiveAlgo()
 // Binary Exponentiation - (Check MOD Value) -------------------
 int BinaryExpoRecur(int a, int p)
 {
-    const int mod = 1e9 + 7;
+    const int mod = 1e18;
     if (p == 0)
         return 1;
     if (p == 1)
@@ -193,81 +193,59 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     return mp;
 }
 
+int MOD = 1e9 + 7;
+int fact[100000];
+
+int fexp(int a, int b)
+{
+    int ans = 1;
+    for (int i = 0; i < 35; i++)
+    {
+        if (b & (1LL << i))
+        {
+            ans *= a;
+        }
+        a *= a;
+        a %= MOD;
+        ans %= MOD;
+    }
+    return ans;
+}
+
+int nCr(int N, int K)
+{
+    return fact[N] * fexp(fact[K] * fact[N - K] % MOD, MOD - 2) % MOD;
+}
+
 void solvee()
 {
-    int n;
-    cin >> n;
-    int half = ((n * 2) + 1) / 2;
-    int first = half;
-    int second = half;
-    for (int row = 0; row <= n; row++)
+    int n, k;
+    cin >> n >> k;
+    vector<int> v(n);
+    for (int i = 0; i < n; i++)
     {
-        int ele = 0;
-        int mid = (first + second) / 2;
-        for (int i = 0; i <= 2 * n + 1; i++)
-        {
-            if (i >= first && i <= mid)
-            {
-                if (second - first == 0)
-                    cout << ele;
-                else if (i == mid)
-                    cout << ele-- << " ";
-                else
-                    cout << ele++ << " ";
-            }
-            else if (i > mid && i <= second)
-            {
-                if (i == second)
-                    cout << ele--;
-                else
-                    cout << ele-- << " ";
-            }
-            else if (i < first)
-                cout << " " << " ";
-        }
-        cout << endl;
-
-        first -= 1;
-        second += 1;
+        cin >> v[i];
     }
-
-    first += 2;
-    second -= 2;
-
-    for (int row = 0; row <= n - 1; row++)
+    sort(all(v), greater<int>());
+    map<int, int> firstK;
+    map<int, int> mp;
+    for (int i = 0; i < n; i++)
     {
-        int ele = 0;
-        int mid = (first + second) / 2;
-        for (int i = 0; i <= 2 * n + 1; i++)
+        if (i < k)
         {
-            if (i >= first && i <= mid)
-            {
-                if (second - first == 0)
-                    cout << ele;
-                else if (i == mid)
-                    cout << ele-- << " ";
-                else
-                    cout << ele++ << " ";
-            }
-            else if (i > mid && i <= second)
-            {
-                if (i == second)
-                    cout << ele--;
-                else
-                    cout << ele-- << " ";   
-            }
-            else if (i < first)
-                cout << " " << " ";
+            firstK[v[i]]++;
         }
-        cout << endl;
-
-        first += 1;
-        second -= 1;
+        mp[v[i]]++;
     }
+    int ans = 1;
+    int mod = 1e9 + 7;
+    auto it = firstK.begin();
+    ans = ((ans % mod) * (nCr(mp[it->first], it->second) % mod)) % mod;
+    cout << ans << endl;
 }
 
 /*
-    - Read the problem twice
+    - Read the problem twice (10 baariii)
     - Try to prove yourself wrong
     - int is mapped with long long int
     - Check endl while doing interactive problems
@@ -286,10 +264,16 @@ signed main()
 
     // seiveAlgo();
     // BeforePrimeFactorisation()
+    fact[0] = 1;
+    for (int i = 1; i < 100000; i++)
+    {
+        fact[i] = fact[i - 1] * i;
+        fact[i] %= MOD;
+    }
 
-    // int t;
-    // cin >> t;
-    // while (t--)
-    solvee();
+    int t;
+    cin >> t;
+    while (t--)
+        solvee();
     return 0;
 }

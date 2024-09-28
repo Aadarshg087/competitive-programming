@@ -216,6 +216,7 @@ void solvee()
         if (s[i] == '(')
         {
             lastOpen = 1;
+            st.insert()
         }
     }
 }

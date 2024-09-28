@@ -192,82 +192,52 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     // return ans;
     return mp;
 }
+void check(vector<int> &ans)
+{
+    int n = ans.size();
+    for (int i = 0; i < n; i++)
+    {
+        cout << __gcd(i + 1, ans[i]) << " ";
+    }
+    cout << endl;
+}
 
 void solvee()
 {
-    int n;
-    cin >> n;
-    int half = ((n * 2) + 1) / 2;
-    int first = half;
-    int second = half;
-    for (int row = 0; row <= n; row++)
+    int n, l, r;
+    cin >> n >> l >> r;
+    // if (r - l + 1 < n)
+    // {
+    //     cout << "NO" << endl;
+    //     return;
+    // }
+
+    set<int> st;
+    vector<int> ans(n);
+    for (int i = n - 1; i >= 0; i--)
     {
-        int ele = 0;
-        int mid = (first + second) / 2;
-        for (int i = 0; i <= 2 * n + 1; i++)
+        // p(i + 1);
+
+        int endingPoint = r / (i + 1);
+        endingPoint = endingPoint * (i + 1);
+        if (endingPoint > r || endingPoint < l)
         {
-            if (i >= first && i <= mid)
-            {
-                if (second - first == 0)
-                    cout << ele;
-                else if (i == mid)
-                    cout << ele-- << " ";
-                else
-                    cout << ele++ << " ";
-            }
-            else if (i > mid && i <= second)
-            {
-                if (i == second)
-                    cout << ele--;
-                else
-                    cout << ele-- << " ";
-            }
-            else if (i < first)
-                cout << " " << " ";
+            cout << "NO" << endl;
+            return;
         }
-        cout << endl;
 
-        first -= 1;
-        second += 1;
+        ans[i] = endingPoint;
     }
-
-    first += 2;
-    second -= 2;
-
-    for (int row = 0; row <= n - 1; row++)
-    {
-        int ele = 0;
-        int mid = (first + second) / 2;
-        for (int i = 0; i <= 2 * n + 1; i++)
-        {
-            if (i >= first && i <= mid)
-            {
-                if (second - first == 0)
-                    cout << ele;
-                else if (i == mid)
-                    cout << ele-- << " ";
-                else
-                    cout << ele++ << " ";
-            }
-            else if (i > mid && i <= second)
-            {
-                if (i == second)
-                    cout << ele--;
-                else
-                    cout << ele-- << " ";   
-            }
-            else if (i < first)
-                cout << " " << " ";
-        }
-        cout << endl;
-
-        first += 1;
-        second -= 1;
-    }
+    // cout << "Checking : ";
+    // check(ans);
+    cout << "YES" << endl;
+    for (int i : ans)
+        cout << i << " ";
+    cout << endl;
 }
 
 /*
-    - Read the problem twice
+    - Read the problem twice (10 baariiiii)
     - Try to prove yourself wrong
     - int is mapped with long long int
     - Check endl while doing interactive problems
@@ -287,9 +257,9 @@ signed main()
     // seiveAlgo();
     // BeforePrimeFactorisation()
 
-    // int t;
-    // cin >> t;
-    // while (t--)
-    solvee();
+    int t;
+    cin >> t;
+    while (t--)
+        solvee();
     return 0;
 }

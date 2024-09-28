@@ -120,7 +120,7 @@ void seiveAlgo()
 // Binary Exponentiation - (Check MOD Value) -------------------
 int BinaryExpoRecur(int a, int p)
 {
-    const int mod = 1e9 + 7;
+    const int mod = 1e18;
     if (p == 0)
         return 1;
     if (p == 1)
@@ -195,79 +195,35 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n;
-    cin >> n;
-    int half = ((n * 2) + 1) / 2;
-    int first = half;
-    int second = half;
-    for (int row = 0; row <= n; row++)
+    int n, k;
+    cin >> k >> n;
+
+    vector<int> v(n + 1, -1);
+    int i = 1;
+    int diff = 1;
+    cout << i << " ";
+    v[i] = 0;
+    k--;
+    vector<int> ans;
+    while (k--)
     {
-        int ele = 0;
-        int mid = (first + second) / 2;
-        for (int i = 0; i <= 2 * n + 1; i++)
+        if (i + diff > n)
         {
-            if (i >= first && i <= mid)
-            {
-                if (second - first == 0)
-                    cout << ele;
-                else if (i == mid)
-                    cout << ele-- << " ";
-                else
-                    cout << ele++ << " ";
-            }
-            else if (i > mid && i <= second)
-            {
-                if (i == second)
-                    cout << ele--;
-                else
-                    cout << ele-- << " ";
-            }
-            else if (i < first)
-                cout << " " << " ";
+            break;
         }
-        cout << endl;
+        // cout << i + diff << " ";
+        ans.push_back(i + diff);
 
-        first -= 1;
-        second += 1;
+        v[i + diff] = 1;
+        i += diff;
+        diff += 1;
     }
-
-    first += 2;
-    second -= 2;
-
-    for (int row = 0; row <= n - 1; row++)
-    {
-        int ele = 0;
-        int mid = (first + second) / 2;
-        for (int i = 0; i <= 2 * n + 1; i++)
-        {
-            if (i >= first && i <= mid)
-            {
-                if (second - first == 0)
-                    cout << ele;
-                else if (i == mid)
-                    cout << ele-- << " ";
-                else
-                    cout << ele++ << " ";
-            }
-            else if (i > mid && i <= second)
-            {
-                if (i == second)
-                    cout << ele--;
-                else
-                    cout << ele-- << " ";   
-            }
-            else if (i < first)
-                cout << " " << " ";
-        }
-        cout << endl;
-
-        first += 1;
-        second -= 1;
-    }
+    sort(all(ans));
+    cout << endl;
 }
 
 /*
-    - Read the problem twice
+    - Read the problem twice (10 baariii)
     - Try to prove yourself wrong
     - int is mapped with long long int
     - Check endl while doing interactive problems
@@ -287,9 +243,9 @@ signed main()
     // seiveAlgo();
     // BeforePrimeFactorisation()
 
-    // int t;
-    // cin >> t;
-    // while (t--)
-    solvee();
+    int t;
+    cin >> t;
+    while (t--)
+        solvee();
     return 0;
 }

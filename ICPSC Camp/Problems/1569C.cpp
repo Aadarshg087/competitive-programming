@@ -120,7 +120,7 @@ void seiveAlgo()
 // Binary Exponentiation - (Check MOD Value) -------------------
 int BinaryExpoRecur(int a, int p)
 {
-    const int mod = 1e9 + 7;
+    const int mod = 1e18;
     if (p == 0)
         return 1;
     if (p == 1)
@@ -197,77 +197,49 @@ void solvee()
 {
     int n;
     cin >> n;
-    int half = ((n * 2) + 1) / 2;
-    int first = half;
-    int second = half;
-    for (int row = 0; row <= n; row++)
+    vector<int> v(n);
+    for (int i = 0; i < n; i++)
     {
-        int ele = 0;
-        int mid = (first + second) / 2;
-        for (int i = 0; i <= 2 * n + 1; i++)
+        cin >> v[i];
+    }
+    int maxEle = *max_element(all(v));
+    int count1LessMaxi = 0;
+    int countMaxi = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (v[i] == maxEle - 1)
         {
-            if (i >= first && i <= mid)
-            {
-                if (second - first == 0)
-                    cout << ele;
-                else if (i == mid)
-                    cout << ele-- << " ";
-                else
-                    cout << ele++ << " ";
-            }
-            else if (i > mid && i <= second)
-            {
-                if (i == second)
-                    cout << ele--;
-                else
-                    cout << ele-- << " ";
-            }
-            else if (i < first)
-                cout << " " << " ";
+            count1LessMaxi++;
         }
-        cout << endl;
-
-        first -= 1;
-        second += 1;
+        if (v[i] == maxEle)
+            countMaxi++;
     }
 
-    first += 2;
-    second -= 2;
-
-    for (int row = 0; row <= n - 1; row++)
+    int mod = 998244353;
+    int total = 1;
+    int bad = 1;
+    for (int i = 1; i <= n; i++)
     {
-        int ele = 0;
-        int mid = (first + second) / 2;
-        for (int i = 0; i <= 2 * n + 1; i++)
+        total = ((total % mod) * (i % mod)) % mod;
+        if (i != count1LessMaxi + 1)
         {
-            if (i >= first && i <= mid)
-            {
-                if (second - first == 0)
-                    cout << ele;
-                else if (i == mid)
-                    cout << ele-- << " ";
-                else
-                    cout << ele++ << " ";
-            }
-            else if (i > mid && i <= second)
-            {
-                if (i == second)
-                    cout << ele--;
-                else
-                    cout << ele-- << " ";   
-            }
-            else if (i < first)
-                cout << " " << " ";
+            bad = ((bad % mod) * (i % mod)) % mod;
         }
-        cout << endl;
-
-        first += 1;
-        second -= 1;
     }
+    int nice = 0;
+    if (countMaxi > 1)
+    {
+        nice = total % mod;
+    }
+    else
+    {
+        nice = ((total % mod) - (bad % mod) + mod) % mod;
+    }
+    cout << nice << endl;
 }
 
 /*
-    - Read the problem twice
+    - Read the problem twice (10 baariii)
     - Try to prove yourself wrong
     - int is mapped with long long int
     - Check endl while doing interactive problems
@@ -287,9 +259,9 @@ signed main()
     // seiveAlgo();
     // BeforePrimeFactorisation()
 
-    // int t;
-    // cin >> t;
-    // while (t--)
-    solvee();
+    int t;
+    cin >> t;
+    while (t--)
+        solvee();
     return 0;
 }

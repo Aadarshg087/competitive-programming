@@ -195,75 +195,34 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n;
-    cin >> n;
-    int half = ((n * 2) + 1) / 2;
-    int first = half;
-    int second = half;
-    for (int row = 0; row <= n; row++)
+    string s;
+    cin >> s;
+    vector<char> temp;
+    int n = s.size();
+    set<char> st;
+    for (int i = 0; i < n; i++)
     {
-        int ele = 0;
-        int mid = (first + second) / 2;
-        for (int i = 0; i <= 2 * n + 1; i++)
+        if (st.find(s[i]) == st.end())
         {
-            if (i >= first && i <= mid)
-            {
-                if (second - first == 0)
-                    cout << ele;
-                else if (i == mid)
-                    cout << ele-- << " ";
-                else
-                    cout << ele++ << " ";
-            }
-            else if (i > mid && i <= second)
-            {
-                if (i == second)
-                    cout << ele--;
-                else
-                    cout << ele-- << " ";
-            }
-            else if (i < first)
-                cout << " " << " ";
+            st.insert(s[i]);
+            temp.push_back(s[i]);
         }
-        cout << endl;
-
-        first -= 1;
-        second += 1;
     }
-
-    first += 2;
-    second -= 2;
-
-    for (int row = 0; row <= n - 1; row++)
+    // p(temp);
+    int j = 0;
+    for (int i = 0; i < n; i++)
     {
-        int ele = 0;
-        int mid = (first + second) / 2;
-        for (int i = 0; i <= 2 * n + 1; i++)
+        if (s[i] != temp[j])
         {
-            if (i >= first && i <= mid)
-            {
-                if (second - first == 0)
-                    cout << ele;
-                else if (i == mid)
-                    cout << ele-- << " ";
-                else
-                    cout << ele++ << " ";
-            }
-            else if (i > mid && i <= second)
-            {
-                if (i == second)
-                    cout << ele--;
-                else
-                    cout << ele-- << " ";   
-            }
-            else if (i < first)
-                cout << " " << " ";
-        }
-        cout << endl;
 
-        first += 1;
-        second -= 1;
+            cout << "NO" << endl;
+            return;
+        }
+        j++;
+        if (j == temp.size())
+            j = 0;
     }
+    cout << "YES" << endl;
 }
 
 /*
@@ -287,9 +246,9 @@ signed main()
     // seiveAlgo();
     // BeforePrimeFactorisation()
 
-    // int t;
-    // cin >> t;
-    // while (t--)
-    solvee();
+    int t;
+    cin >> t;
+    while (t--)
+        solvee();
     return 0;
 }

@@ -195,79 +195,17 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n;
-    cin >> n;
-    int half = ((n * 2) + 1) / 2;
-    int first = half;
-    int second = half;
-    for (int row = 0; row <= n; row++)
-    {
-        int ele = 0;
-        int mid = (first + second) / 2;
-        for (int i = 0; i <= 2 * n + 1; i++)
-        {
-            if (i >= first && i <= mid)
-            {
-                if (second - first == 0)
-                    cout << ele;
-                else if (i == mid)
-                    cout << ele-- << " ";
-                else
-                    cout << ele++ << " ";
-            }
-            else if (i > mid && i <= second)
-            {
-                if (i == second)
-                    cout << ele--;
-                else
-                    cout << ele-- << " ";
-            }
-            else if (i < first)
-                cout << " " << " ";
-        }
-        cout << endl;
+    int n, m;
+    cin >> n >> m;
 
-        first -= 1;
-        second += 1;
-    }
-
-    first += 2;
-    second -= 2;
-
-    for (int row = 0; row <= n - 1; row++)
-    {
-        int ele = 0;
-        int mid = (first + second) / 2;
-        for (int i = 0; i <= 2 * n + 1; i++)
-        {
-            if (i >= first && i <= mid)
-            {
-                if (second - first == 0)
-                    cout << ele;
-                else if (i == mid)
-                    cout << ele-- << " ";
-                else
-                    cout << ele++ << " ";
-            }
-            else if (i > mid && i <= second)
-            {
-                if (i == second)
-                    cout << ele--;
-                else
-                    cout << ele-- << " ";   
-            }
-            else if (i < first)
-                cout << " " << " ";
-        }
-        cout << endl;
-
-        first += 1;
-        second -= 1;
-    }
+    int ans1 = BinaryExpoRecur(2, m);
+    ans1--;
+    int ans2 = BinaryExpoRecur(ans1, n);
+    cout << ans2 << endl;
 }
 
 /*
-    - Read the problem twice
+    - Read the problem twice (10 baariii)
     - Try to prove yourself wrong
     - int is mapped with long long int
     - Check endl while doing interactive problems
@@ -290,6 +228,6 @@ signed main()
     // int t;
     // cin >> t;
     // while (t--)
-    solvee();
+        solvee();
     return 0;
 }

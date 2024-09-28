@@ -211,7 +211,7 @@ void solvee()
     int n, m;
     cin >> n >> m;
 
-    int mod = 1e9 + 1;
+    int mod = 1e9 + 7;
     vector<string> v(n);
     for (auto &it : v)
         cin >> it;

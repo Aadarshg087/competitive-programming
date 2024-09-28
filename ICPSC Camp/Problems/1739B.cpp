@@ -197,73 +197,37 @@ void solvee()
 {
     int n;
     cin >> n;
-    int half = ((n * 2) + 1) / 2;
-    int first = half;
-    int second = half;
-    for (int row = 0; row <= n; row++)
+    vector<int> v(n);
+    for (int i = 0; i < n; i++)
     {
-        int ele = 0;
-        int mid = (first + second) / 2;
-        for (int i = 0; i <= 2 * n + 1; i++)
+        cin >> v[i];
+    }
+    bool f = 1;
+    vector<int> ans(n);
+    int curr = v[0];
+    ans[0] = v[0];
+    for (int i = 1; i < n; i++)
+    {
+        ans[i] = curr + v[i];
+        if (curr - v[i] >= 0 && v[i] != 0)
         {
-            if (i >= first && i <= mid)
-            {
-                if (second - first == 0)
-                    cout << ele;
-                else if (i == mid)
-                    cout << ele-- << " ";
-                else
-                    cout << ele++ << " ";
-            }
-            else if (i > mid && i <= second)
-            {
-                if (i == second)
-                    cout << ele--;
-                else
-                    cout << ele-- << " ";
-            }
-            else if (i < first)
-                cout << " " << " ";
+            // p(curr);
+            // p(v[i]);
+            // cout << curr - v[i] << " ";
+            f = 0;
+            break;
         }
-        cout << endl;
-
-        first -= 1;
-        second += 1;
+        curr = ans[i];
+    }
+    if (!f)
+    {
+        cout << -1 << endl;
+        return;
     }
 
-    first += 2;
-    second -= 2;
-
-    for (int row = 0; row <= n - 1; row++)
-    {
-        int ele = 0;
-        int mid = (first + second) / 2;
-        for (int i = 0; i <= 2 * n + 1; i++)
-        {
-            if (i >= first && i <= mid)
-            {
-                if (second - first == 0)
-                    cout << ele;
-                else if (i == mid)
-                    cout << ele-- << " ";
-                else
-                    cout << ele++ << " ";
-            }
-            else if (i > mid && i <= second)
-            {
-                if (i == second)
-                    cout << ele--;
-                else
-                    cout << ele-- << " ";   
-            }
-            else if (i < first)
-                cout << " " << " ";
-        }
-        cout << endl;
-
-        first += 1;
-        second -= 1;
-    }
+    for (auto it : ans)
+        cout << it << " ";
+    cout << endl;
 }
 
 /*
@@ -287,9 +251,9 @@ signed main()
     // seiveAlgo();
     // BeforePrimeFactorisation()
 
-    // int t;
-    // cin >> t;
-    // while (t--)
-    solvee();
+    int t;
+    cin >> t;
+    while (t--)
+        solvee();
     return 0;
 }

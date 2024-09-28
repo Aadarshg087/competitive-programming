@@ -1,523 +1,401 @@
-#include <SDL.h>
-#include <iostream>
-#include <limits>
-#include <time.h>
-#include <string>
+#include <bits/stdc++.h>
 using namespace std;
 
-const int SCREEN_WIDTH = 910;
-const int SCREEN_HEIGHT = 750;
+// ------------------------ Macros -------------------------
+#define int long long int
+#define endl '\n'
+#define all(x) (x).begin(), (x).end()
+#define INF 1e18
+#define ff first
+#define ss second
 
-const int arrSize = 130;
-const int rectSize = 7;
+// ---------------------- Debug Functions -------------------------
+#define p(x)            \
+    cout << #x << ": "; \
+    _print(x);          \
+    cout << endl;
+void _print(int t) { cout << t; }
+void _print(string t) { cout << t; }
+void _print(char t) { cout << t; }
+void _print(double t) { cout << t; }
 
-int arr[arrSize];
-int Barr[arrSize];
-
-SDL_Window *window = NULL;
-SDL_Renderer *renderer = NULL;
-
-bool complete = false;
-
-bool init()
+template <class T, class V>
+void _print(pair<T, V> p);
+template <class T>
+void _print(vector<T> v);
+template <class T>
+void _print(set<T> v);
+template <class T, class V>
+void _print(map<T, V> v);
+template <class T, class V>
+void _print(multimap<T, V> v);
+template <class T>
+void _print(multiset<T> v);
+template <class T, class V>
+void _print(pair<T, V> p)
 {
-    bool success = true;
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    cout << "{";
+    _print(p.ff);
+    cout << ",";
+    _print(p.ss);
+    cout << "}";
+}
+template <class T>
+void _print(vector<T> v)
+{
+    cout << "[ ";
+    for (T i : v)
     {
-        cout << "Couldn't initialize SDL. SDL_Error: " << SDL_GetError();
-        success = false;
+        _print(i);
+        cout << " ";
     }
-    else
+    cout << "]";
+}
+template <class T>
+void _print(set<T> v)
+{
+    cout << "[ ";
+    for (T i : v)
     {
-        if (!(SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")))
-        {
-            cout << "Warning: Linear Texture Filtering not enabled.\n";
-        }
-
-        window = SDL_CreateWindow("Sorting Visualizer", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-        if (window == NULL)
-        {
-            cout << "Couldn't create window. SDL_Error: " << SDL_GetError();
-            success = false;
-        }
-        else
-        {
-            renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-            if (renderer == NULL)
-            {
-                cout << "Couldn't create renderer. SDL_Error: " << SDL_GetError();
-                success = false;
-            }
-        }
+        _print(i);
+        cout << " ";
     }
-
-    return success;
+    cout << "]";
+}
+template <class T>
+void _print(multiset<T> v)
+{
+    cout << "[ ";
+    for (T i : v)
+    {
+        _print(i);
+        cout << " ";
+    }
+    cout << "]";
+}
+template <class T, class V>
+void _print(map<T, V> v)
+{
+    cout << "[ ";
+    for (auto i : v)
+    {
+        _print(i);
+        cout << " ";
+    }
+    cout << "]";
+}
+template <class T, class V>
+void _print(multimap<T, V> v)
+{
+    cout << "[ ";
+    for (auto i : v)
+    {
+        _print(i);
+        cout << " ";
+    }
+    cout << "]";
 }
 
-void close()
+// ----------------- Helper Functions ---------------------
+
+int expo(int a, int b, int mod)
 {
-    SDL_DestroyRenderer(renderer);
-    renderer = NULL;
-
-    SDL_DestroyWindow(window);
-    window = NULL;
-
-    SDL_Quit();
+    int res = 1;
+    while (b > 0)
+    {
+        if (b & 1)
+            res = (res * a) % mod;
+        a = (a * a) % mod;
+        b = b >> 1;
+    }
+    return res;
 }
 
-void visualize(int x = -1, int y = -1, int z = -1)
+int gcd(int a, int b)
 {
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-    SDL_RenderClear(renderer);
-
-    int j = 0;
-    for (int i = 0; i <= SCREEN_WIDTH - rectSize; i += rectSize)
+    if (b > a)
     {
-        SDL_PumpEvents();
-
-        SDL_Rect rect = {i, 0, rectSize, arr[j]};
-        if (complete)
-        {
-            SDL_SetRenderDrawColor(renderer, 100, 180, 100, 0);
-            SDL_RenderDrawRect(renderer, &rect);
-        }
-        else if (j == x || j == z)
-        {
-            SDL_SetRenderDrawColor(renderer, 100, 180, 100, 0);
-            SDL_RenderFillRect(renderer, &rect);
-        }
-        else if (j == y)
-        {
-            SDL_SetRenderDrawColor(renderer, 165, 105, 189, 0);
-            SDL_RenderFillRect(renderer, &rect);
-        }
-        else
-        {
-            SDL_SetRenderDrawColor(renderer, 170, 183, 184, 0);
-            SDL_RenderDrawRect(renderer, &rect);
-        }
-        j++;
+        return gcd(b, a);
     }
-    SDL_RenderPresent(renderer);
+    if (b == 0)
+    {
+        return a;
+    }
+    return gcd(b, a % b);
 }
 
-void inplaceHeapSort(int *input, int n)
+void extendgcd(int a, int b, int *v)
 {
-    for (int i = 1; i < n; i++)
+    if (b == 0)
     {
-        int childIndex = i;
-        int parentIndex = (childIndex - 1) / 2;
-
-        while (childIndex > 0)
-        {
-            if (input[childIndex] > input[parentIndex])
-            {
-                int temp = input[parentIndex];
-                input[parentIndex] = input[childIndex];
-                input[childIndex] = temp;
-            }
-            else
-            {
-                break;
-            }
-
-            visualize(parentIndex, childIndex);
-            SDL_Delay(40);
-
-            childIndex = parentIndex;
-            parentIndex = (childIndex - 1) / 2;
-        }
-    }
-
-    for (int heapLast = n - 1; heapLast >= 0; heapLast--)
-    {
-        int temp = input[0];
-        input[0] = input[heapLast];
-        input[heapLast] = temp;
-
-        int parentIndex = 0;
-        int leftChildIndex = 2 * parentIndex + 1;
-        int rightChildIndex = 2 * parentIndex + 2;
-
-        while (leftChildIndex < heapLast)
-        {
-            int maxIndex = parentIndex;
-
-            if (input[leftChildIndex] > input[maxIndex])
-            {
-                maxIndex = leftChildIndex;
-            }
-            if (rightChildIndex < heapLast && input[rightChildIndex] > input[maxIndex])
-            {
-                maxIndex = rightChildIndex;
-            }
-            if (maxIndex == parentIndex)
-            {
-                break;
-            }
-
-            int temp = input[parentIndex];
-            input[parentIndex] = input[maxIndex];
-            input[maxIndex] = temp;
-
-            visualize(maxIndex, parentIndex, heapLast);
-            SDL_Delay(40);
-
-            parentIndex = maxIndex;
-            leftChildIndex = 2 * parentIndex + 1;
-            rightChildIndex = 2 * parentIndex + 2;
-        }
-    }
-}
-
-int partition_array(int a[], int si, int ei)
-{
-    int count_small = 0;
-
-    for (int i = (si + 1); i <= ei; i++)
-    {
-        if (a[i] <= a[si])
-        {
-            count_small++;
-        }
-    }
-    int c = si + count_small;
-    int temp = a[c];
-    a[c] = a[si];
-    a[si] = temp;
-    visualize(c, si);
-
-    int i = si, j = ei;
-
-    while (i < c && j > c)
-    {
-        if (a[i] <= a[c])
-        {
-            i++;
-        }
-        else if (a[j] > a[c])
-        {
-            j--;
-        }
-        else
-        {
-            int temp_1 = a[j];
-            a[j] = a[i];
-            a[i] = temp_1;
-
-            visualize(i, j);
-            SDL_Delay(70);
-
-            i++;
-            j--;
-        }
-    }
-    return c;
-}
-
-void quickSort(int a[], int si, int ei)
-{
-    if (si >= ei)
-    {
+        v[0] = 1;
+        v[1] = 0;
+        v[2] = a;
         return;
     }
+    extendgcd(b, a % b, v);
+    int x = v[1];
+    v[1] = v[0] - v[1] * (a / b);
+    v[0] = x;
+    return;
+} // pass an arry of size1 3
 
-    int c = partition_array(a, si, ei);
-    quickSort(a, si, c - 1);
-    quickSort(a, c + 1, ei);
-}
-
-void merge2SortedArrays(int a[], int si, int ei)
+int mminv(int a, int b)
 {
-    int size_output = (ei - si) + 1;
-    int *output = new int[size_output];
+    int arr[3];
+    extendgcd(a, b, arr);
+    return arr[0];
+} // for non prime b
+int mminvprime(int a, int b) { return expo(a, b - 2, b); }
+int mod_add(int a, int b, int m)
+{
+    a = a % m;
+    b = b % m;
+    return (((a + b) % m) + m) % m;
+}
+int mod_mul(int a, int b, int m)
+{
+    a = a % m;
+    b = b % m;
+    return (((a * b) % m) + m) % m;
+}
+int mod_sub(int a, int b, int m)
+{
+    a = a % m;
+    b = b % m;
+    return (((a - b) % m) + m) % m;
+}
+int mod_div(int a, int b, int m)
+{
+    a = a % m;
+    b = b % m;
+    return (mod_mul(a, mminvprime(b, m), m) + m) % m;
+} // only for prime m
 
-    int mid = (si + ei) / 2;
-    int i = si, j = mid + 1, k = 0;
-    while (i <= mid && j <= ei)
+int phin(int n)
+{
+    int number = n;
+    if (n % 2 == 0)
     {
-        if (a[i] <= a[j])
+        number /= 2;
+        while (n % 2 == 0)
+            n /= 2;
+    }
+    for (int i = 3; i <= sqrt(n); i += 2)
+    {
+        if (n % i == 0)
         {
-            output[k] = a[i];
-            visualize(i, j);
-            i++;
-            k++;
+            while (n % i == 0)
+                n /= i;
+            number = (number / i * (i - 1));
         }
-        else
-        {
-            output[k] = a[j];
-            visualize(i, j);
-            j++;
-            k++;
-        }
     }
-    while (i <= mid)
-    {
-        output[k] = a[i];
-        visualize(-1, i);
-        i++;
-        k++;
-    }
-    while (j <= ei)
-    {
-        output[k] = a[j];
-        visualize(-1, j);
-        j++;
-        k++;
-    }
-    int x = 0;
-    for (int l = si; l <= ei; l++)
-    {
-        a[l] = output[x];
-        visualize(l);
-        SDL_Delay(15);
-        x++;
-    }
-    delete[] output;
-}
+    if (n > 1)
+        number = (number / n * (n - 1));
+    return number;
+} // O(sqrt(N))
 
-void mergeSort(int a[], int si, int ei)
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+int getRandomNumber(int l, int r) { return uniform_int_distribution<int>(l, r)(rng); }
+
+// Seive Algo -------------------
+const int NN = 1e6 + 7;
+vector<bool> isPrime(NN, true);
+void seiveAlgo()
 {
-    if (si >= ei)
+    isPrime[0] = isPrime[1] = false;
+    for (int i = 2; i < NN; i++)
     {
-        return;
-    }
-    int mid = (si + ei) / 2;
-
-    mergeSort(a, si, mid);
-    mergeSort(a, mid + 1, ei);
-
-    merge2SortedArrays(a, si, ei);
-}
-
-void bubbleSort()
-{
-    for (int i = 0; i < arrSize - 1; i++)
-    {
-        for (int j = 0; j < arrSize - 1 - i; j++)
+        if (isPrime[i] == true)
         {
-            if (arr[j + 1] < arr[j])
+            for (int j = 2 * i; j < NN; j += i)
             {
-                int temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-
-                visualize(j + 1, j, arrSize - i);
+                isPrime[j] = false;
             }
-            SDL_Delay(1);
         }
     }
 }
 
-void insertionSort()
+int __lcm(int a, int b)
 {
-    for (int i = 1; i < arrSize; i++)
-    {
-        int j = i - 1;
-        int temp = arr[i];
-        while (j >= 0 && arr[j] > temp)
-        {
-            arr[j + 1] = arr[j];
-            j--;
-
-            visualize(i, j + 1);
-            SDL_Delay(5);
-        }
-        arr[j + 1] = temp;
-    }
+    return (a * b) / gcd(a, b);
 }
 
-void selectionSort()
+int mex(vector<int> &v)
 {
-    int minIndex;
-    for (int i = 0; i < arrSize - 1; i++)
+    int num = 0;
+    set<int> st(all(v));
+    bool c = 0;
+    for (auto &i : st)
     {
-        minIndex = i;
-        for (int j = i + 1; j < arrSize; j++)
+        if (i != num)
         {
-            if (arr[j] < arr[minIndex])
+            return num;
+        }
+        num++;
+    }
+    return num;
+}
+
+vector<int> spf(100100 + 7);
+void BeforePrimeFactorisation()
+{
+    int N = 100100 + 7;
+    for (int i = 0; i < N; i++)
+        spf[i] = i;
+
+    for (int i = 2; i < N; i++)
+    {
+        for (int j = 2 * i; j < N; j += i)
+        {
+            if (spf[j] == j)
+                spf[j] = i;
+        }
+    }
+}
+map<int, int> primeFactorisation(int n) // run Pre-requisite function
+{
+    // vector<int> ans; // for unique prime factors
+    map<int, int> mp;
+
+    while (n > 1)
+    {
+        int x = spf[n];
+        while (n % x == 0)
+        {
+            mp[x]++;
+            n /= x;
+        }
+        // ans.push_back(x);
+    }
+    // return ans;
+    return mp;
+}
+/*------ Bas itna hi krna tha scroll -------*/
+
+int again(vector<int> &v, int &size, int p)
+{
+    int s = 0;
+    int e = 0;
+    int currSum = v[0];
+    int num = LLONG_MAX;
+    int start = 0;
+    int nn = v.size();
+    while (e < v.size())
+    {
+
+        while (s < v.size() && currSum >= p)
+        {
+            int size = e - s + 1;
+            if (size < num)
             {
-                minIndex = j;
-                visualize(i, minIndex);
+                start = s;
+                num = size;
             }
-            SDL_Delay(1);
+            currSum -= v[s];
+            s++;
         }
-        int temp = arr[i];
-        arr[i] = arr[minIndex];
-        arr[minIndex] = temp;
-    }
-}
-
-void loadArr()
-{
-    memcpy(arr, Barr, sizeof(int) * arrSize);
-}
-
-void randomizeAndSaveArray()
-{
-    unsigned int seed = (unsigned)time(NULL);
-    srand(seed);
-    for (int i = 0; i < arrSize; i++)
-    {
-        int random = rand() % (SCREEN_HEIGHT);
-        Barr[i] = random;
-    }
-}
-
-void execute()
-{
-    if (!init())
-    {
-        cout << "SDL Initialization Failed.\n";
-    }
-    else
-    {
-        randomizeAndSaveArray();
-        loadArr();
-
-        SDL_Event e;
-        bool quit = false;
-        while (!quit)
+        if (currSum < p)
         {
-            while (SDL_PollEvent(&e) != 0)
-            {
-                if (e.type == SDL_QUIT)
-                {
-                    quit = true;
-                    complete = false;
-                }
-                else if (e.type == SDL_KEYDOWN)
-                {
-                    switch (e.key.keysym.sym)
-                    {
-                    case (SDLK_q):
-                        quit = true;
-                        complete = false;
-                        cout << "\nEXITING SORTING VISUALIZER.\n";
-                        break;
-                    case (SDLK_0):
-                        randomizeAndSaveArray();
-                        complete = false;
-                        loadArr();
-                        cout << "\nNEW RANDOM LIST GENERATED.\n";
-                        break;
-                    case (SDLK_1):
-                        loadArr();
-                        cout << "\nSELECTION SORT STARTED.\n";
-                        complete = false;
-                        selectionSort();
-                        complete = true;
-                        cout << "\nSELECTION SORT COMPLETE.\n";
-                        break;
-                    case (SDLK_2):
-                        loadArr();
-                        cout << "\nINSERTION SORT STARTED.\n";
-                        complete = false;
-                        insertionSort();
-                        complete = true;
-                        cout << "\nINSERTION SORT COMPLETE.\n";
-                        break;
-                    case (SDLK_3):
-                        loadArr();
-                        cout << "\nBUBBLE SORT STARTED.\n";
-                        complete = false;
-                        bubbleSort();
-                        complete = true;
-                        cout << "\nBUBBLE SORT COMPLETE.\n";
-                        break;
-                    case (SDLK_4):
-                        loadArr();
-                        cout << "\nMERGE SORT STARTED.\n";
-                        complete = false;
-                        mergeSort(arr, 0, arrSize - 1);
-                        complete = true;
-                        cout << "\nMERGE SORT COMPLETE.\n";
-                        break;
-                    case (SDLK_5):
-                        loadArr();
-                        cout << "\nQUICK SORT STARTED.\n";
-                        complete = false;
-                        quickSort(arr, 0, arrSize - 1);
-                        complete = true;
-                        cout << "\nQUICK SORT COMPLETE.\n";
-                        break;
-                    case (SDLK_6):
-                        loadArr();
-                        cout << "\nHEAP SORT STARTED.\n";
-                        complete = false;
-                        inplaceHeapSort(arr, arrSize);
-                        complete = true;
-                        cout << "\nHEAP SORT COMPLETE.\n";
-                        break;
-                    }
-                }
-            }
-            visualize();
+            e++;
+            currSum += v[e];
         }
-        close();
-    }
-}
-
-bool controls()
-{
-    cout << "WARNING: Giving repetitive commands may cause latency and the visualizer may behave unexpectedly. Please give a new command only after the current command's execution is done.\n\n"
-         << "Available Controls inside Sorting Visualizer:-\n"
-         << "    Use 0 to Generate a different randomized list.\n"
-         << "    Use 1 to start Selection Sort Algorithm.\n"
-         << "    Use 2 to start Insertion Sort Algorithm.\n"
-         << "    Use 3 to start Bubble Sort Algorithm.\n"
-         << "    Use 4 to start Merge Sort Algorithm.\n"
-         << "    Use 5 to start Quick Sort Algorithm.\n"
-         << "    Use 6 to start Heap Sort Algorithm.\n"
-         << "    Use q to exit out of Sorting Visualizer\n\n"
-         << "PRESS ENTER TO START SORTING VISUALIZER...\n\n"
-         << "Or type -1 and press ENTER to quit the program.";
-
-    string s;
-    getline(cin, s);
-    if (s == "-1")
-    {
-        return false;
-    }
-    // else if(s=="\n")
-    //{
-    //     return true;
-    // }
-    return true;
-}
-
-void intro()
-{
-    cout << "==============================Sorting Visualizer==============================\n\n"
-         << "Visualization of different sorting algorithms in C++ with SDL2 Library. A sorting algorithm is an algorithm that puts the elements of a list in a certain order. While there are a large number of sorting algorithms, in practical implementations a few algorithms predominate.\n"
-         << "In this implementation of sorting visualizer, we'll be looking at some of these sorting algorithms and visually comprehend their working.\n"
-         << "The sorting algorithms covered here are Selection Sort, Insertion Sort, Bubble Sort, Merge Sort, Quick Sort and Heap Sort.\n"
-         << "The list size is fixed to 130 elements. You can randomize the list and select any type of sorting algorithm to call on the list from the given options. Here, all sorting algorithms will sort the elements in ascending order. The sorting time being visualized for an algorithm is not exactly same as their actual time complexities. The relatively faster algorithms like Merge Sort, etc. have been delayed so that they could be properly visualized.\n\n"
-         << "Press ENTER to show controls...";
-
-    string s;
-    getline(cin, s);
-    if (s == "\n")
-    {
-        return;
-    }
-}
-
-int main(int argc, char *args[])
-{
-    intro();
-
-    while (1)
-    {
-        cout << '\n';
-        if (controls())
-            execute();
-        else
-        {
-            cout << "\nEXITING PROGRAM.\n";
+        if (s > e)
             break;
-        }
     }
+    size += num;
+    return start + 1;
+}
 
+void solvee()
+{
+    int n, p;
+    cin >> n >> p;
+    vector<int> v(n);
+    int sum = 0;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> v[i];
+        sum += v[i];
+    }
+    int k = 0;
+    for (int i = 0; i < n; i++)
+    {
+        v.push_back(v[k++]);
+    }
+    // p(v);
+    int s = 0;
+    int e = 0;
+    int currSum = v[0];
+    int num = LLONG_MAX;
+    int start = 0;
+    int nn = v.size();
+    while (e < v.size())
+    {
+
+        while (s < v.size() && currSum >= p)
+        {
+            int size = e - s + 1;
+            if (size < num)
+            {
+                start = s;
+                num = size;
+            }
+            currSum -= v[s];
+            s++;
+        }
+        if (currSum < p)
+        {
+            e++;
+            if (e < nn)
+                currSum += v[e];
+        }
+        if (s > e)
+            break;
+    }
+    if (num == LLONG_MAX)
+    {
+        int size = (p / sum) * n;
+        int rem = p % sum;
+        int i = 0;
+        int st = again(v, size, rem);
+        // while (rem > 0)
+        // {
+        //     size++;
+        //     rem -= v[i++];
+        // }
+        cout << st << " ";
+        cout << size << endl;
+        return;
+    }
+    cout << start + 1 << " ";
+    cout << num << endl;
+}
+
+/*
+    - Read the problem twice (10 baariii)
+    - Try to prove yourself wrong
+    - int is mapped with long long int
+    - Check endl while doing interactive problems
+    - Check corner cases (out of bounds for loops)
+    - Revise the code
+*/
+
+signed main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+#ifndef ONLINE_JUDGE
+    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+#endif
+
+    // seiveAlgo();
+    // BeforePrimeFactorisation()
+
+    // int t;
+    // cin >> t;
+    // while (t--)
+    solvee();
     return 0;
 }

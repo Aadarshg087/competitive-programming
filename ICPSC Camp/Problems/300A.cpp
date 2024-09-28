@@ -197,73 +197,54 @@ void solvee()
 {
     int n;
     cin >> n;
-    int half = ((n * 2) + 1) / 2;
-    int first = half;
-    int second = half;
-    for (int row = 0; row <= n; row++)
+    vector<int> v(n);
+    for (int i = 0; i < n; i++)
+        cin >> v[i];
+
+    int count = 0;
+    for (int i = 0; i < n; i++)
+        if (v[i] < 0)
+            count++;
+
+    bool c = 0;
+    if (count >= 3)
+        c = 1;
+    else
+        c = 0;
+
+    vector<int> first, second, third;
+    int t = 2;
+    for (int i = 0; i < n; i++)
     {
-        int ele = 0;
-        int mid = (first + second) / 2;
-        for (int i = 0; i <= 2 * n + 1; i++)
+        if (v[i] < 0 && first.empty())
         {
-            if (i >= first && i <= mid)
-            {
-                if (second - first == 0)
-                    cout << ele;
-                else if (i == mid)
-                    cout << ele-- << " ";
-                else
-                    cout << ele++ << " ";
-            }
-            else if (i > mid && i <= second)
-            {
-                if (i == second)
-                    cout << ele--;
-                else
-                    cout << ele-- << " ";
-            }
-            else if (i < first)
-                cout << " " << " ";
+            first.push_back(v[i]);
+            count--;
+            continue;
         }
-        cout << endl;
 
-        first -= 1;
-        second += 1;
-    }
-
-    first += 2;
-    second -= 2;
-
-    for (int row = 0; row <= n - 1; row++)
-    {
-        int ele = 0;
-        int mid = (first + second) / 2;
-        for (int i = 0; i <= 2 * n + 1; i++)
+        if ((v[i] < 0 && t > 0 && c) || (v[i] > 0))
         {
-            if (i >= first && i <= mid)
-            {
-                if (second - first == 0)
-                    cout << ele;
-                else if (i == mid)
-                    cout << ele-- << " ";
-                else
-                    cout << ele++ << " ";
-            }
-            else if (i > mid && i <= second)
-            {
-                if (i == second)
-                    cout << ele--;
-                else
-                    cout << ele-- << " ";   
-            }
-            else if (i < first)
-                cout << " " << " ";
+            count--;
+            if (v[i] < 0)
+                t--;
+            second.push_back(v[i]);
         }
-        cout << endl;
-
-        first += 1;
-        second -= 1;
+        else
+            third.push_back(v[i]);
     }
+    cout << first.size() << " ";
+    for (auto it : first)
+        cout << it << " ";
+    cout << endl;
+    cout << second.size() << " ";
+    for (auto it : second)
+        cout << it << " ";
+    cout << endl;
+    cout << third.size() << " ";
+    for (auto it : third)
+        cout << it << " ";
+    cout << endl;
 }
 
 /*

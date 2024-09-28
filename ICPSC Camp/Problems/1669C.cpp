@@ -96,6 +96,105 @@ void _print(multimap<T, V> v)
     cout << "]";
 }
 
+// ----------------- Helper Functions ---------------------
+
+int expo(int a, int b, int mod)
+{
+    int res = 1;
+    while (b > 0)
+    {
+        if (b & 1)
+            res = (res * a) % mod;
+        a = (a * a) % mod;
+        b = b >> 1;
+    }
+    return res;
+}
+
+int gcd(int a, int b)
+{
+    if (b > a)
+    {
+        return gcd(b, a);
+    }
+    if (b == 0)
+    {
+        return a;
+    }
+    return gcd(b, a % b);
+}
+
+void extendgcd(int a, int b, int *v)
+{
+    if (b == 0)
+    {
+        v[0] = 1;
+        v[1] = 0;
+        v[2] = a;
+        return;
+    }
+    extendgcd(b, a % b, v);
+    int x = v[1];
+    v[1] = v[0] - v[1] * (a / b);
+    v[0] = x;
+    return;
+} // pass an arry of size1 3
+
+int mminv(int a, int b)
+{
+    int arr[3];
+    extendgcd(a, b, arr);
+    return arr[0];
+} // for non prime b
+int mminvprime(int a, int b) { return expo(a, b - 2, b); }
+int mod_add(int a, int b, int m)
+{
+    a = a % m;
+    b = b % m;
+    return (((a + b) % m) + m) % m;
+}
+int mod_mul(int a, int b, int m)
+{
+    a = a % m;
+    b = b % m;
+    return (((a * b) % m) + m) % m;
+}
+int mod_sub(int a, int b, int m)
+{
+    a = a % m;
+    b = b % m;
+    return (((a - b) % m) + m) % m;
+}
+int mod_div(int a, int b, int m)
+{
+    a = a % m;
+    b = b % m;
+    return (mod_mul(a, mminvprime(b, m), m) + m) % m;
+} // only for prime m
+
+int phin(int n)
+{
+    int number = n;
+    if (n % 2 == 0)
+    {
+        number /= 2;
+        while (n % 2 == 0)
+            n /= 2;
+    }
+    for (int i = 3; i <= sqrt(n); i += 2)
+    {
+        if (n % i == 0)
+        {
+            while (n % i == 0)
+                n /= i;
+            number = (number / i * (i - 1));
+        }
+    }
+    if (n > 1)
+        number = (number / n * (n - 1));
+    return number;
+} // O(sqrt(N))
+
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 int getRandomNumber(int l, int r) { return uniform_int_distribution<int>(l, r)(rng); }
 
@@ -117,29 +216,9 @@ void seiveAlgo()
     }
 }
 
-// Binary Exponentiation - (Check MOD Value) -------------------
-int BinaryExpoRecur(int a, int p)
-{
-    const int mod = 1e9 + 7;
-    if (p == 0)
-        return 1;
-    if (p == 1)
-        return a;
-    int ans = BinaryExpoRecur(a, p / 2);
-    if (p & 1)
-    {
-        return (((ans * ans) % mod) * a) % mod;
-    }
-    else
-    {
-        return (ans * ans) % mod;
-    }
-    return ans;
-}
-
 int __lcm(int a, int b)
 {
-    return (a * b) / __gcd(a, b);
+    return (a * b) / gcd(a, b);
 }
 
 int mex(vector<int> &v)
@@ -192,82 +271,37 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     // return ans;
     return mp;
 }
+/*------ Bas itna hi krna tha scroll -------*/
 
 void solvee()
 {
     int n;
     cin >> n;
-    int half = ((n * 2) + 1) / 2;
-    int first = half;
-    int second = half;
-    for (int row = 0; row <= n; row++)
+    vector<int> v(n);
+    for (int i = 0; i < n; i++)
     {
-        int ele = 0;
-        int mid = (first + second) / 2;
-        for (int i = 0; i <= 2 * n + 1; i++)
-        {
-            if (i >= first && i <= mid)
-            {
-                if (second - first == 0)
-                    cout << ele;
-                else if (i == mid)
-                    cout << ele-- << " ";
-                else
-                    cout << ele++ << " ";
-            }
-            else if (i > mid && i <= second)
-            {
-                if (i == second)
-                    cout << ele--;
-                else
-                    cout << ele-- << " ";
-            }
-            else if (i < first)
-                cout << " " << " ";
-        }
-        cout << endl;
-
-        first -= 1;
-        second += 1;
+        cin >> v[i];
     }
-
-    first += 2;
-    second -= 2;
-
-    for (int row = 0; row <= n - 1; row++)
+    int parity = (v[0] & 1);
+    int parity2 = (v[1] & 1);
+    for (int i = 0; i < n; i += 2)
     {
-        int ele = 0;
-        int mid = (first + second) / 2;
-        for (int i = 0; i <= 2 * n + 1; i++)
+        if ((v[i] & 1) != parity)
         {
-            if (i >= first && i <= mid)
-            {
-                if (second - first == 0)
-                    cout << ele;
-                else if (i == mid)
-                    cout << ele-- << " ";
-                else
-                    cout << ele++ << " ";
-            }
-            else if (i > mid && i <= second)
-            {
-                if (i == second)
-                    cout << ele--;
-                else
-                    cout << ele-- << " ";   
-            }
-            else if (i < first)
-                cout << " " << " ";
+            cout << "NO" << endl;
+            return;
         }
-        cout << endl;
-
-        first += 1;
-        second -= 1;
+        if (i + 1 < n && (v[i + 1] & 1) != parity2)
+        {
+            cout << "NO" << endl;
+            return;
+        }
     }
+    cout << "YES" << endl;
 }
 
 /*
-    - Read the problem twice
+    - Read the problem twice (10 baariii)
     - Try to prove yourself wrong
     - int is mapped with long long int
     - Check endl while doing interactive problems
@@ -287,9 +321,9 @@ signed main()
     // seiveAlgo();
     // BeforePrimeFactorisation()
 
-    // int t;
-    // cin >> t;
-    // while (t--)
-    solvee();
+    int t;
+    cin >> t;
+    while (t--)
+        solvee();
     return 0;
 }

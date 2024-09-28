@@ -208,7 +208,9 @@ void solvee()
     p(v);
 
     /*
-    2, 2, 3, 3
+    2, 2, 3, 3 = 36
+    b = 18, a = 9
+
     a = 4, b = 9
     9 * 2 = 18, if this is not divisible by a then
     9 * 3 = 27, if

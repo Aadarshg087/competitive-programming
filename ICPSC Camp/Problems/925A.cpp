@@ -273,86 +273,103 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 }
 /*------ Bas itna hi krna tha scroll -------*/
 
-string convertToString(int n)
-{
-    string s = "";
-    int i = 32;
-    while (i >= 1)
-    {
-        if (n & i)
-        {
-            s.push_back('1');
-        }
-        else
-        {
-            if (s.size())
-                s.push_back('0');
-        }
-        i >>= 1;
-    }
-    cout << "Conversion to stirng: " << s << endl;
-    return s;
-}
-
-int convertToNumber(string s)
-{
-    int p = 0;
-    int n = s.size();
-    int ans = 0;
-    for (int i = n - 1; i >= 0; i--)
-    {
-        if (s[i] == '1')
-        {
-            ans += pow(2, p);
-        }
-        p++;
-    }
-    return ans;
-}
-
 void solvee()
 {
-    /*
-    Given a interger n, find the first valid number greater than or eqaul to n
-    valid number : there should be no consecutive ones in  binary representation of that
-    */
-    int n;
-    cin >> n;
-    string s = convertToString(n);
+    int n, m;
+    cin >> n >> m;
+    int ee, sss;
+    int v;
+    cin >> sss >> ee >> v;
+    vector<int> e(ee);
+    vector<int> s(sss);
+    int q;
 
-    int i = s.size() - 1;
-    int count = 0;
-    vector<int> v;
-    while (i >= 0)
+    for (int i = 0; i < sss; i++)
+        cin >> s[i];
+    for (int i = 0; i < ee; i++)
+        cin >> e[i];
+
+    cin >> q;
+    while (q--)
     {
-        if (s[i] == '1')
-            count++;
-        else
-            count = 0;
-        if (count >= 2)
-            v.push_back(i);
-        i--;
-    }
-    int size = s.size();
-    if (count >= 2)
-    {
-        s = "1";
-        for (int i = 0; i < size; i++)
+        int x1, y1, x2, y2;
+        cin >> x1 >> y1 >> x2 >> y2;
+        if (x1 == x2)
         {
-            s.push_back('0');
+            cout << abs(y1 - y2) << endl;
+            continue;
         }
-    }
-    else if (v.size())
-    {
-        int ind = *min_element(all(v));
-        s[ind] = '1';
-        for (int i = ind + 1; i < size; i++)
+        auto it = upper_bound(e.begin(), e.end(), y1);
+        int res = INT_MAX;
+        if (it != e.end())
         {
-            s[i] = '0';
+            int val = *it;
+            int dis = abs(x1 - x2);
+            res = min(res, abs(y1 - val) + abs(y2 - val) + (dis + v - 1) / v);
         }
+        if (it != e.begin())
+        {
+            int val = *prev(it);
+            int dis = abs(x1 - x2);
+            res = min(res, abs(y1 - val) + abs(y2 - val) + (dis + v - 1) / v);
+        }
+        it = upper_bound(s.begin(), s.end(), y1);
+        if (it != s.end())
+        {
+            int val = *it;
+            int dis = abs(x1 - x2);
+            res = min(res, abs(y1 - val) + abs(y2 - val) + dis);
+        }
+        if (it != s.begin())
+        {
+            int val = *prev(it);
+            int dis = abs(x1 - x2);
+            res = min(res, abs(y1 - val) + abs(y2 - val) + dis);
+        }
+        cout << res << endl;
     }
-    cout << "New string: " << s << endl;
-    cout << convertToNumber(s) << endl;
+    // while (q--)
+    // {
+    //     int x1, y1, x2, y2;
+    //     cin >> x1 >> y1 >> x2 >> y2;
+
+    //     if (x1 == x2)
+    //     {
+    //         cout << abs(y1 - y2) << endl;
+    //         continue;
+    //     }
+    //     auto it = upper_bound(all(e), y1);
+    //     int ans = LLONG_MAX;
+    //     if (it != e.end())
+    //     {
+    //         int right = *it;
+    //         int diff = abs(x2 - x1);
+    //         int dis = (diff + v - 1) / v;
+    //         ans = min(ans, abs(right - y1) + dis + abs(right - y2));
+    //     }
+    //     if (it != e.begin())
+    //     {
+    //         int left = *prev(it);
+    //         int diff = abs(x2 - x1);
+    //         int dis = (diff + v - 1) / v;
+    //         ans = min(ans, abs(y1 - left) + dis + abs(y2 - left));
+    //     }
+    //     it = upper_bound(all(s), y1);
+    //     if (it != s.end())
+    //     {
+    //         int right = *it;
+    //         int dis = abs(x2 - x1);
+    //         ans = min(ans, abs(y2 - right) + dis + abs(y1 - right));
+    //     }
+
+    //     if (it != s.begin())
+    //     {
+    //         int left = *prev(it);
+    //         int dis = abs(x2 - x1);
+    //         ans = min(ans, abs(y2 - left) + dis + abs(y1 - left));
+    //     }
+    //     cout << ans << endl;
+    // }
 }
 
 /*
@@ -376,9 +393,9 @@ signed main()
     // seiveAlgo();
     // BeforePrimeFactorisation()
 
-    int t;
-    cin >> t;
-    while (t--)
-        solvee();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    solvee();
     return 0;
 }
