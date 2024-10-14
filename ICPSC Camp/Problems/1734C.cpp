@@ -277,54 +277,38 @@ void solvee()
 {
     int n;
     cin >> n;
-    vector<int> v(n);
-    for (int i = 0; i < n; i++)
+    // vector<int> s(n + 1);
+    vector<int> t(n + 1);
+    string st;
+    cin >> st;
+    for (int i = 0; i < st.size(); i++)
     {
-        cin >> v[i];
-    }
-    int g1 = v[0];
-    for (int i = 0; i < n; i += 2)
-        g1 = gcd(g1, v[i]);
-    int g2 = v[1];
-    for (int i = 1; i < n; i += 2)
-        g2 = gcd(g2, v[i]);
-    // p(g1);
-    // p(g2);
-    bool c = 0;
-    if (g1 > 1)
-    {
-        for (int i = 1; i < n; i += 2)
+        if (st[i] == '0')
         {
-            if (v[i] % g1 == 0)
+            t[i + 1] = 0;
+        }
+        else
+            t[i + 1] = 1;
+    }
+    // p(t);
+    int count = 0;
+    for (int i = 1; i <= (n); i++)
+    {
+        for (int j = i; j < n + 1; j += i)
+        {
+            if (t[j] == 0)
             {
-                c = 1;
+                count += i;
+                t[j] = -1;
+            }
+            else if (t[j] == 1)
+            {
                 break;
             }
         }
-        if (c == 0)
-        {
-            cout << g1 << endl;
-            return;
-        }
+        // p(t);
     }
-    c = 0;
-    if (g2 > 1)
-    {
-        for (int i = 0; i < n; i += 2)
-        {
-            if (v[i] % g2 == 0)
-            {
-                c = 1;
-                break;
-            }
-        }
-        if (c == 0)
-        {
-            cout << g2 << endl;
-            return;
-        }
-    }
-    cout << 0 << endl;
+    cout << count << endl;
 }
 
 /*
@@ -346,7 +330,7 @@ signed main()
     // #endif
 
     // seiveAlgo();
-    BeforePrimeFactorisation();
+    // BeforePrimeFactorisation()
 
     int t;
     cin >> t;

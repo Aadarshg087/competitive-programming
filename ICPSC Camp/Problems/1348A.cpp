@@ -272,59 +272,38 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     return mp;
 }
 /*------ Bas itna hi krna tha scroll -------*/
-
+vector<int> w(30, 0);
+void pre()
+{
+    for (int i = 0; i < 30; i++)
+    {
+        w[i] = (1 << (i + 1));
+    }
+}
 void solvee()
 {
     int n;
     cin >> n;
-    vector<int> v(n);
-    for (int i = 0; i < n; i++)
+    vector<int> v(n, 2);
+    for (int i = 1; i < n; i++)
     {
-        cin >> v[i];
+        v[i] = v[i - 1] * 2;
     }
-    int g1 = v[0];
-    for (int i = 0; i < n; i += 2)
-        g1 = gcd(g1, v[i]);
-    int g2 = v[1];
-    for (int i = 1; i < n; i += 2)
-        g2 = gcd(g2, v[i]);
-    // p(g1);
-    // p(g2);
-    bool c = 0;
-    if (g1 > 1)
+
+    int elements = n / 2 - 1;
+    int ind = elements;
+    int first = v[n - 1];
+    for (int i = 0; i < elements; i++)
     {
-        for (int i = 1; i < n; i += 2)
-        {
-            if (v[i] % g1 == 0)
-            {
-                c = 1;
-                break;
-            }
-        }
-        if (c == 0)
-        {
-            cout << g1 << endl;
-            return;
-        }
+        first += v[i];
     }
-    c = 0;
-    if (g2 > 1)
+    int second = 0;
+    for (int i = ind; i < n - 1; i++)
     {
-        for (int i = 0; i < n; i += 2)
-        {
-            if (v[i] % g2 == 0)
-            {
-                c = 1;
-                break;
-            }
-        }
-        if (c == 0)
-        {
-            cout << g2 << endl;
-            return;
-        }
+        second += v[i];
     }
-    cout << 0 << endl;
+
+    cout << abs(first - second) << endl;
 }
 
 /*
@@ -346,8 +325,8 @@ signed main()
     // #endif
 
     // seiveAlgo();
-    BeforePrimeFactorisation();
-
+    // BeforePrimeFactorisation()
+    pre();
     int t;
     cin >> t;
     while (t--)

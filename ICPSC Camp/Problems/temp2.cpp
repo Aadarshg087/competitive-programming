@@ -273,103 +273,45 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 }
 /*------ Bas itna hi krna tha scroll -------*/
 
-int again(vector<int> &v, int &size, int p)
-{
-    int s = 0;
-    int e = 0;
-    int currSum = v[0];
-    int num = LLONG_MAX;
-    int start = 0;
-    int nn = v.size();
-    while (e < v.size())
-    {
-
-        while (s < v.size() && currSum >= p)
-        {
-            int size = e - s + 1;
-            if (size < num)
-            {
-                start = s;
-                num = size;
-            }
-            currSum -= v[s];
-            s++;
-        }
-        if (currSum < p)
-        {
-            e++;
-            currSum += v[e];
-        }
-        if (s > e)
-            break;
-    }
-    size += num;
-    return start + 1;
-}
-
 void solvee()
 {
-    int n, p;
-    cin >> n >> p;
-    vector<int> v(n);
-    int sum = 0;
-    for (int i = 0; i < n; i++)
-    {
-        cin >> v[i];
-        sum += v[i];
-    }
-    int k = 0;
-    for (int i = 0; i < n; i++)
-    {
-        v.push_back(v[k++]);
-    }
-    // p(v);
-    int s = 0;
-    int e = 0;
-    int currSum = v[0];
-    int num = LLONG_MAX;
-    int start = 0;
-    int nn = v.size();
-    while (e < v.size())
-    {
+    /*
+    Given N numbers
+    pick any subsequence and calculate (maxEle * maxEle) * minEle of subseq, let's call it cool subseq
 
-        while (s < v.size() && currSum >= p)
-        {
-            int size = e - s + 1;
-            if (size < num)
-            {
-                start = s;
-                num = size;
-            }
-            currSum -= v[s];
-            s++;
-        }
-        if (currSum < p)
-        {
-            e++;
-            if (e < nn)
-                currSum += v[e];
-        }
-        if (s > e)
-            break;
-    }
-    if (num == LLONG_MAX)
-    {
-        int size = (p / sum) * n;
-        int rem = p % sum;
-        int i = 0;
-        int st = again(v, size, rem);
-        // while (rem > 0)
-        // {
-        //     size++;
-        //     rem -= v[i++];
-        // }
-        cout << st << " ";
-        cout << size << endl;
-        return;
-    }
-    cout << start + 1 << " ";
-    cout << num << endl;
+    Find the sum of all possible subsequences
+
+    2, 4, 9
+
+    [2] - 2 * 2   * 2     --- a
+    [2,4] - 4 * 4    * 2 ---- b
+    [2,9] - 9 * 9    * 2 ---- c
+    [2 4 9] - 9 * 9  * 2 ---- d
+
+    use MOD = 1e9 + 7 along the way
+
+    find the sum of a + b + c + d ...
+
+    MOD = 1e9 + 7
+    1 <= N <= 1e5
+    1 <= a[i] <= 1e9
+
+    */
+   /*
+    MY APPROACH
+
+    
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   */
 }
 
 /*
@@ -386,16 +328,16 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-#ifndef ONLINE_JUDGE
-    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
-#endif
+    // #ifndef ONLINE_JUDGE
+    // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+    // #endif
 
     // seiveAlgo();
     // BeforePrimeFactorisation()
 
-    // int t;
-    // cin >> t;
-    // while (t--)
-    solvee();
+    int t;
+    cin >> t;
+    while (t--)
+        solvee();
     return 0;
 }

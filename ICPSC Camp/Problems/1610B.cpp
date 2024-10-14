@@ -272,6 +272,30 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     return mp;
 }
 /*------ Bas itna hi krna tha scroll -------*/
+bool check(vector<int> &v, int ele)
+{
+    vector<int> temp;
+    for (int i = 0; i < v.size(); i++)
+    {
+        if (v[i] != ele)
+        {
+            temp.push_back(v[i]);
+        }
+    }
+    bool ans = 1;
+    int i = 0;
+    int j = temp.size() - 1;
+    while (i < j)
+    {
+        if (temp[i] != temp[j])
+            return false;
+
+        i++;
+        j--;
+    }
+
+    return true;
+}
 
 void solvee()
 {
@@ -282,49 +306,27 @@ void solvee()
     {
         cin >> v[i];
     }
-    int g1 = v[0];
-    for (int i = 0; i < n; i += 2)
-        g1 = gcd(g1, v[i]);
-    int g2 = v[1];
-    for (int i = 1; i < n; i += 2)
-        g2 = gcd(g2, v[i]);
-    // p(g1);
-    // p(g2);
-    bool c = 0;
-    if (g1 > 1)
+    if (n == 1)
     {
-        for (int i = 1; i < n; i += 2)
+        cout << "YES" << endl;
+        return;
+    }
+    int mid = ((n & 1) ? n / 2 : n / 2 - 1);
+    for (int i = 0; i <= mid; i++)
+    {
+        int ele = v[i];
+        if (ele != v[n - 1 - i])
         {
-            if (v[i] % g1 == 0)
+            if (check(v, v[n - i - 1]) || check(v, v[i]))
             {
-                c = 1;
-                break;
+                cout << "YES" << endl;
             }
-        }
-        if (c == 0)
-        {
-            cout << g1 << endl;
+            else
+                cout << "NO" << endl;
             return;
         }
     }
-    c = 0;
-    if (g2 > 1)
-    {
-        for (int i = 0; i < n; i += 2)
-        {
-            if (v[i] % g2 == 0)
-            {
-                c = 1;
-                break;
-            }
-        }
-        if (c == 0)
-        {
-            cout << g2 << endl;
-            return;
-        }
-    }
-    cout << 0 << endl;
+    cout << "YES" << endl;
 }
 
 /*
@@ -346,7 +348,7 @@ signed main()
     // #endif
 
     // seiveAlgo();
-    BeforePrimeFactorisation();
+    // BeforePrimeFactorisation()
 
     int t;
     cin >> t;

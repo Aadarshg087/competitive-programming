@@ -282,49 +282,25 @@ void solvee()
     {
         cin >> v[i];
     }
-    int g1 = v[0];
-    for (int i = 0; i < n; i += 2)
-        g1 = gcd(g1, v[i]);
-    int g2 = v[1];
+
+    int ans1 = 0;
+    int max1 = 0;
+    int count = 0;
     for (int i = 1; i < n; i += 2)
-        g2 = gcd(g2, v[i]);
-    // p(g1);
-    // p(g2);
-    bool c = 0;
-    if (g1 > 1)
     {
-        for (int i = 1; i < n; i += 2)
-        {
-            if (v[i] % g1 == 0)
-            {
-                c = 1;
-                break;
-            }
-        }
-        if (c == 0)
-        {
-            cout << g1 << endl;
-            return;
-        }
+        max1 = max(max1, v[i]);
+        count++;
     }
-    c = 0;
-    if (g2 > 1)
+    ans1 = max1 + count;
+    count = 0;
+    int max2 = 0;
+    for (int i = 0; i < n; i += 2)
     {
-        for (int i = 0; i < n; i += 2)
-        {
-            if (v[i] % g2 == 0)
-            {
-                c = 1;
-                break;
-            }
-        }
-        if (c == 0)
-        {
-            cout << g2 << endl;
-            return;
-        }
+        max2 = max(max2, v[i]);
+        count++;
     }
-    cout << 0 << endl;
+    int ans2 = count + max2;
+    cout << max(ans1, ans2) << endl;
 }
 
 /*
@@ -346,7 +322,7 @@ signed main()
     // #endif
 
     // seiveAlgo();
-    BeforePrimeFactorisation();
+    // BeforePrimeFactorisation()
 
     int t;
     cin >> t;

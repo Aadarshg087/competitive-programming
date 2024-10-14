@@ -277,54 +277,68 @@ void solvee()
 {
     int n;
     cin >> n;
-    vector<int> v(n);
+    vector<int> expense(n);
+    vector<int> limit(n);
     for (int i = 0; i < n; i++)
     {
-        cin >> v[i];
+        cin >> expense[i];
     }
-    int g1 = v[0];
-    for (int i = 0; i < n; i += 2)
-        g1 = gcd(g1, v[i]);
-    int g2 = v[1];
-    for (int i = 1; i < n; i += 2)
-        g2 = gcd(g2, v[i]);
-    // p(g1);
-    // p(g2);
-    bool c = 0;
-    if (g1 > 1)
+
+    for (int i = 0; i < n; i++)
     {
-        for (int i = 1; i < n; i += 2)
+        cin >> limit[i];
+    }
+
+    vector<vector<double>> v(n); // calc, expense, limit
+    for (int i = 0; i < n; i++)
+    {
+        double temp = (double)limit[i] / expense[i];
+        v[i] = {temp, (double)expense[i], (double)limit[i]};
+    }
+    sort(all(v), greater<vector<double>>());
+
+    int curr = 0;
+    int l = 0;
+    bool c = 1;
+    int ans = 0;
+    p(v);
+    int currChoose = 0;
+    for (int i = 0; i < n; i++)
+    {
+
+        if (curr + expense[i] <= l + limit[i])
         {
-            if (v[i] % g1 == 0)
+            if (currChoose < 2)
             {
-                c = 1;
-                break;
+                curr += expense[i];
+                l += limit[i];
+                currChoose++;
+            }
+            else
+            {
+                curr = 0;
+                l = 0;
+                currChoose = 0;
             }
         }
-        if (c == 0)
+        else
         {
-            cout << g1 << endl;
-            return;
-        }
-    }
-    c = 0;
-    if (g2 > 1)
-    {
-        for (int i = 0; i < n; i += 2)
-        {
-            if (v[i] % g2 == 0)
+            ans++;
+            currChoose = 0;
+            if (expense[i] <= limit[i])
             {
-                c = 1;
-                break;
+                curr = expense[i];
+                l = limit[i];
+                currChoose = 1;
+            }
+            else
+            {
+                curr = 0;
+                l = 0;
             }
         }
-        if (c == 0)
-        {
-            cout << g2 << endl;
-            return;
-        }
     }
-    cout << 0 << endl;
+    cout << ans << endl;
 }
 
 /*
@@ -346,7 +360,7 @@ signed main()
     // #endif
 
     // seiveAlgo();
-    BeforePrimeFactorisation();
+    // BeforePrimeFactorisation()
 
     int t;
     cin >> t;

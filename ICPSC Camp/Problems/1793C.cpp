@@ -278,53 +278,113 @@ void solvee()
     int n;
     cin >> n;
     vector<int> v(n);
+    set<int> st;
     for (int i = 0; i < n; i++)
     {
         cin >> v[i];
+        st.insert(v[i]);
     }
-    int g1 = v[0];
-    for (int i = 0; i < n; i += 2)
-        g1 = gcd(g1, v[i]);
-    int g2 = v[1];
-    for (int i = 1; i < n; i += 2)
-        g2 = gcd(g2, v[i]);
-    // p(g1);
-    // p(g2);
-    bool c = 0;
-    if (g1 > 1)
+    if (n >= 1 && n <= 3)
     {
-        for (int i = 1; i < n; i += 2)
+        cout << -1 << endl;
+        return;
+    }
+
+    int l = 0;
+    int r = n - 1;
+    while (l <= r)
+    {
+        if (r - l <= 2)
         {
-            if (v[i] % g1 == 0)
+            cout << -1 << endl;
+            break;
+        }
+        if (v[l] == *st.begin() || v[l] == *st.rbegin())
+        {
+            st.erase(v[l]);
+            l++;
+        }
+        else if (v[r] == *st.begin() || v[r] == *st.rbegin())
+        {
+            st.erase(v[r]);
+            r--;
+        }
+        else
+        {
+            cout << l + 1 << " " << r + 1 << endl;
+            break;
+        }
+    }
+
+    /*
+    vector<pair<int, int>> ind;
+    vector<pair<int, int>> ind2;
+
+    int f = 0;
+    int s = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (i + 1 < n && v[i] < v[i + 1])
+        {
+            s = i + 1;
+        }
+        else if (i + 1 < n)
+        {
+            ind.push_back({f, s});
+            f = i + 1;
+            s = i + 1;
+        }
+    }
+    ind.push_back({f, s});
+    f = 0;
+    s = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        if (i + 1 < n && v[i] > v[i + 1])
+        {
+            s = i + 1;
+        }
+        else if (i + 1 < n)
+        {
+            ind2.push_back({f, s});
+            f = i + 1;
+            s = i + 1;
+        }
+    }
+    ind2.push_back({f, s});
+    // p(ind);
+    // p(ind2);
+
+    for (auto it : ind)
+    {
+        int f = it.first;
+        int s = it.second;
+        if (f - 1 >= 0 && s + 1 < n && s - f >= 1)
+        {
+            if (v[f - 1] > v[f] && v[f - 1] < v[s] && v[s + 1] < v[s] && v[s + 1] > v[f])
             {
-                c = 1;
-                break;
+                cout << f - 1 + 1 << " " << s + 1 + 1 << endl;
+                return;
             }
         }
-        if (c == 0)
-        {
-            cout << g1 << endl;
-            return;
-        }
     }
-    c = 0;
-    if (g2 > 1)
+
+    for (auto it : ind2)
     {
-        for (int i = 0; i < n; i += 2)
+        int f = it.first;
+        int s = it.second;
+        if (f - 1 >= 0 && s + 1 < n)
         {
-            if (v[i] % g2 == 0)
+            if (v[f - 1] < v[f] && v[f - 1] > v[s] && v[s + 1] > v[s] && v[s + 1] < v[f])
             {
-                c = 1;
-                break;
+                cout << f - 1 + 1 << " " << s + 1 + 1 << endl;
+                return;
             }
         }
-        if (c == 0)
-        {
-            cout << g2 << endl;
-            return;
-        }
     }
-    cout << 0 << endl;
+    cout << -1 << endl;
+    */
 }
 
 /*
@@ -341,12 +401,12 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // #ifndef ONLINE_JUDGE
-    // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
-    // #endif
+#ifndef ONLINE_JUDGE
+    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+#endif
 
     // seiveAlgo();
-    BeforePrimeFactorisation();
+    // BeforePrimeFactorisation()
 
     int t;
     cin >> t;

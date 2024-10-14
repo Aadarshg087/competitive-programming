@@ -275,56 +275,39 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n;
-    cin >> n;
+    int n, q;
+    cin >> n >> q;
     vector<int> v(n);
+    map<int, set<int>> mp;
     for (int i = 0; i < n; i++)
     {
         cin >> v[i];
+        if (mp[v[i]].size() == 0)
+            mp[v[i]].insert(i);
     }
-    int g1 = v[0];
-    for (int i = 0; i < n; i += 2)
-        g1 = gcd(g1, v[i]);
-    int g2 = v[1];
-    for (int i = 1; i < n; i += 2)
-        g2 = gcd(g2, v[i]);
-    // p(g1);
-    // p(g2);
-    bool c = 0;
-    if (g1 > 1)
+    // p(mp);
+    int temp = 0;
+    while (q--)
     {
-        for (int i = 1; i < n; i += 2)
+        int c;
+        cin >> c;
+        int index = *mp[c].begin() + 1;
+        cout << index << " ";
+
+        mp.erase(c);
+        for (auto &it : mp)
         {
-            if (v[i] % g1 == 0)
+            if (*it.second.begin() < index - 1)
             {
-                c = 1;
-                break;
+                int ind = *it.second.begin() + 1;
+                it.second.clear();
+                it.second.insert(ind);
             }
         }
-        if (c == 0)
-        {
-            cout << g1 << endl;
-            return;
-        }
+        mp[c].insert(0);
+        // p(mp);
     }
-    c = 0;
-    if (g2 > 1)
-    {
-        for (int i = 0; i < n; i += 2)
-        {
-            if (v[i] % g2 == 0)
-            {
-                c = 1;
-                break;
-            }
-        }
-        if (c == 0)
-        {
-            cout << g2 << endl;
-            return;
-        }
-    }
-    cout << 0 << endl;
+    cout << endl;
 }
 
 /*
@@ -346,11 +329,11 @@ signed main()
     // #endif
 
     // seiveAlgo();
-    BeforePrimeFactorisation();
+    // BeforePrimeFactorisation()
 
-    int t;
-    cin >> t;
-    while (t--)
+    // int t;
+    // cin >> t;
+    // while (t--)
         solvee();
     return 0;
 }

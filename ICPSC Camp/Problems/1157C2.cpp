@@ -273,6 +273,31 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 }
 /*------ Bas itna hi krna tha scroll -------*/
 
+string find(int ind, vector<int> &v, int prev, int dir)
+{
+    string temp = "";
+    int n = v.size();
+    if (dir) // moves left
+    {
+        while (ind >= 0 && v[ind] > prev)
+        {
+            temp += "R";
+            prev = v[ind];
+            ind--;
+        }
+    }
+    else
+    {
+        while (ind < n && v[ind] > prev)
+        {
+            temp += "L";
+            prev = v[ind];
+            ind++;
+        }
+    }
+    return temp;
+}
+
 void solvee()
 {
     int n;
@@ -282,49 +307,67 @@ void solvee()
     {
         cin >> v[i];
     }
-    int g1 = v[0];
-    for (int i = 0; i < n; i += 2)
-        g1 = gcd(g1, v[i]);
-    int g2 = v[1];
-    for (int i = 1; i < n; i += 2)
-        g2 = gcd(g2, v[i]);
-    // p(g1);
-    // p(g2);
-    bool c = 0;
-    if (g1 > 1)
+
+    int l = 0;
+    int r = n - 1;
+    int prev = -1;
+    string ans = "";
+    while (l <= r)
     {
-        for (int i = 1; i < n; i += 2)
+        if (v[l] < v[r])
         {
-            if (v[i] % g1 == 0)
+            if (v[l] > prev)
             {
-                c = 1;
-                break;
+                ans += "L";
+                prev = v[l];
+                l++;
             }
+            else if (v[r] > prev)
+            {
+                ans += "R";
+                prev = v[r];
+                r--;
+            }
+            else
+                break;
         }
-        if (c == 0)
+        else if (v[l] > v[r])
         {
-            cout << g1 << endl;
-            return;
+            // cout << v[l] << " " << v[r] << " " << prev << endl;
+            if (v[r] > prev)
+            {
+                ans += "R";
+                prev = v[r];
+                r--;
+            }
+            else if (v[l] > prev)
+            {
+                ans += "L";
+                prev = v[l];
+                l++;
+            }
+            else
+                break;
+        }
+        else if (v[l] == v[r] && v[l] > prev)
+        {
+            string tempL = find(l, v, prev, 0);
+            string tempR = find(r, v, prev, 1);
+            string temp;
+            if (tempL.size() > tempR.size())
+                temp = string(tempL.size(), 'L');
+            else
+                temp = string(tempR.size(), 'R');
+            ans += temp;
+            break;
+        }
+        else
+        {
+            break;
         }
     }
-    c = 0;
-    if (g2 > 1)
-    {
-        for (int i = 0; i < n; i += 2)
-        {
-            if (v[i] % g2 == 0)
-            {
-                c = 1;
-                break;
-            }
-        }
-        if (c == 0)
-        {
-            cout << g2 << endl;
-            return;
-        }
-    }
-    cout << 0 << endl;
+    cout << ans.size() << endl;
+    cout << ans << endl;
 }
 
 /*
@@ -341,16 +384,16 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // #ifndef ONLINE_JUDGE
-    // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
-    // #endif
+#ifndef ONLINE_JUDGE
+    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+#endif
 
     // seiveAlgo();
-    BeforePrimeFactorisation();
+    // BeforePrimeFactorisation()
 
-    int t;
-    cin >> t;
-    while (t--)
-        solvee();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    solvee();
     return 0;
 }

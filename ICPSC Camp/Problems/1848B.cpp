@@ -275,56 +275,53 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n;
-    cin >> n;
+    int n, k;
+    cin >> n >> k;
     vector<int> v(n);
     for (int i = 0; i < n; i++)
     {
         cin >> v[i];
     }
-    int g1 = v[0];
-    for (int i = 0; i < n; i += 2)
-        g1 = gcd(g1, v[i]);
-    int g2 = v[1];
-    for (int i = 1; i < n; i += 2)
-        g2 = gcd(g2, v[i]);
-    // p(g1);
-    // p(g2);
-    bool c = 0;
-    if (g1 > 1)
+
+    vector<vector<int>> pp(k + 1, {0, 0, -1}); // maxDis, secondMaxDis, prevInd
+    for (int i = 0; i < n; i++)
     {
-        for (int i = 1; i < n; i += 2)
+        int dis = i - pp[v[i]][2] - 1;
+        pp[v[i]][2] = i;
+        if (dis > pp[v[i]][0])
         {
-            if (v[i] % g1 == 0)
-            {
-                c = 1;
-                break;
-            }
+            pp[v[i]][1] = pp[v[i]][0]; // updating second max
+            pp[v[i]][0] = dis;         // new max
         }
-        if (c == 0)
+        else if (dis > pp[v[i]][1]) // got new second max
         {
-            cout << g1 << endl;
-            return;
+            pp[v[i]][1] = dis;
         }
     }
-    c = 0;
-    if (g2 > 1)
+    // p(pp);
+
+    int ans = INT_MAX;
+    for (auto &it : pp)
     {
-        for (int i = 0; i < n; i += 2)
+        // for last index
+        int dis = n - it[2] - 1;
+        it[2] = n;
+        if (dis > it[0])
         {
-            if (v[i] % g2 == 0)
-            {
-                c = 1;
-                break;
-            }
+            it[1] = it[0]; // updating second max
+            it[0] = dis;   // new max
         }
-        if (c == 0)
+        else if (dis > it[1]) // got new second max
         {
-            cout << g2 << endl;
-            return;
+            it[1] = dis;
+        }
+
+        if (it[2] != -1)
+        {
+            ans = min(ans, max(it[0] / 2, it[1]));
         }
     }
-    cout << 0 << endl;
+    cout << ans << endl;
 }
 
 /*
@@ -346,7 +343,7 @@ signed main()
     // #endif
 
     // seiveAlgo();
-    BeforePrimeFactorisation();
+    // BeforePrimeFactorisation()
 
     int t;
     cin >> t;

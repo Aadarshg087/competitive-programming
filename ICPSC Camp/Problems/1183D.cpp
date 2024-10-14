@@ -278,53 +278,40 @@ void solvee()
     int n;
     cin >> n;
     vector<int> v(n);
+    set<int> st;
+    map<int, int> mp;
     for (int i = 0; i < n; i++)
     {
         cin >> v[i];
+        mp[v[i]]++;
     }
-    int g1 = v[0];
-    for (int i = 0; i < n; i += 2)
-        g1 = gcd(g1, v[i]);
-    int g2 = v[1];
-    for (int i = 1; i < n; i += 2)
-        g2 = gcd(g2, v[i]);
-    // p(g1);
-    // p(g2);
-    bool c = 0;
-    if (g1 > 1)
+    multimap<int, int, greater<int>> mp2;
+    for (auto it : mp)
     {
-        for (int i = 1; i < n; i += 2)
-        {
-            if (v[i] % g1 == 0)
-            {
-                c = 1;
-                break;
-            }
-        }
-        if (c == 0)
-        {
-            cout << g1 << endl;
-            return;
-        }
+        mp2.insert({it.second, it.first});
     }
-    c = 0;
-    if (g2 > 1)
+
+    int ans = 0;
+    // p(mp2);
+    for (auto it : mp2)
     {
-        for (int i = 0; i < n; i += 2)
+        if (st.find(it.first) == st.end())
         {
-            if (v[i] % g2 == 0)
-            {
-                c = 1;
-                break;
-            }
+            // p(it.first);
+            ans += it.first;
+            st.insert(it.first);
         }
-        if (c == 0)
+        else
         {
-            cout << g2 << endl;
-            return;
+            int i = it.first;
+            while (i > 0 && st.find(i) != st.end())
+                i--;    
+            if (st.find(i) == st.end())
+                ans += i;
+            st.insert(i);
         }
     }
-    cout << 0 << endl;
+    cout << ans << endl;
 }
 
 /*
@@ -346,7 +333,7 @@ signed main()
     // #endif
 
     // seiveAlgo();
-    BeforePrimeFactorisation();
+    // BeforePrimeFactorisation()
 
     int t;
     cin >> t;

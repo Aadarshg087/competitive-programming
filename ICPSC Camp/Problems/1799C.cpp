@@ -272,59 +272,105 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     return mp;
 }
 /*------ Bas itna hi krna tha scroll -------*/
+map<char, int> mp;
+bool palindrome(string &s)
+{
+    for (char ch : s)
+    {
+        mp[ch]++;
+    }
+    int ODD = 0;
+    int EVEN = 0;
+    for (auto it : mp)
+    {
+        if (it.second & 1)
+        {
+            ODD++;
+        }
+        else
+            EVEN++;
+    }
+    if (ODD == 1 || ODD == 0)
+        return true;
+    return false;
+}
 
 void solvee()
 {
-    int n;
-    cin >> n;
-    vector<int> v(n);
+    string s;
+    cin >> s;
+    int n = s.size();
+    string temp = string(n, '-');
+    if (palindrome(s))
+    {
+        int i = 0;
+        int j = n - 1;
+        char oddEle = ' ';
+        for (auto &it : mp)
+        {
+            if (it.second % 2 != 0)
+            {
+                oddEle = it.first;
+                it.second--;
+            }
+            while (it.second > 0)
+            {
+                temp[i] = it.first;
+                temp[n - 1 - i] = it.first;
+                it.second -= 2;
+                i++;
+            }
+        }
+        for (int i = 0; i < n; i++)
+        {
+            if (temp[i] == '-')
+            {
+                temp[i] = oddEle;
+            }
+        }
+        cout << temp << endl;
+        return;
+    }
+
+    sort(all(s));
+    // p(s);
+    int i = 0;
+    int j = 0;
+    string rem = "";
+    while (i < n)
+    {
+        temp[j] = max(s[i], s[i + 1]);
+        temp[n - 1 - j] = min(s[i], s[i + 1]);
+        if (temp[j] != temp[n - 1 - j])
+        {
+            // temp[i] = max(s[i], s[n - 1 - i]);
+            // temp[n - 1 - i] = min(s[i], s[n - 1 - i]);
+            i += 2;
+            int f = i;
+            rem = s.substr(f);
+            break;
+        }
+
+        // temp[i] = max(s[i], s[n - 1 - i]);
+        // temp[n - 1 - i] = min(s[i], s[n - 1 - i]);
+        // i++;
+        i += 2;
+        j++;
+    }
+    sort(all(rem));
+    // p(rem);
+    j = 0;
     for (int i = 0; i < n; i++)
     {
-        cin >> v[i];
-    }
-    int g1 = v[0];
-    for (int i = 0; i < n; i += 2)
-        g1 = gcd(g1, v[i]);
-    int g2 = v[1];
-    for (int i = 1; i < n; i += 2)
-        g2 = gcd(g2, v[i]);
-    // p(g1);
-    // p(g2);
-    bool c = 0;
-    if (g1 > 1)
-    {
-        for (int i = 1; i < n; i += 2)
+        if (temp[i] == '-')
         {
-            if (v[i] % g1 == 0)
-            {
-                c = 1;
-                break;
-            }
-        }
-        if (c == 0)
-        {
-            cout << g1 << endl;
-            return;
+            temp[i] = rem[j++];
         }
     }
-    c = 0;
-    if (g2 > 1)
-    {
-        for (int i = 0; i < n; i += 2)
-        {
-            if (v[i] % g2 == 0)
-            {
-                c = 1;
-                break;
-            }
-        }
-        if (c == 0)
-        {
-            cout << g2 << endl;
-            return;
-        }
-    }
-    cout << 0 << endl;
+    // cout << "sdfsd" << endl;
+    cout << temp << endl;
+    mp.clear();
+    // p(temp);
 }
 
 /*
@@ -346,7 +392,7 @@ signed main()
     // #endif
 
     // seiveAlgo();
-    BeforePrimeFactorisation();
+    // BeforePrimeFactorisation()
 
     int t;
     cin >> t;

@@ -272,59 +272,40 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     return mp;
 }
 /*------ Bas itna hi krna tha scroll -------*/
-
+int num(int k, int n)
+{
+    int ans = 1;
+    while (ans <= n)
+    {
+        ans *= k;
+    }
+    return ans / k;
+}
 void solvee()
 {
-    int n;
-    cin >> n;
-    vector<int> v(n);
-    for (int i = 0; i < n; i++)
+    int n, k;
+    cin >> n >> k;
+    int count = 0;
+    int nn = n;
+    if (k == 1)
     {
-        cin >> v[i];
+        cout << n << endl;
+        return;
     }
-    int g1 = v[0];
-    for (int i = 0; i < n; i += 2)
-        g1 = gcd(g1, v[i]);
-    int g2 = v[1];
-    for (int i = 1; i < n; i += 2)
-        g2 = gcd(g2, v[i]);
-    // p(g1);
-    // p(g2);
-    bool c = 0;
-    if (g1 > 1)
+    while (1)
     {
-        for (int i = 1; i < n; i += 2)
+        int temp = num(k, nn);
+        count++;
+        nn -= temp;
+        if (nn == 0)
+            break;
+        if (nn < k)
         {
-            if (v[i] % g1 == 0)
-            {
-                c = 1;
-                break;
-            }
-        }
-        if (c == 0)
-        {
-            cout << g1 << endl;
-            return;
+            count += nn;
+            break;
         }
     }
-    c = 0;
-    if (g2 > 1)
-    {
-        for (int i = 0; i < n; i += 2)
-        {
-            if (v[i] % g2 == 0)
-            {
-                c = 1;
-                break;
-            }
-        }
-        if (c == 0)
-        {
-            cout << g2 << endl;
-            return;
-        }
-    }
-    cout << 0 << endl;
+    cout << count << endl;
 }
 
 /*
@@ -346,7 +327,7 @@ signed main()
     // #endif
 
     // seiveAlgo();
-    BeforePrimeFactorisation();
+    // BeforePrimeFactorisation()
 
     int t;
     cin >> t;

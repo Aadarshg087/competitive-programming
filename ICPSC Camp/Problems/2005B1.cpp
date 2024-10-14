@@ -275,56 +275,64 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n;
-    cin >> n;
-    vector<int> v(n);
-    for (int i = 0; i < n; i++)
+    int n, m, q;
+    cin >> n >> m >> q;
+    vector<int> v; // teachers
+    for (int i = 0; i < m; i++)
     {
-        cin >> v[i];
+        int temp;
+        cin >> temp;
+        v.push_back(temp);
     }
-    int g1 = v[0];
-    for (int i = 0; i < n; i += 2)
-        g1 = gcd(g1, v[i]);
-    int g2 = v[1];
-    for (int i = 1; i < n; i += 2)
-        g2 = gcd(g2, v[i]);
-    // p(g1);
-    // p(g2);
-    bool c = 0;
-    if (g1 > 1)
+    sort(all(v));
+    vector<int> queries(q);
+    for (int i = 0; i < q; i++)
     {
-        for (int i = 1; i < n; i += 2)
+        cin >> queries[i];
+    }
+
+    for (int i = 0; i < q; i++)
+    {
+        auto it = upper_bound(all(v), queries[i]);
+        int first = 0;
+        int second = 0;
+        if (it == v.end())
         {
-            if (v[i] % g1 == 0)
+            int first = prev(it) - v.begin();
+            if (v[first] == queries[i])
             {
-                c = 1;
-                break;
+                cout << 1 << endl;
+                continue;
             }
+            // cout << v[first] << " " << v[second] << endl;
+            cout << abs(queries[i] - v[first]) + (n - queries[i]) << endl;
         }
-        if (c == 0)
+        else if (it == v.begin())
         {
-            cout << g1 << endl;
-            return;
-        }
-    }
-    c = 0;
-    if (g2 > 1)
-    {
-        for (int i = 0; i < n; i += 2)
-        {
-            if (v[i] % g2 == 0)
+            int second = it - v.begin();
+            if (v[second] == queries[i])
             {
-                c = 1;
-                break;
+                cout << 1 << endl;
+                continue;
             }
+            cout << abs(queries[i] - v[second]) + (queries[i] - 1) << endl;
         }
-        if (c == 0)
+        else
         {
-            cout << g2 << endl;
-            return;
+            second = it - v.begin();
+            first = prev(it) - v.begin();
+            if (v[first] == queries[i] || v[second] == queries[i])
+            {
+                cout << 1 << endl;
+                continue;
+            }
+            int ans = (abs(v[first] - queries[i]) - 1) + (abs(v[second] - queries[i]) - 1);
+            if (ans == 0)
+                cout << 1 << endl;
+            else
+                cout << ans << endl;
         }
     }
-    cout << 0 << endl;
 }
 
 /*
@@ -346,7 +354,7 @@ signed main()
     // #endif
 
     // seiveAlgo();
-    BeforePrimeFactorisation();
+    // BeforePrimeFactorisation()
 
     int t;
     cin >> t;

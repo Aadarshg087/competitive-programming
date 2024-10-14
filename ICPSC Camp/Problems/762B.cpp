@@ -275,56 +275,81 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n;
-    cin >> n;
-    vector<int> v(n);
-    for (int i = 0; i < n; i++)
+    int usbComp, psComp, bothComp;
+    cin >> usbComp >> psComp >> bothComp;
+    int m;
+    cin >> m;
+    multiset<int> usb;
+    multiset<int> ps;
+    for (int i = 0; i < m; i++)
     {
-        cin >> v[i];
-    }
-    int g1 = v[0];
-    for (int i = 0; i < n; i += 2)
-        g1 = gcd(g1, v[i]);
-    int g2 = v[1];
-    for (int i = 1; i < n; i += 2)
-        g2 = gcd(g2, v[i]);
-    // p(g1);
-    // p(g2);
-    bool c = 0;
-    if (g1 > 1)
-    {
-        for (int i = 1; i < n; i += 2)
+        int num;
+        cin >> num;
+        string s;
+        cin >> s;
+        if (s == "USB")
         {
-            if (v[i] % g1 == 0)
+            usb.insert(num);
+        }
+        else if (s == "PS/2")
+        {
+            ps.insert(num);
+        }
+    }
+    int count = 0;
+    int expense = 0;
+    int maxi = usbComp + psComp + bothComp;
+    while (m--)
+    {
+        if ((int)usb.size() && usbComp)
+        {
+            expense += *usb.begin();
+            usb.erase(usb.begin());
+            count++;
+            usbComp--;
+        }
+        else if (ps.size() && psComp)
+        {
+            expense += *ps.begin();
+            ps.erase(ps.begin());
+            count++;
+            psComp--;
+        }
+        else if (usb.size() && ps.size() && bothComp)
+        {
+            if (*usb.begin() < *ps.begin())
             {
-                c = 1;
-                break;
+                expense += *usb.begin();
+                usb.erase(usb.begin());
+                count++;
+                bothComp--;
+            }
+            else
+            {
+                expense += *ps.begin();
+                ps.erase(ps.begin());
+                count++;
+                bothComp--;
             }
         }
-        if (c == 0)
+        else if (usb.size() && bothComp)
         {
-            cout << g1 << endl;
-            return;
+            expense += *usb.begin();
+            usb.erase(usb.begin());
+            count++;
+            bothComp--;
         }
+        else if (ps.size() && bothComp)
+        {
+            expense += *ps.begin();
+            ps.erase(ps.begin());
+            count++;
+            bothComp--;
+        }
+        else
+            break;
     }
-    c = 0;
-    if (g2 > 1)
-    {
-        for (int i = 0; i < n; i += 2)
-        {
-            if (v[i] % g2 == 0)
-            {
-                c = 1;
-                break;
-            }
-        }
-        if (c == 0)
-        {
-            cout << g2 << endl;
-            return;
-        }
-    }
-    cout << 0 << endl;
+    cout << count << " " << expense << endl;
 }
 
 /*
@@ -341,16 +366,16 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // #ifndef ONLINE_JUDGE
-    // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
-    // #endif
+#ifndef ONLINE_JUDGE
+    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+#endif
 
     // seiveAlgo();
-    BeforePrimeFactorisation();
+    // BeforePrimeFactorisation()
 
-    int t;
-    cin >> t;
-    while (t--)
-        solvee();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    solvee();
     return 0;
 }

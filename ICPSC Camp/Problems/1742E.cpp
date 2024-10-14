@@ -275,56 +275,55 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n;
-    cin >> n;
+    int n, q;
+    cin >> n >> q;
     vector<int> v(n);
     for (int i = 0; i < n; i++)
     {
         cin >> v[i];
     }
-    int g1 = v[0];
-    for (int i = 0; i < n; i += 2)
-        g1 = gcd(g1, v[i]);
-    int g2 = v[1];
-    for (int i = 1; i < n; i += 2)
-        g2 = gcd(g2, v[i]);
-    // p(g1);
-    // p(g2);
-    bool c = 0;
-    if (g1 > 1)
+    vector<int> queries(q);
+    for (int i = 0; i < q; i++)
     {
-        for (int i = 1; i < n; i += 2)
+        cin >> queries[i];
+    }
+
+    vector<int> pre(n, v[0]);
+    for (int i = 1; i < n; i++)
+    {
+        pre[i] = pre[i - 1] + v[i];
+    }
+
+    map<int, int> mp;
+    int currMax = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (v[i] > currMax)
         {
-            if (v[i] % g1 == 0)
-            {
-                c = 1;
-                break;
-            }
-        }
-        if (c == 0)
-        {
-            cout << g1 << endl;
-            return;
+            mp[v[i]] = i;
+            currMax = v[i];
         }
     }
-    c = 0;
-    if (g2 > 1)
+    // p(temp);
+    // p(mp);
+
+    for (int i = 0; i < q; i++)
     {
-        for (int i = 0; i < n; i += 2)
+        int x = queries[i];
+        auto it = mp.upper_bound(x);
+        int ind = 0;
+        if (it == mp.end())
         {
-            if (v[i] % g2 == 0)
-            {
-                c = 1;
-                break;
-            }
+            ind = n - 1;
         }
-        if (c == 0)
-        {
-            cout << g2 << endl;
-            return;
-        }
+        else
+            ind = it->second - 1;
+        if (ind < 0)
+            cout << 0 << " ";
+        else
+            cout << pre[ind] << " ";
     }
-    cout << 0 << endl;
+    cout << endl;
 }
 
 /*
@@ -341,12 +340,12 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // #ifndef ONLINE_JUDGE
-    // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
-    // #endif
+#ifndef ONLINE_JUDGE
+    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+#endif
 
     // seiveAlgo();
-    BeforePrimeFactorisation();
+    // BeforePrimeFactorisation()
 
     int t;
     cin >> t;

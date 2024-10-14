@@ -275,56 +275,63 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n;
-    cin >> n;
+    int n, c;
+    cin >> n >> c;
     vector<int> v(n);
     for (int i = 0; i < n; i++)
     {
         cin >> v[i];
     }
-    int g1 = v[0];
-    for (int i = 0; i < n; i += 2)
-        g1 = gcd(g1, v[i]);
-    int g2 = v[1];
-    for (int i = 1; i < n; i += 2)
-        g2 = gcd(g2, v[i]);
-    // p(g1);
-    // p(g2);
-    bool c = 0;
-    if (g1 > 1)
+
+    vector<int> fromLeft(n);
+    for (int i = 0; i < n; i++)
     {
-        for (int i = 1; i < n; i += 2)
-        {
-            if (v[i] % g1 == 0)
-            {
-                c = 1;
-                break;
-            }
-        }
-        if (c == 0)
-        {
-            cout << g1 << endl;
-            return;
-        }
+        fromLeft[i] = v[i] + (i + 1);
     }
-    c = 0;
-    if (g2 > 1)
+    int j = 1;
+    vector<int> fromRight(n);
+    for (int i = n - 1; i >= 0; i--)
     {
-        for (int i = 0; i < n; i += 2)
-        {
-            if (v[i] % g2 == 0)
-            {
-                c = 1;
-                break;
-            }
-        }
-        if (c == 0)
-        {
-            cout << g2 << endl;
-            return;
-        }
+        fromRight[i] = v[i] + j;
+        j++;
     }
-    cout << 0 << endl;
+
+    sort(all(fromLeft));
+    sort(all(fromRight));
+    int count = 1;
+    c -= fromLeft[0];
+    if (c < 0)
+    {
+        cout << 0 << endl;
+        return;
+    }
+    p(fromLeft);
+    p(fromRight);
+    int i = 1;
+    j = 0;
+    while (i < n && j < n)
+    {
+        int mini = 0;
+        if (fromLeft[i] < fromRight[j])
+        {
+            mini = fromLeft[i];
+            i++;
+        }
+        else
+        {
+            mini = fromRight[j];
+            j++;
+        }
+        if (c - mini >= 0)
+        {
+            p(c);
+            c -= mini;
+            count++;
+        }
+        else
+            break;
+    }
+    cout << count << endl;
 }
 
 /*
@@ -341,12 +348,12 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // #ifndef ONLINE_JUDGE
-    // freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
-    // #endif
+#ifndef ONLINE_JUDGE
+    freopen("C:/Users/aadar/Desktop/input.txt", "r", stdin);
+#endif
 
     // seiveAlgo();
-    BeforePrimeFactorisation();
+    // BeforePrimeFactorisation()
 
     int t;
     cin >> t;

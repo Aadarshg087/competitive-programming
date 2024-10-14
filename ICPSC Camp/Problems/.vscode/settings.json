@@ -21,6 +21,7 @@
     "cstdlib": "cpp",
     "iosfwd": "cpp",
     "limits": "cpp",
-    "complex": "cpp"
+    "complex": "cpp",
+    "*.tcc": "cpp"
   }
 }

@@ -271,6 +271,27 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     // return ans;
     return mp;
 }
+
+int mod = 998244353;
+
+int fact(int n)
+{
+    if (n == 0)
+        return 1;
+    int res = 1;
+    for (int i = 2; i <= n; i++)
+        res = mod_mul(res, i, mod);
+    return res;
+}
+int nCr(int n, int r)
+{
+    int first = fact(n) % mod;
+    int second = mod_mul(fact(r), fact(n - r), mod);
+    return mod_div(first, second, mod);
+}
+
+// Returns factorial of n
+
 /*------ Bas itna hi krna tha scroll -------*/
 
 void solvee()
@@ -282,49 +303,21 @@ void solvee()
     {
         cin >> v[i];
     }
-    int g1 = v[0];
-    for (int i = 0; i < n; i += 2)
-        g1 = gcd(g1, v[i]);
-    int g2 = v[1];
-    for (int i = 1; i < n; i += 2)
-        g2 = gcd(g2, v[i]);
-    // p(g1);
-    // p(g2);
-    bool c = 0;
-    if (g1 > 1)
+    int ans = 0;
+    int i = 0;
+    while (i < n)
     {
-        for (int i = 1; i < n; i += 2)
-        {
-            if (v[i] % g1 == 0)
-            {
-                c = 1;
-                break;
-            }
-        }
-        if (c == 0)
-        {
-            cout << g1 << endl;
-            return;
-        }
+        map<int, int> mp;
+        mp[v[i]]++;
+        mp[v[i + 1]]++;
+        mp[v[i + 2]]++;
+        ans = mod_mul(ans, (int)mp.size(), mod);
+        i += 3;
     }
-    c = 0;
-    if (g2 > 1)
-    {
-        for (int i = 0; i < n; i += 2)
-        {
-            if (v[i] % g2 == 0)
-            {
-                c = 1;
-                break;
-            }
-        }
-        if (c == 0)
-        {
-            cout << g2 << endl;
-            return;
-        }
-    }
-    cout << 0 << endl;
+
+    int first = nCr(n / 3, n / 6);
+    ans = mod_mul(ans, first, mod);
+    cout << ans << endl;
 }
 
 /*
@@ -346,11 +339,11 @@ signed main()
     // #endif
 
     // seiveAlgo();
-    BeforePrimeFactorisation();
+    // BeforePrimeFactorisation()
 
-    int t;
-    cin >> t;
-    while (t--)
-        solvee();
+    // int t;
+    // cin >> t;
+    // while (t--)
+    solvee();
     return 0;
 }

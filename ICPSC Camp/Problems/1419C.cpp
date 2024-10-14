@@ -275,56 +275,43 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
 
 void solvee()
 {
-    int n;
-    cin >> n;
+    int n, x;
+    cin >> n >> x;
     vector<int> v(n);
+    bool iPresent = 0;
+    int maxi = INT_MIN;
+    int mini = INT_MAX;
     for (int i = 0; i < n; i++)
     {
         cin >> v[i];
+        maxi = max(maxi, v[i]);
+        mini = min(mini, v[i]);
+        if (v[i] == x)
+            iPresent = 1;
     }
-    int g1 = v[0];
-    for (int i = 0; i < n; i += 2)
-        g1 = gcd(g1, v[i]);
-    int g2 = v[1];
-    for (int i = 1; i < n; i += 2)
-        g2 = gcd(g2, v[i]);
-    // p(g1);
-    // p(g2);
-    bool c = 0;
-    if (g1 > 1)
+    sort(all(v));
+    if (maxi == mini && maxi == x)
     {
-        for (int i = 1; i < n; i += 2)
-        {
-            if (v[i] % g1 == 0)
-            {
-                c = 1;
-                break;
-            }
-        }
-        if (c == 0)
-        {
-            cout << g1 << endl;
-            return;
-        }
+        cout<<0<<endl;
+        return;
     }
-    c = 0;
-    if (g2 > 1)
+    if (iPresent)
     {
-        for (int i = 0; i < n; i += 2)
-        {
-            if (v[i] % g2 == 0)
-            {
-                c = 1;
-                break;
-            }
-        }
-        if (c == 0)
-        {
-            cout << g2 << endl;
-            return;
-        }
+        cout << 1 << endl;
+        return;
     }
-    cout << 0 << endl;
+    int ans = 0;
+    for (int i = 0; i < n; i++)
+    {
+        ans += v[i] - x;
+    }
+    if (ans == 0)
+    {
+        cout << 1 << endl;
+        return;
+    }
+
+    cout << 2 << endl;
 }
 
 /*
@@ -346,7 +333,7 @@ signed main()
     // #endif
 
     // seiveAlgo();
-    BeforePrimeFactorisation();
+    // BeforePrimeFactorisation()
 
     int t;
     cin >> t;

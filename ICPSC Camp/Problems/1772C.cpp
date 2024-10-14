@@ -96,6 +96,105 @@ void _print(multimap<T, V> v)
     cout << "]";
 }
 
+// ----------------- Helper Functions ---------------------
+
+int expo(int a, int b, int mod)
+{
+    int res = 1;
+    while (b > 0)
+    {
+        if (b & 1)
+            res = (res * a) % mod;
+        a = (a * a) % mod;
+        b = b >> 1;
+    }
+    return res;
+}
+
+int gcd(int a, int b)
+{
+    if (b > a)
+    {
+        return gcd(b, a);
+    }
+    if (b == 0)
+    {
+        return a;
+    }
+    return gcd(b, a % b);
+}
+
+void extendgcd(int a, int b, int *v)
+{
+    if (b == 0)
+    {
+        v[0] = 1;
+        v[1] = 0;
+        v[2] = a;
+        return;
+    }
+    extendgcd(b, a % b, v);
+    int x = v[1];
+    v[1] = v[0] - v[1] * (a / b);
+    v[0] = x;
+    return;
+} // pass an arry of size1 3
+
+int mminv(int a, int b)
+{
+    int arr[3];
+    extendgcd(a, b, arr);
+    return arr[0];
+} // for non prime b
+int mminvprime(int a, int b) { return expo(a, b - 2, b); }
+int mod_add(int a, int b, int m)
+{
+    a = a % m;
+    b = b % m;
+    return (((a + b) % m) + m) % m;
+}
+int mod_mul(int a, int b, int m)
+{
+    a = a % m;
+    b = b % m;
+    return (((a * b) % m) + m) % m;
+}
+int mod_sub(int a, int b, int m)
+{
+    a = a % m;
+    b = b % m;
+    return (((a - b) % m) + m) % m;
+}
+int mod_div(int a, int b, int m)
+{
+    a = a % m;
+    b = b % m;
+    return (mod_mul(a, mminvprime(b, m), m) + m) % m;
+} // only for prime m
+
+int phin(int n)
+{
+    int number = n;
+    if (n % 2 == 0)
+    {
+        number /= 2;
+        while (n % 2 == 0)
+            n /= 2;
+    }
+    for (int i = 3; i <= sqrt(n); i += 2)
+    {
+        if (n % i == 0)
+        {
+            while (n % i == 0)
+                n /= i;
+            number = (number / i * (i - 1));
+        }
+    }
+    if (n > 1)
+        number = (number / n * (n - 1));
+    return number;
+} // O(sqrt(N))
+
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 int getRandomNumber(int l, int r) { return uniform_int_distribution<int>(l, r)(rng); }
 
@@ -117,29 +216,9 @@ void seiveAlgo()
     }
 }
 
-// Binary Exponentiation - (Check MOD Value) -------------------
-int BinaryExpoRecur(int a, int p)
-{
-    const int mod = 1e18;
-    if (p == 0)
-        return 1;
-    if (p == 1)
-        return a;
-    int ans = BinaryExpoRecur(a, p / 2);
-    if (p & 1)
-    {
-        return (((ans * ans) % mod) * a) % mod;
-    }
-    else
-    {
-        return (ans * ans) % mod;
-    }
-    return ans;
-}
-
 int __lcm(int a, int b)
 {
-    return (a * b) / __gcd(a, b);
+    return (a * b) / gcd(a, b);
 }
 
 int mex(vector<int> &v)
@@ -192,33 +271,44 @@ map<int, int> primeFactorisation(int n) // run Pre-requisite function
     // return ans;
     return mp;
 }
+/*------ Bas itna hi krna tha scroll -------*/
+
+bool check(int k, int curr)
+{
+    k--;
+    return k < curr;
+}
 
 void solvee()
 {
-    int n, k;
+    int k, n;
     cin >> k >> n;
-
-    vector<int> v(n + 1, -1);
-    int i = 1;
-    int diff = 1;
-    cout << i << " ";
-    v[i] = 0;
-    k--;
     vector<int> ans;
-    while (k--)
+    int curr = n;
+    int diff = 0;
+    while (1)
     {
-        if (i + diff > n)
+        if (check(k, curr - diff))
         {
+            ans.push_back(curr - diff);
+            curr -= diff;
+            diff++;
+            k--;
+        }
+        else
+        {
+            curr = ans.back() - 1;
+            while (curr && k)
+            {
+                ans.push_back(curr--);
+                k--;
+            }
             break;
         }
-        // cout << i + diff << " ";
-        ans.push_back(i + diff);
-
-        v[i + diff] = 1;
-        i += diff;
-        diff += 1;
     }
-    sort(all(ans));
+    reverse(all(ans));
+    for (auto it : ans)
+        cout << it << " ";
     cout << endl;
 }
 

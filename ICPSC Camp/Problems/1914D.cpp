@@ -277,54 +277,49 @@ void solvee()
 {
     int n;
     cin >> n;
-    vector<int> v(n);
+    vector<pair<int, int>> first, second, third;
     for (int i = 0; i < n; i++)
     {
-        cin >> v[i];
+        int temp;
+        cin >> temp;
+        first.push_back({temp, i});
     }
-    int g1 = v[0];
-    for (int i = 0; i < n; i += 2)
-        g1 = gcd(g1, v[i]);
-    int g2 = v[1];
-    for (int i = 1; i < n; i += 2)
-        g2 = gcd(g2, v[i]);
-    // p(g1);
-    // p(g2);
-    bool c = 0;
-    if (g1 > 1)
+
+    for (int i = 0; i < n; i++)
     {
-        for (int i = 1; i < n; i += 2)
+        int temp;
+        cin >> temp;
+        second.push_back({temp, i});
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        int temp;
+        cin >> temp;
+        third.push_back({temp, i});
+    }
+
+    sort(all(first), greater<pair<int, int>>());
+    sort(all(second), greater<pair<int, int>>());
+    sort(all(third), greater<pair<int, int>>());
+    // p(first);
+    // p(second);
+    // p(third);
+    int ans = 0;
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
         {
-            if (v[i] % g1 == 0)
+            for (int k = 0; k < 3; k++)
             {
-                c = 1;
-                break;
+                if (first[i].second != second[j].second && first[i].second != third[k].second && second[j].second != third[k].second)
+                {
+                    ans = max(ans, first[i].first + second[j].first + third[k].first);
+                }
             }
         }
-        if (c == 0)
-        {
-            cout << g1 << endl;
-            return;
-        }
     }
-    c = 0;
-    if (g2 > 1)
-    {
-        for (int i = 0; i < n; i += 2)
-        {
-            if (v[i] % g2 == 0)
-            {
-                c = 1;
-                break;
-            }
-        }
-        if (c == 0)
-        {
-            cout << g2 << endl;
-            return;
-        }
-    }
-    cout << 0 << endl;
+    cout << ans << endl;
 }
 
 /*
@@ -346,7 +341,7 @@ signed main()
     // #endif
 
     // seiveAlgo();
-    BeforePrimeFactorisation();
+    // BeforePrimeFactorisation()
 
     int t;
     cin >> t;
